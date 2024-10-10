@@ -8,17 +8,7 @@
 | 2주차   | 초기 개발 환경 구축   | 개발 환경 설정                                                         |
 | 3~4주차 | 주요 기능 개발        | 핵심 API 및 비즈니스 로직 구현                                         |
 | 5주차   | 테스트 및 최적화      | 테스트 작성, 성능 개선                                                 |
-| 6주차   | 배포 준비 및 출시     | 서버 배포, 모니터링, CI/CD 구축                                        |
-
-## 개발 환경
-
-- Architecture
-  - Layered Architecture Based + clean Architecture
-  - Testable Business logics
-- DB ORM
-  - TypeORM
-- Test
-  - Jest
+| 6주차   | 배포                  | 서버 배포                                                              |
 
 ## 플로우 차트
 
