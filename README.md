@@ -5,10 +5,30 @@
 - DB, ORM
   - Mysql
   - TypeORM
-- api docs
+- Api docs
   - openapi.yaml + swagger editor
 - Test
+
   - Jest
+
+## 폴더 구조
+
+/src
+├── /application
+│ ├── /usecases
+│ └── /services
+├── /domain
+│ ├── /entities
+│ └── /repositories
+├── /infrastructure
+│ ├── /modules
+│ └── /database
+├── /interfaces
+│ ├── /controllers
+│ ├── /dto
+│ │ ├── /req
+│ │ └── /res
+└── app.module.ts
 
 ## erd
 
