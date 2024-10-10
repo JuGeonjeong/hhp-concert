@@ -1,3 +1,19 @@
+## 개발 환경
+
+- Architecture
+  - Layered Architecture Based + clean Architecture
+- DB, ORM
+  - Mysql
+  - TypeORM
+- api docs
+  - openapi.yaml + swagger editor
+- Test
+  - Jest
+
+## erd
+
+![이미지 설명](erd.png)
+
 ## 시나리오 선정 및 프로젝트 Milestone 제출
 
 #### [콘서트 대기열]
