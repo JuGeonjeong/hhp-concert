@@ -26,6 +26,7 @@ participant USER
 participant API
 participant DB
 
+```mermaid
 sequenceDiagram
 USER ->> API: 1. 대기 요청
 API ->> DB: 2. 대기 토큰 등록 요청
@@ -45,6 +46,7 @@ else 토큰 유지
 DB ->> USER: 10. 대기열 정보
 end
 end
+```
 
 sequenceDiagram
 USER ->> API: 1. 대기 요청
