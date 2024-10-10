@@ -21,13 +21,11 @@
 
 ### 시퀀스 다이어그램
 
+```mermaid
 sequenceDiagram
 participant USER
 participant API
 participant DB
-
-```mermaid
-sequenceDiagram
 USER ->> API: 1. 대기 요청
 API ->> DB: 2. 대기 토큰 등록 요청
 alt 토큰 있음
@@ -47,21 +45,3 @@ DB ->> USER: 10. 대기열 정보
 end
 end
 ```
-
-sequenceDiagram
-USER ->> API: 1. 대기 요청
-API ->> DB: 2. 대기 토큰 등록 요청
-alt 토큰 있음
-DB ->> API: 3. 기존 대기열 반환
-else 토큰 없음
-DB ->> API: 4. 신규 대기열 토큰 등록, 반환
-end
-API ->> USER: 5. 대기열 정보
-loop 5초
-USER ->> API: 6. 확인 요청 [Token]
-API ->> DB: 7. 대기열 확인 요청
-alt 토큰 만료
-DB ->> API: 8. 신규 대기열 토큰 등록, 반환
-API ->> USER: 9. 대기열 정보
-else 토큰 유지
-DB ->> USER: 10. 대기열 정보
