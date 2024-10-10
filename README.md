@@ -11,6 +11,10 @@
 
   - Jest
 
+## API 명세 및 Mock API 작성
+
+- openapi.yaml
+
 ## 폴더 구조
 
 ```javascript
