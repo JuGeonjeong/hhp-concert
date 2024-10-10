@@ -13,6 +13,7 @@
 
 ## 폴더 구조
 
+```javascript
 /src
 ├── /application
 │ ├── /usecases
@@ -29,6 +30,7 @@
 │ │ ├── /req
 │ │ └── /res
 └── app.module.ts
+```
 
 ## erd
 
