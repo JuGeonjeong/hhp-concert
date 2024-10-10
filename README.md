@@ -19,7 +19,9 @@
 - Test
   - Jest
 
-### 시퀀스 다이어그램
+## 시퀀스 다이어그램
+
+#### 유저 대기열 토큰 기능
 
 ```mermaid
 sequenceDiagram
@@ -44,4 +46,41 @@ else 토큰 유지
 DB ->> USER: 10. 대기열 정보
 end
 end
+```
+
+#### 예약 가능 날짜/좌석 조회 & 예약 요청
+
+```mermaid
+sequenceDiagram
+  participant USER
+  participant API
+  participant DB
+
+    USER ->> API: 1. 조회 요청
+    API ->> DB: 2. 데이터 조회
+    DB ->> API: 3. 데이터 반환
+    API ->> USER: 4. 좌석 정보
+    USER ->> API: 5. 좌석 예약 요청[Token]
+    API ->> DB: 6. 좌석 상태 조희
+alt 예약 불가능
+    DB ->> USER: 7. 에러 반환
+else 예약 가능
+    DB ->> API: 8. 좌석 상태 변경 & 정보 반환
+end
+    API ->> USER: 5. 좌석 예약 확인
+```
+
+#### 잔액 충전
+
+```mermaid
+
+sequenceDiagram
+  participant USER
+  participant API
+  participant DB
+
+USER ->> API: 1. 충전 요청[Token]
+API ->> DB: 5. 충전 & 기록 저장
+DB ->> API: 6. 잔액 반환
+API ->> USER: 6. 잔액 확인
 ```
