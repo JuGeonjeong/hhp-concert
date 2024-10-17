@@ -16,7 +16,7 @@ export class QueueController {
   ) {}
 
   @Post('issue')
-  @HttpCode(201)
+  @HttpCode(200)
   async createToken(
     @Res({ passthrough: true }) response: Response,
   ): Promise<ResponseSuccessDto<any>> {
@@ -26,7 +26,7 @@ export class QueueController {
   }
 
   @Get('check')
-  @HttpCode(201)
+  @HttpCode(200)
   async checkToken(
     // bearer token 유무 확인
     @ReqToken() token,

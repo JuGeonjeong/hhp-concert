@@ -9,7 +9,7 @@ export enum ReservationStatusEnum {
 }
 
 @Entity({ name: 'reservation' })
-export class Reservation extends BaseEntities {
+export default class Reservation extends BaseEntities {
   //   @IsEnum(AdjustmentStatusType)
   @Column({ type: 'enum', enum: ReservationStatusEnum, default: 'REQUEST' })
   status: ReservationStatusEnum;

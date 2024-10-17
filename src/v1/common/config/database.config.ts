@@ -11,7 +11,7 @@ export const getDatabaseConfig = (
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
   logging: configService.get<string>('NODE_ENV') !== 'production',
-  timezone: 'Z',
+  timezone: '+09:00',
   charset: 'utf8mb4',
   entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
   autoLoadEntities: true,
