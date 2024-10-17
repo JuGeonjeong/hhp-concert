@@ -19,6 +19,12 @@ export class QueueRepositoryImpl implements QueueRepository {
     return await this.manager.findOne(Queue, { where: { uuid } });
   }
 
+  async findAndUpdate(uuid: string): Promise<Queue> {
+    const queue = await this.manager.findOne(Queue, { where: { uuid } });
+    queue.status = QueueStatusEnum.OUT;
+    return await this.manager.save(queue);
+  }
+
   async findStatusEnter(): Promise<Queue> {
     return await this.manager.findOne(Queue, {
       where: { status: QueueStatusEnum.ENTER },

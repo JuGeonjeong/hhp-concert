@@ -1,5 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { SeatRepository } from '../../domain/repository/seatRepository';
+import Seat from '../../domain/entity/seat.entity';
 
 @Injectable()
 export class SeatService {
@@ -20,6 +21,10 @@ export class SeatService {
     return exSeat;
   }
 
+  async findOne(id) {
+    return await this.seatsRepository.findOne(id);
+  }
+
   async findSeats(id: number) {
     const seats = await this.seatsRepository.findSeats(id);
     if (!seats) {
@@ -35,5 +40,9 @@ export class SeatService {
     const totalSeats = Array.from({ length: 50 }, (_, i) => i + 1);
     const availableSeats = totalSeats.filter((seat) => !data.includes(seat));
     return availableSeats;
+  }
+
+  async updateStatus(seat: Seat) {
+    return await this.seatsRepository.update(seat);
   }
 }

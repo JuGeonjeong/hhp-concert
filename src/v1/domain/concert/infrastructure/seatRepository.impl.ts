@@ -42,6 +42,19 @@ export class SeatRepositoryImpl implements SeatRepository {
     return await this.manager.findOne(Seat, { where: { seatNumber } });
   }
 
+  async findOne(id: number): Promise<Seat> {
+    return await this.manager.findOne(Seat, {
+      where: {
+        id,
+      },
+    });
+  }
+
+  async update(seat: Seat): Promise<Seat> {
+    seat.status = SeatStatusEnum.RESERVED;
+    return await this.manager.save(seat);
+  }
+
   async findSeats(scheduleId: number): Promise<Seat[]> {
     const now = dayjs().toDate();
     return await this.manager.find(Seat, {

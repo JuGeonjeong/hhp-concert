@@ -17,4 +17,9 @@ export class PointRepositoryImpl implements PointRepository {
   async findOne(userId: number): Promise<Point> {
     return await this.manager.findOne(Point, { where: { userId } });
   }
+
+  async usePoint(point: Point, amount: number): Promise<Point> {
+    point.amount = amount;
+    return await this.manager.save(point);
+  }
 }

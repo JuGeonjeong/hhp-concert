@@ -42,6 +42,10 @@ export class QueueService {
     }
   }
 
+  async findAndUpdate(uuid) {
+    return await this.queueRepository.findAndUpdate(uuid);
+  }
+
   async findStatus(uuid) {
     const queue = await this.queueRepository.findOne(uuid);
     const status = queue.status;

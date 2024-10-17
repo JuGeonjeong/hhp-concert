@@ -6,6 +6,9 @@ export default class User extends BaseEntities {
   @Column({ comment: '이메일' })
   email: string;
 
+  @Column({ comment: '대기열 uuid' })
+  uuid: string;
+
   constructor(partial: Partial<User>) {
     super();
     Object.assign(this, partial);

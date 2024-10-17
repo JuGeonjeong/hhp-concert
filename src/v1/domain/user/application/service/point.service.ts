@@ -21,7 +21,20 @@ export class PointService {
     }
     return await this.pointRepository.charge(userId, point, user);
   }
+
   async findPoint(userId: number): Promise<Point> {
+    return await this.pointRepository.findOne(userId);
+  }
+
+  async isPoint(userId: number, price: number): Promise<Point> {
+    const point = await this.findPoint(userId);
+    if (point.amount < price)
+      throw new BadRequestException(
+        `보유 포인트를 초과했습니다. 보유포인트: ${point.amount}`,
+      );
+    const calcPoint = point.amount - price;
+    await this.pointRepository.usePoint(point, calcPoint);
+
     return await this.pointRepository.findOne(userId);
   }
 }

@@ -15,5 +15,5 @@ export const getDatabaseConfig = (
   charset: 'utf8mb4',
   entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
 });
