@@ -1,5 +1,6 @@
-import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
+// import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
 import { Column, Entity } from 'typeorm';
+import { BaseEntities } from '../../../common/typeorm/base.entity';
 
 export enum QueueStatusEnum {
   // 대기
@@ -11,7 +12,7 @@ export enum QueueStatusEnum {
 }
 
 @Entity({ name: 'queue' })
-export class Queue extends BaseEntities {
+export default class Queue extends BaseEntities {
   @Column({ unique: true, comment: '사용자전달아이디' })
   uuid: string;
 

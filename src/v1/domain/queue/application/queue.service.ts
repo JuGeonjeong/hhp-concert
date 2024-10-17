@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { Queue, QueueStatusEnum } from '../domain/queue.entity';
+import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 import { QueueRepository } from '../domain/queue.repository';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 

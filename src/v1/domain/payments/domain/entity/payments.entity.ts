@@ -1,7 +1,8 @@
-import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
+// import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
 import { Column, JoinColumn } from 'typeorm';
+import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
-export default class Payment extends BaseEntities {
+export default class Payments extends BaseEntities {
   @Column('int')
   @JoinColumn({
     name: 'userId',
@@ -16,7 +17,10 @@ export default class Payment extends BaseEntities {
   })
   seatId: number;
 
-  constructor(partial: Partial<Payment>) {
+  @Column()
+  status: string;
+
+  constructor(partial: Partial<Payments>) {
     super();
     Object.assign(this, partial);
   }

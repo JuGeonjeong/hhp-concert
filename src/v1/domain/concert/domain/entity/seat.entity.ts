@@ -1,5 +1,6 @@
-import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
+// import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
 import { Column, Entity, JoinColumn } from 'typeorm';
+import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 export enum SeatStatusEnum {
   // 결제 가능함
@@ -39,8 +40,8 @@ export default class Seat extends BaseEntities {
   })
   userId: number;
 
-  constructor(partial: Partial<Seat>) {
-    super();
-    Object.assign(this, partial);
-  }
+  // constructor(partial: Partial<Seat>) {
+  //   super();
+  //   Object.assign(this, partial);
+  // }
 }

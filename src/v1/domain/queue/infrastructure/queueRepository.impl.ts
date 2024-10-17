@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { QueueRepository } from '../domain/queue.repository';
-import { Queue, QueueStatusEnum } from '../domain/queue.entity';
+import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,5 +1,6 @@
-import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
+// import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
 import { Column, Entity } from 'typeorm';
+import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 @Entity({ name: 'concert' })
 export default class Concert extends BaseEntities {
@@ -10,8 +11,8 @@ export default class Concert extends BaseEntities {
   // @OneToMany(() => Schedule, (schedule) => schedule.concert)
   // schedules: Schedule[];
 
-  constructor(partial: Partial<Concert>) {
-    super();
-    Object.assign(this, partial);
-  }
+  // constructor(partial: Partial<Concert>) {
+  //   super();
+  //   Object.assign(this, partial);
+  // }
 }

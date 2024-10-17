@@ -4,7 +4,6 @@ import { UserService } from './application/service/user.service';
 import User from './domain/entity/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import Point from './domain/entity/point.entity';
-import { PointHistory } from './domain/entity/pointHistory.entity';
 import { UserRepositoryImpl } from './infrastructure/database/userRepository.impl';
 import { CreateUserUsecase } from './application/usecase/createUser.usecase';
 import { PointChargeUsecase } from './application/usecase/pointCharge.usecase';
@@ -13,7 +12,7 @@ import { PointRepositoryImpl } from './infrastructure/database/pointRepository.i
 import { FindPointUsecase } from './application/usecase/findPoint.usecase';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Point, PointHistory])],
+  imports: [TypeOrmModule.forFeature([User, Point])],
   controllers: [UserController],
   providers: [
     {

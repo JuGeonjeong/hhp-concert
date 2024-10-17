@@ -7,13 +7,13 @@ import {
 
 export class BaseEntities {
   @PrimaryGeneratedColumn({ type: 'int', comment: '고유키' })
-  readonly id: number;
+  id: number;
 
   @CreateDateColumn({ type: 'datetime', comment: '생성일' })
-  readonly createdAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ type: 'datetime', comment: '수정일' })
-  readonly updatedAt: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn({
     type: 'datetime',
@@ -21,5 +21,5 @@ export class BaseEntities {
     nullable: true,
     default: null,
   })
-  readonly deletedAt: Date;
+  deletedAt: Date;
 }
