@@ -2,7 +2,7 @@
 import { Column, JoinColumn } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
-export default class Payments extends BaseEntities {
+export default class Payment extends BaseEntities {
   @Column('int')
   @JoinColumn({
     name: 'userId',
@@ -20,7 +20,7 @@ export default class Payments extends BaseEntities {
   @Column()
   status: string;
 
-  constructor(partial: Partial<Payments>) {
+  constructor(partial: Partial<Payment>) {
     super();
     Object.assign(this, partial);
   }

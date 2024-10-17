@@ -13,10 +13,10 @@ import { UserService } from '../user/application/service/user.service';
 import { QueueService } from '../queue/application/queue.service';
 import { QueueRepositoryImpl } from '../queue/infrastructure/queueRepository.impl';
 import { UserRepositoryImpl } from '../user/infrastructure/database/userRepository.impl';
-import Payments from './domain/entity/payments.entity';
+import Payment from './domain/entity/payment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Payments])],
+  imports: [TypeOrmModule.forFeature([Payment])],
   controllers: [PaymentController],
   providers: [
     {

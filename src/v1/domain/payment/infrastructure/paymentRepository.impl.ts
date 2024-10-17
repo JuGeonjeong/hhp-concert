@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { PaymentRepository } from '../domain/repository/payment.repository';
-import Payment from '../domain/entity/payments.entity';
+import Payment from '../domain/entity/payment.entity';
 
 @Injectable()
 export class PaymentRepositoryImpl implements PaymentRepository {
