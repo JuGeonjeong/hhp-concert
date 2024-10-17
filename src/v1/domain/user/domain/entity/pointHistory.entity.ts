@@ -1,18 +1,17 @@
 import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { Point } from './point.entity';
+import { Column, Entity, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'pointHistory' })
 export class PointHistory extends BaseEntities {
   @Column({ type: 'int', comment: '보유금' })
   amount: number;
 
-  @ManyToOne(() => Point, (point) => point.pointHistory, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+  @Column('int')
+  @JoinColumn({
+    name: 'pointId',
+    foreignKeyConstraintName: 'fk_seat_pointId',
   })
-  @JoinColumn()
-  point: Point;
+  pointId: number;
 
   constructor(partial: Partial<PointHistory>) {
     super();

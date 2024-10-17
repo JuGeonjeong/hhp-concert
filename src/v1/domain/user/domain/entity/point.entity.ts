@@ -1,24 +1,17 @@
 import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-import { User } from './user.entity';
-import { PointHistory } from './pointHistory.entity';
+import { Column, Entity, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'point' })
-export class Point extends BaseEntities {
+export default class Point extends BaseEntities {
   @Column('int')
   amount: number;
 
-  @OneToOne(() => Point, (point) => point.user, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+  @Column('int')
+  @JoinColumn({
+    name: 'userId',
+    foreignKeyConstraintName: 'fk_seat_userId',
   })
-  @JoinColumn()
-  user: User;
-
-  @OneToMany(() => PointHistory, (pointHistory) => pointHistory.point, {
-    cascade: true,
-  })
-  pointHistory: PointHistory[];
+  userId: number;
 
   constructor(partial: Partial<Point>) {
     super();

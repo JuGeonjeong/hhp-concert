@@ -1,28 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../../domain/entity/user.entity';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
+import User from '../../domain/entity/user.entity';
 import { UserRepository } from '../../domain/repository/userRepository';
-import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
-    return user;
+  async create(body): Promise<User> {
+    const user = this.manager.create(User, body);
+    return await this.manager.save(user);
   }
 
-  async save(user: User): Promise<User> {
-    return await this.userRepository.save(user);
+  async findOne(id): Promise<User> {
+    return await this.manager.findOne(User, { where: { id } });
   }
 
   async existsByEmail(email: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.manager.findOne(User, { where: { email } });
     return !!user;
   }
 }

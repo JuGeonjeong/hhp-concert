@@ -10,7 +10,7 @@ import {
 import { ResponseSuccessDto } from 'src/v1/common/dto/responseSuccess.dto';
 import { AvailableDates } from '../../application/usecase/availableDates.usecase';
 import { AvailableSeats } from '../../application/usecase/availableSeats.usecase';
-import { ResDatesDto } from '../dto/res/res-dates.dto';
+import { ResDatesDto } from '../dto/res/resDates.dto';
 import { TakeSeat } from '../../application/usecase/takeSeat.usecase';
 import { SeatReservDto } from '../dto/req/seatReserv.dto';
 
