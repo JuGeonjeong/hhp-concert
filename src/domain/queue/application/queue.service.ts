@@ -29,7 +29,7 @@ export class QueueService {
     );
   }
 
-  async findOne(uuid) {
+  async findOne(uuid): Promise<Queue> {
     const queue = await this.queueRepository.findOne(uuid);
     if (queue) {
       if (queue.status === QueueStatusEnum.WAIT) {
@@ -42,8 +42,8 @@ export class QueueService {
     }
   }
 
-  async findAndUpdate(uuid) {
-    return await this.queueRepository.findAndUpdate(uuid);
+  async update(queue: Queue, data: Partial<Queue>): Promise<Queue> {
+    return await this.queueRepository.update(queue, data);
   }
 
   async findStatus(uuid) {
@@ -66,7 +66,7 @@ export class QueueService {
     return await this.queueRepository.findStatusEnter();
   }
 
-  async removeQueue(queue: Queue): Promise<Queue> {
-    return await this.queueRepository.remove(queue);
+  async removeQueue(queue: Queue, data: Partial<Queue>): Promise<Queue> {
+    return await this.queueRepository.update(queue, data);
   }
 }

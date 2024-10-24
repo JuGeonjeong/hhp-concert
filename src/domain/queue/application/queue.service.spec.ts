@@ -100,14 +100,15 @@ describe('QueueService', () => {
     });
   });
 
-  describe('findAndUpdate', () => {
+  describe('update', () => {
     it('대기열을 업데이트 해야 한다', async () => {
       const queue = new Queue();
-      jest.spyOn(queueRepository, 'findAndUpdate').mockResolvedValue(queue);
+      const data = { status: QueueStatusEnum.OUT };
+      jest.spyOn(queueRepository, 'update').mockResolvedValue(queue);
 
-      const result = await queueService.findAndUpdate('test-uuid');
+      const result = await queueService.update(queue, data);
 
-      expect(queueRepository.findAndUpdate).toHaveBeenCalledWith('test-uuid');
+      expect(queueRepository.update).toHaveBeenCalledWith(queue);
       expect(result).toEqual(queue);
     });
   });

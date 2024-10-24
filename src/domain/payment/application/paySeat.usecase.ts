@@ -4,6 +4,7 @@ import { PointService } from '../../user/application/service/point.service';
 import { QueueService } from '../../queue/application/queue.service';
 import { UserService } from '../../user/application/service/user.service';
 import { ConcertService } from 'src/domain/concert/application/service/concert.service';
+import { QueueStatusEnum } from 'src/domain/queue/domain/queue.entity';
 
 export class PaySeatUsecase {
   constructor(
@@ -29,7 +30,8 @@ export class PaySeatUsecase {
     // 좌석 상태값 변경
     await this.concertService.updateStatus(seat);
     // 대기열 토큰만료
-    await this.queueService.findAndUpdate(user.uuid);
+    const queue = await this.queueService.findOne(user.uuid);
+    await this.queueService.update(queue, { status: QueueStatusEnum.OUT });
     // payment 생성
     return await this.paymentService.create(userId, seatId);
   }

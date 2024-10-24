@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { QueueService } from './queue.service';
-import Queue from '../domain/queue.entity';
+import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 
 export class OutTokenUsecase {
   constructor(
@@ -11,7 +11,9 @@ export class OutTokenUsecase {
   async update(token: Queue): Promise<Queue> {
     const { uuid } = token;
     const queue = await this.queueService.findOne(uuid);
-    const update = await this.queueService.removeQueue(queue);
+    const update = await this.queueService.update(queue, {
+      status: QueueStatusEnum.OUT,
+    });
     return update;
   }
 }

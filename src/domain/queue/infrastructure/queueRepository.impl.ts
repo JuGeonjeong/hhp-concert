@@ -22,13 +22,9 @@ export class QueueRepositoryImpl implements QueueRepository {
     return await this.manager.findOne(Queue, { where: { uuid } });
   }
 
-  async findAndUpdate(uuid: string): Promise<Queue> {
-    const queue = await this.manager.findOne(Queue, { where: { uuid } });
-    if (queue) {
-      queue.status = QueueStatusEnum.OUT;
-      return await this.manager.save(queue);
-    }
-    return null;
+  async update(queue: Queue, data: Partial<Queue>): Promise<Queue> {
+    Object.assign(queue, data);
+    return await this.manager.save(queue);
   }
 
   async findStatusEnter(): Promise<Queue> {
@@ -42,12 +38,5 @@ export class QueueRepositoryImpl implements QueueRepository {
     return await this.manager.count(Queue, {
       where: { status: QueueStatusEnum.WAIT },
     });
-  }
-
-  async remove(queue: Queue): Promise<Queue> {
-    queue.status = QueueStatusEnum.OUT;
-    await this.manager.save(queue);
-
-    return queue;
   }
 }
