@@ -1,23 +1,10 @@
-import { Module, ValidationPipe } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { DomainModule } from './domain/domain.module';
-import { MysqlDataSource } from './common/config/database.config';
-import { APP_PIPE } from '@nestjs/core';
+import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    DomainModule,
-    TypeOrmModule.forRootAsync({
-      useFactory: async () => MysqlDataSource.options,
-    }),
-  ],
+  imports: [],
   controllers: [AppController],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
