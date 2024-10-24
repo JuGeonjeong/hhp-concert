@@ -65,4 +65,8 @@ export class QueueService {
   async findStatusEnter() {
     return await this.queueRepository.findStatusEnter();
   }
+
+  async removeQueue(queue: Queue): Promise<Queue> {
+    return await this.queueRepository.remove(queue);
+  }
 }

@@ -7,6 +7,7 @@ import { QueueService } from './application/queue.service';
 import { CreateTokenUsecase } from './application/createToken.usecase';
 import { CheckTokenUsecase } from './application/checkToken.usecase';
 import { CookieAdapter } from './interface/adapter/Cookie.adapter';
+import { OutTokenUsecase } from './application/outToken.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Queue])],
@@ -19,6 +20,7 @@ import { CookieAdapter } from './interface/adapter/Cookie.adapter';
     QueueService,
     CreateTokenUsecase,
     CheckTokenUsecase,
+    OutTokenUsecase,
     CookieAdapter,
   ],
 })

@@ -6,4 +6,5 @@ export interface QueueRepository {
   findStatusEnter(): Promise<Queue>;
   waitingCount(): Promise<number>;
   findAndUpdate(uuid: string): Promise<Queue>;
+  remove(queue: Queue): Promise<Queue>;
 }

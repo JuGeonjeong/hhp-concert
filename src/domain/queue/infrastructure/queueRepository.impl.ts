@@ -43,4 +43,11 @@ export class QueueRepositoryImpl implements QueueRepository {
       where: { status: QueueStatusEnum.WAIT },
     });
   }
+
+  async remove(queue: Queue): Promise<Queue> {
+    queue.status = QueueStatusEnum.OUT;
+    await this.manager.save(queue);
+
+    return queue;
+  }
 }
