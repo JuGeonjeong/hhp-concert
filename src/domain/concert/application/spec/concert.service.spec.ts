@@ -124,13 +124,13 @@ describe('ConcertService', () => {
       expect(result).toEqual(exSeat);
     });
 
-    it('좌석이 없으면 취소하지 않습니다', async () => {
+    it('좌석이 없으면 취소할 수 없다.', async () => {
       const seatDto = { seatNumber: 1 };
       jest.spyOn(seatRepository, 'exSeat').mockResolvedValue(null);
 
       const result = await concertService.cancelSeat(seatDto);
 
-      expect(seatRepository.exSeat).toHaveBeenCalledWith(seatDto);
+      expect(seatRepository.exSeat).toHaveBeenCalledWith(seatDto.seatNumber);
       expect(seatRepository.cancel).not.toHaveBeenCalled();
       expect(result).toBeNull();
     });
