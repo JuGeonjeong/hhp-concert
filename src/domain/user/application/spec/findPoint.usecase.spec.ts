@@ -34,7 +34,7 @@ describe('FindPointUsecase', () => {
     userService = module.get<UserService>(UserService);
   });
 
-  it('should be defined', () => {
+  it('', () => {
     expect(findPointUsecase).toBeDefined();
   });
 

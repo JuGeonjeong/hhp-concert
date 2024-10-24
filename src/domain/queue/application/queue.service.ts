@@ -2,7 +2,7 @@ import { sign } from 'jsonwebtoken';
 import { QueueRepository } from '../domain/queue.repository';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import Queue, { QueueStatusEnum } from '../domain/queue.entity';
-import { Cron, CronExpression } from '@nestjs/schedule';
+// import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class QueueService {
@@ -76,10 +76,10 @@ export class QueueService {
     return await this.queueRepository.ghostQueue();
   }
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  // @Cron(CronExpression.EVERY_MINUTE)
   async joinQueue() {
     // 5명 제한
-    const maxJoiner = 5;
+    // const maxJoiner = 5;
     // status.join -> 10분간 행동없으면 아웃
     const ghostJoiner = await this.ghostQueue();
     return ghostJoiner;

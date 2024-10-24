@@ -4,6 +4,7 @@ import { PointService } from '../service/point.service';
 import { UserService } from '../service/user.service';
 import User from '../../domain/entity/user.entity';
 import Point from '../../domain/entity/point.entity';
+import { Mutex } from 'async-mutex';
 
 describe('PointChargeUsecase', () => {
   let pointChargeUsecase: PointChargeUsecase;
@@ -34,7 +35,7 @@ describe('PointChargeUsecase', () => {
     userService = module.get<UserService>(UserService);
   });
 
-  it('정의되어 있어야 한다', () => {
+  it('', () => {
     expect(pointChargeUsecase).toBeDefined();
   });
 
@@ -50,9 +51,27 @@ describe('PointChargeUsecase', () => {
 
       const result = await pointChargeUsecase.charge(userId, points);
 
-      expect(userService.findOne).toHaveBeenCalledWith(userId); // userService.findOne이 호출되었는지 확인
-      expect(pointService.charge).toHaveBeenCalledWith(userId, points, user); // pointService.charge가 호출되었는지 확인
-      expect(result).toEqual({ user, point }); // 결과가 예상한 값과 일치하는지 확인
+      expect(userService.findOne).toHaveBeenCalledWith(userId);
+      expect(pointService.charge).toHaveBeenCalledWith(userId, points, user);
+      expect(result).toEqual({ user, point });
+    });
+
+    it('동시성 제어', async () => {
+      const mutex = new Mutex();
+      jest.spyOn(mutex, 'runExclusive');
+
+      const userId = 1;
+      const points = 100;
+      const mockUser = new User();
+      const mockPoint = new Point();
+
+      jest.spyOn(userService, 'findOne').mockResolvedValue(mockUser);
+      jest.spyOn(pointService, 'charge').mockResolvedValue(mockPoint);
+
+      const result = await pointChargeUsecase.charge(userId, points);
+
+      expect(result).toEqual({ user: mockUser, point: mockPoint });
+      expect(mutex.runExclusive).toHaveBeenCalled();
     });
   });
 });
