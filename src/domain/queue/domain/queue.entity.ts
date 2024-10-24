@@ -1,6 +1,6 @@
 // import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
+import { BaseEntities } from 'src/common/typeorm/base.entity';
 import { Column, Entity } from 'typeorm';
-import { BaseEntities } from '../../../common/typeorm/base.entity';
 
 export enum QueueStatusEnum {
   // 대기

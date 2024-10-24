@@ -56,7 +56,12 @@ export class ConcertService {
   }
 
   async findOne(id) {
-    return await this.seatsRepository.findOne(id);
+    const data = await this.seatsRepository.findOne(id);
+    if (!data) {
+      throw new BadRequestException(`없는 좌석 입니다. id: ${id}`);
+    }
+    console.log(data);
+    return data;
   }
 
   async findSeats(id: number) {

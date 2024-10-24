@@ -14,6 +14,7 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI, // URI에 버전을 추가하는 방식
   });
+
   await app.listen(3000);
 }
 bootstrap();

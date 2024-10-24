@@ -31,7 +31,10 @@ export function setupSwagger(app: INestApplication): void {
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document, {
-    swaggerOptions: { defaultModelsExpandDepth: 0, docExpansion: 'none' },
+    swaggerOptions: {
+      defaultModelsExpandDepth: 0,
+      // , docExpansion: 'none'
+    },
     customSiteTitle: process.env.PROJECT_NAME,
   });
 }

@@ -6,9 +6,10 @@ import { ResTokenDto } from '../dto/resToken.dto';
 import { CheckTokenUsecase } from '../../application/checkToken.usecase';
 import { CookieAdapter } from '../adapter/Cookie.adapter';
 import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Waiting-queue')
+@ApiBearerAuth('JWT-auth')
 @Controller('waiting-queue')
 export class QueueController {
   constructor(
@@ -27,15 +28,15 @@ export class QueueController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<ResponseSuccessDto<any>> {
     const data = await this.createTokenUseCase.create();
-    this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
+    await this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
     return new ResponseSuccessDto<any>({ data: new ResTokenDto(data.queue) });
   }
 
   @Get('check')
   @HttpCode(200)
   @ApiOperation({
-    summary: '로그인',
-    description: '로그인 합니다.',
+    summary: '대기열 확인',
+    description: '대기열 확인 합니다.',
   })
   async checkToken(
     // bearer token 유무 확인

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import User from '../../domain/entity/user.entity';
 import { UserRepository } from '../../domain/repository/userRepository';
 
@@ -14,7 +14,11 @@ export class UserService {
   }
 
   async findOne(userId): Promise<User> {
-    return await this.userRepository.findOne(userId);
+    const data = await this.userRepository.findOne(userId);
+    if (!data) {
+      throw new BadRequestException(`없는 유저 입니다. id: ${userId}`);
+    }
+    return data;
   }
 
   async isEmailTaken(email: string): Promise<boolean> {

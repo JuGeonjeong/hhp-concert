@@ -7,10 +7,10 @@ import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
+    DomainModule,
     TypeOrmModule.forRootAsync({
       useFactory: async () => MysqlDataSource.options,
     }),
-    DomainModule,
   ],
   controllers: [AppController],
   providers: [

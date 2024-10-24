@@ -23,7 +23,11 @@ export class PointService {
   }
 
   async findPoint(userId: number): Promise<Point> {
-    return await this.pointRepository.findOne(userId);
+    const data = await this.pointRepository.findOne(userId);
+    if (!data) {
+      throw new BadRequestException(`보유 포인트가 없습니다.`);
+    }
+    return data;
   }
 
   async isPoint(userId: number, price: number): Promise<Point> {

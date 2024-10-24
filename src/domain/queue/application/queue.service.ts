@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
-import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 import { QueueRepository } from '../domain/queue.repository';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 
 @Injectable()
 export class QueueService {
@@ -23,7 +23,7 @@ export class QueueService {
       },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: '2d',
+        expiresIn: '1d',
         issuer: process.env.JWT_SECRET_KEY,
       },
     );

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QueueService } from './queue.service';
 import { QueueRepository } from '../domain/queue.repository';
-import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 import { BadRequestException } from '@nestjs/common';
+import Queue, { QueueStatusEnum } from '../domain/queue.entity';
 // import { sign } from 'jsonwebtoken';
 
 describe('QueueService', () => {
