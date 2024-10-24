@@ -56,7 +56,7 @@ describe('ConcertService', () => {
 
   describe('findConcert', () => {
     it('콘서트를 찾으면 반환해야 한다.', async () => {
-      const mockConcert = new Concert(); // 가짜 콘서트 엔티티 생성
+      const mockConcert = new Concert();
       jest.spyOn(concertRepository, 'findOne').mockResolvedValue(mockConcert);
 
       const result = await concertService.findConcert(1);
@@ -160,7 +160,6 @@ describe('ConcertService', () => {
     });
 
     // it('빈 좌석을 반환해야 한다.', async () => {
-    //   // const totalSeat = 10
     //   const scheduleId = 1;
     //   const seats = [{ seatNumber: 1 }, { seatNumber: 2 }];
     //   jest.spyOn(seatRepository, 'findSeats').mockResolvedValue(seats);
@@ -187,12 +186,12 @@ describe('ConcertService', () => {
   // ScheduleDomain
   describe('findSchedule', () => {
     it('스케줄을 찾으면 반환해야 한다.', async () => {
-      const mockSchedule = new Schedule(); // 가짜 스케줄 데이터 생성
+      const mockSchedule = new Schedule();
       jest.spyOn(scheduleRepository, 'findOne').mockResolvedValue(mockSchedule);
 
       const result = await concertService.findSchedule(1);
       expect(scheduleRepository.findOne).toHaveBeenCalledWith(1);
-      expect(result).toBeUndefined(); // 서비스 메서드가 값을 반환하지 않음
+      expect(result).toBeUndefined();
     });
 
     it('스케줄이 없으면 예외를 던져야 한다.', async () => {
