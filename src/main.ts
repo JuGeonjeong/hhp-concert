@@ -1,22 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
-import { ValidationPipe } from '@nestjs/common';
-
-// import { ValidationPipe } from '@nestjs/common';
+import { HttpExceptionFilter } from './common/filter/http-exception.filter';
+import { VersioningType } from '@nestjs/common';
+import { setupSwagger } from './common/config/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // ValidationPipe 설정
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true, // 요청 데이터를 DTO 클래스로 자동 변환
-      whitelist: true, // DTO에 정의된 값만 허용
-      forbidNonWhitelisted: true, // 정의되지 않은 값이 있으면 에러 발생
-    }),
-  );
+  setupSwagger(app);
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.use(cookieParser('secretKey'));
 
+  app.enableVersioning({
+    type: VersioningType.URI, // URI에 버전을 추가하는 방식
+  });
   await app.listen(3000);
 }
 bootstrap();
