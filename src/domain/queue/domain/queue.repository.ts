@@ -6,4 +6,5 @@ export interface QueueRepository {
   findStatusEnter(): Promise<Queue>;
   waitingCount(): Promise<number>;
   update(queue: Queue, data: Partial<Queue>): Promise<Queue>;
+  ghostQueue(): Promise<Queue[]>;
 }

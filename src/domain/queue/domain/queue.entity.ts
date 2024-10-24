@@ -16,8 +16,8 @@ export default class Queue extends BaseEntities {
   @Column({ unique: true, comment: '사용자전달아이디' })
   uuid: string;
 
-  @Column({ type: 'datetime', nullable: true, comment: '입장시간' })
-  enteredAt: Date;
+  @Column({ type: 'datetime', nullable: true, comment: '입장 후 활동시간' })
+  activeAt: Date;
 
   //   @IsEnum(QueueStatusEnum)
   @Column({

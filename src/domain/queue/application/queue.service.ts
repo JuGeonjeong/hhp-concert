@@ -2,6 +2,7 @@ import { sign } from 'jsonwebtoken';
 import { QueueRepository } from '../domain/queue.repository';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import Queue, { QueueStatusEnum } from '../domain/queue.entity';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class QueueService {
@@ -15,11 +16,12 @@ export class QueueService {
   }
 
   async createJwt(queue: Queue): Promise<string> {
+    const { uuid, createdAt, activeAt } = queue;
     return sign(
       {
-        uuid: queue.uuid,
-        createdAt: queue.createdAt,
-        enterdAt: queue.enteredAt,
+        uuid,
+        createdAt,
+        activeAt,
       },
       process.env.JWT_SECRET_KEY,
       {
@@ -68,5 +70,22 @@ export class QueueService {
 
   async removeQueue(queue: Queue, data: Partial<Queue>): Promise<Queue> {
     return await this.queueRepository.update(queue, data);
+  }
+
+  async ghostQueue(): Promise<Queue[]> {
+    return await this.queueRepository.ghostQueue();
+  }
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async joinQueue() {
+    // 5명 제한
+    const maxJoiner = 5;
+    // status.join -> 10분간 행동없으면 아웃
+    const ghostJoiner = await this.ghostQueue();
+    return ghostJoiner;
+    // status.join 인원 확인
+    // 대기열 오래된 순서부터 5 - join인원 = 입장수
+    // status 변경
+    // 입장시 유저테이블 생성
   }
 }

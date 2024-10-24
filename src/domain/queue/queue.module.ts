@@ -8,9 +8,10 @@ import { CreateTokenUsecase } from './application/createToken.usecase';
 import { CheckTokenUsecase } from './application/checkToken.usecase';
 import { CookieAdapter } from './interface/adapter/Cookie.adapter';
 import { OutTokenUsecase } from './application/outToken.usecase';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Queue])],
+  imports: [ScheduleModule.forRoot(), TypeOrmModule.forFeature([Queue])],
   controllers: [QueueController],
   providers: [
     {
