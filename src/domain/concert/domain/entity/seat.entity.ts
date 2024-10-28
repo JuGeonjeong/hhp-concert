@@ -1,4 +1,3 @@
-// import { BaseEntities } from 'src/v1/common/typeorm/base.entity';
 import { Column, Entity, JoinColumn } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 

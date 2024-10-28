@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { PointService } from '../service/point.service';
 import { UserService } from '../service/user.service';
+import { Mutex } from 'async-mutex';
 
 export class PointChargeUsecase {
   constructor(
@@ -11,8 +12,11 @@ export class PointChargeUsecase {
   ) {}
 
   async charge(userId: number, points: number) {
-    const user = await this.userService.findOne(userId);
-    const point = await this.pointService.charge(userId, points, user);
-    return { user, point };
+    const mutex = new Mutex();
+    return mutex.runExclusive(async () => {
+      const user = await this.userService.findOne(userId);
+      const point = await this.pointService.charge(userId, points, user);
+      return { user, point };
+    });
   }
 }
