@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 interface ISuccess<T> {
   readonly message?: string;
   readonly data?: T;
+  readonly statusCode?: number;
 }
 
 export class baseResponse {
@@ -18,7 +19,7 @@ export class ResponseSuccessDto<T> extends baseResponse {
 
   constructor(data?: ISuccess<T>) {
     super();
-    this.statusCode = 200;
+    this.statusCode = data.statusCode;
     this.message = data?.message ?? 'success';
     this.data = data?.data;
   }

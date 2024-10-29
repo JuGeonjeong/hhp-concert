@@ -1,6 +1,8 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import User from '../../domain/entity/user.entity';
 import { UserRepository } from '../../domain/repository/userRepository';
+import { NotFoundException404 } from 'src/common/exception/not.fount.exception.404';
+// import { ResourceNotFoundException } from 'src/common/exception/not.found.exception';
 
 @Injectable()
 export class UserService {
@@ -15,9 +17,8 @@ export class UserService {
 
   async findOne(userId): Promise<User> {
     const data = await this.userRepository.findOne(userId);
-    if (!data) {
-      throw new BadRequestException(`없는 유저 입니다. id: ${userId}`);
-    }
+    if (!data)
+      throw new NotFoundException404(`없는 유저 입니다. id: ${userId}`);
     return data;
   }
 

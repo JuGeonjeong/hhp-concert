@@ -1,20 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
-import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 import { VersioningType } from '@nestjs/common';
 import { setupSwagger } from './common/config/swagger';
+import { LoggerService } from './common/logger/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+
+  app.useLogger(new LoggerService());
   setupSwagger(app);
-  app.useGlobalFilters(new HttpExceptionFilter());
   app.use(cookieParser('secretKey'));
 
   app.enableVersioning({
-    type: VersioningType.URI, // URI에 버전을 추가하는 방식
+    type: VersioningType.URI,
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

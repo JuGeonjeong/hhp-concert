@@ -68,11 +68,8 @@ export class UserController {
   @ApiOperation({ summary: '포인트 조회', description: '포인트 조회 합니다.' })
   async findPoints(
     @Query('userId', ParseIntPipe) userId: number,
-  ): Promise<ResponseSuccessDto<any>> {
+  ): Promise<ResPointDto> {
     const data = await this.findPointUsecase.findOne(userId);
-    console.log(data);
-    return new ResponseSuccessDto<any>({
-      data: new ResPointDto(data.user, data.point),
-    });
+    return new ResPointDto(data.user, data.point);
   }
 }

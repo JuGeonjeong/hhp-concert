@@ -22,7 +22,7 @@ export function setupSwagger(app: INestApplication): void {
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
-        name: 'JWT',
+        name: 'Access JWT',
         description: 'Enter JWT token',
       },
       'JWT-auth',
@@ -30,7 +30,7 @@ export function setupSwagger(app: INestApplication): void {
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api-docs', app, document, {
+  SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       defaultModelsExpandDepth: 0,
       // , docExpansion: 'none'
