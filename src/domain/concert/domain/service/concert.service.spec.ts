@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConcertService } from '../service/concert.service';
-import { ConcertRepository } from '../../domain/repository/concertRepository';
-import { ScheduleRepository } from '../../domain/repository/scheduleRepository';
+import { ConcertService } from './concert.service';
+import { ConcertRepository } from '../repository/concertRepository';
+import { ScheduleRepository } from '../repository/scheduleRepository';
 import { BadRequestException } from '@nestjs/common';
-import Concert from '../../domain/entity/concert.entity';
-import Schedule from '../../domain/entity/schedule.entity';
-import { SeatRepository } from '../../domain/repository/seatRepository';
-import Seat from '../../domain/entity/seat.entity';
+import Concert from '../entity/concert.entity';
+import Schedule from '../entity/schedule.entity';
+import { SeatRepository } from '../repository/seatRepository';
+import Seat from '../entity/seat.entity';
 
 describe('ConcertService', () => {
   let concertService: ConcertService;

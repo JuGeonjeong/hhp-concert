@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { PointService } from '../service/point.service';
-import { UserService } from '../service/user.service';
+import { PointService } from '../../domain/service/point.service';
+import { UserService } from '../../domain/service/user.service';
 
 export class FindPointUsecase {
   constructor(

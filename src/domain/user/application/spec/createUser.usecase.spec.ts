@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserUsecase } from '../usecase/createUser.usecase';
-import { UserService } from '../service/user.service';
+import { UserService } from '../../domain/service/user.service';
 import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 import User from '../../domain/entity/user.entity';
 

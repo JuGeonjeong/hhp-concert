@@ -7,7 +7,7 @@ import { ConcertController } from './interface/controller/concert.controller';
 import { ConcertRepositoryImpl } from './infrastructure/concertRepository.impl';
 import { ScheduleRepositoryImpl } from './infrastructure/scheduleRepository.impl';
 import { SeatRepositoryImpl } from './infrastructure/seatRepository.impl';
-import { ConcertService } from './application/service/concert.service';
+import { ConcertService } from './domain/service/concert.service';
 import { AvailableDatesUsecase } from './application/usecase/availableDates.usecase';
 import { AvailableSeatsUsecase } from './application/usecase/availableSeats.usecase';
 import { TakeSeatUsecase } from './application/usecase/takeSeat.usecase';

@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
-import { QueueRepository } from '../domain/queue.repository';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import Queue, { QueueStatusEnum } from '../domain/queue.entity';
+import { QueueRepository } from '../repository/queue.repository';
+import Queue, { QueueStatusEnum } from '../entity/queue.entity';
 // import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()

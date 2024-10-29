@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PaymentRepository } from '../domain/repository/payment.repository';
+import { PaymentRepository } from '../repository/payment.repository';
 
 @Injectable()
 export class PaymentService {
