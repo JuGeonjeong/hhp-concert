@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CheckTokenUsecase } from './checkToken.usecase';
-import { QueueService } from './queue.service';
+import { CheckTokenUsecase } from '../usecase/checkToken.usecase';
 import { BadRequestException } from '@nestjs/common';
+import { QueueService } from '../../domain/service/queue.service';
 
 describe('CheckTokenUsecase', () => {
   let checkTokenUsecase: CheckTokenUsecase;

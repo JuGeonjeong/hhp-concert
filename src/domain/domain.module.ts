@@ -8,7 +8,7 @@ import Payment from './payment/domain/entity/payment.entity';
 import User from './user/domain/entity/user.entity';
 import Concert from './concert/domain/entity/concert.entity';
 import Seat from './concert/domain/entity/seat.entity';
-import Queue from './queue/domain/queue.entity';
+import Queue from './queue/domain/entity/queue.entity';
 
 @Module({
   imports: [

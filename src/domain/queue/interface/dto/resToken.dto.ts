@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import Queue from '../../domain/queue.entity';
+import Queue from '../../domain/entity/queue.entity';
 
 export class ResTokenDto {
   @ApiProperty({ description: 'uuid' })

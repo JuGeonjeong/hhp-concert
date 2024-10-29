@@ -1,4 +1,4 @@
-import Queue from './queue.entity';
+import Queue from '../entity/queue.entity';
 
 export interface QueueRepository {
   create(): Promise<Queue>;

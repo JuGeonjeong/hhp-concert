@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FindPointUsecase } from '../usecase/findPoint.usecase';
-import { PointService } from '../service/point.service';
-import { UserService } from '../service/user.service';
+import { PointService } from '../../domain/service/point.service';
+import { UserService } from '../../domain/service/user.service';
 import User from '../../domain/entity/user.entity';
 import Point from '../../domain/entity/point.entity';
 

@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { QueueController } from './interface/controller/queue.controller';
-import Queue from './domain/queue.entity';
+import Queue from './domain/entity/queue.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QueueRepositoryImpl } from './infrastructure/queueRepository.impl';
-import { QueueService } from './application/queue.service';
-import { CreateTokenUsecase } from './application/createToken.usecase';
-import { CheckTokenUsecase } from './application/checkToken.usecase';
+import { CreateTokenUsecase } from './application/usecase/createToken.usecase';
+import { CheckTokenUsecase } from './application/usecase/checkToken.usecase';
 import { CookieAdapter } from './interface/adapter/Cookie.adapter';
-import { OutTokenUsecase } from './application/outToken.usecase';
+import { OutTokenUsecase } from './application/usecase/outToken.usecase';
 import { ScheduleModule } from '@nestjs/schedule';
+import { QueueService } from './domain/service/queue.service';
 
 @Module({
   imports: [ScheduleModule.forRoot(), TypeOrmModule.forFeature([Queue])],

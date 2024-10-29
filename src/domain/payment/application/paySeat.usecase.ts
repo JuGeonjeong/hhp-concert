@@ -1,11 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { PaymentService } from './payment.service';
-import { PointService } from '../../user/application/service/point.service';
-import { QueueService } from '../../queue/application/queue.service';
-import { UserService } from '../../user/application/service/user.service';
-import { ConcertService } from '../../..//domain/concert/application/service/concert.service';
-import { QueueStatusEnum } from '../../../domain/queue/domain/queue.entity';
+import { ConcertService } from '../../concert/domain/service/concert.service';
+import { QueueStatusEnum } from '../../queue/domain/entity/queue.entity';
 import { Mutex } from 'async-mutex';
+import { PaymentService } from '../domain/service/payment.service';
+import { UserService } from 'src/domain/user/domain/service/user.service';
+import { PointService } from 'src/domain/user/domain/service/point.service';
+import { QueueService } from 'src/domain/queue/domain/service/queue.service';
 
 export class PaySeatUsecase {
   constructor(

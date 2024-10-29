@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PaySeatUsecase } from './paySeat.usecase';
-import { PaymentService } from './payment.service';
-import { PointService } from '../../user/application/service/point.service';
-import { QueueService } from '../../queue/application/queue.service';
-import { UserService } from '../../user/application/service/user.service';
 import Seat from '../../concert/domain/entity/seat.entity';
 import User from '../../user/domain/entity/user.entity';
 import Point from '../../user/domain/entity/point.entity';
 import Payment from '../domain/entity/payment.entity';
-import { ConcertService } from '../../../domain/concert/application/service/concert.service';
+import { ConcertService } from '../../concert/domain/service/concert.service';
 import { Mutex } from 'async-mutex';
-import Queue, { QueueStatusEnum } from '../../queue/domain/queue.entity';
+import Queue, { QueueStatusEnum } from '../../queue/domain/entity/queue.entity';
+import { PaymentService } from '../domain/service/payment.service';
+import { PointService } from 'src/domain/user/domain/service/point.service';
+import { QueueService } from 'src/domain/queue/domain/service/queue.service';
+import { UserService } from 'src/domain/user/domain/service/user.service';
 
 describe('PaySeatUsecase', () => {
   let paySeatUsecase: PaySeatUsecase;

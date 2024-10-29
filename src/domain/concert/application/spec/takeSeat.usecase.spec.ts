@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TakeSeatUsecase } from '../usecase/takeSeat.usecase';
+import { TakeSeatUsecase } from '../../application/usecase/takeSeat.usecase';
+import { ConcertService } from '../../domain/service/concert.service';
 import Seat from '../../domain/entity/seat.entity';
-import { ConcertService } from '../service/concert.service';
 
 describe('takeSeatUsecase', () => {
   let takeSeatUsecase: TakeSeatUsecase;

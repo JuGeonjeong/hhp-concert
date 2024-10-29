@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
-import { ConcertService } from '../service/concert.service';
-import { AvailableSeatsUsecase } from '../usecase/availableSeats.usecase';
+import { AvailableSeatsUsecase } from '../../application/usecase/availableSeats.usecase';
+import { ConcertService } from '../../domain/service/concert.service';
 
 describe('availableSeatsUsecase', () => {
   let availableSeatsUsecase: AvailableSeatsUsecase;

@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { PointService } from '../service/point.service';
-import { UserService } from '../service/user.service';
 import { Mutex } from 'async-mutex';
+import { PointService } from '../../domain/service/point.service';
+import { UserService } from '../../domain/service/user.service';
 
 export class PointChargeUsecase {
   constructor(

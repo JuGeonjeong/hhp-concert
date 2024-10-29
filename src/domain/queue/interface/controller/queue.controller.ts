@@ -1,13 +1,13 @@
 import { Controller, Get, HttpCode, Post, Put, Res } from '@nestjs/common';
-import { CreateTokenUsecase } from '../../application/createToken.usecase';
+import { CreateTokenUsecase } from '../../application/usecase/createToken.usecase';
 import { Response } from 'express';
 import { ReqToken } from '../decorator/token.decorator';
 import { ResTokenDto } from '../dto/resToken.dto';
-import { CheckTokenUsecase } from '../../application/checkToken.usecase';
+import { CheckTokenUsecase } from '../../application/usecase/checkToken.usecase';
 import { CookieAdapter } from '../adapter/Cookie.adapter';
 import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { OutTokenUsecase } from '../../application/outToken.usecase';
+import { OutTokenUsecase } from '../../application/usecase/outToken.usecase';
 
 @ApiTags('Waiting-queue')
 @ApiBearerAuth('JWT-auth')

@@ -1,4 +1,4 @@
-import { BaseEntities } from '../../../common/typeorm/base.entity';
+import { BaseEntities } from '../../../../common/typeorm/base.entity';
 import { Column, Entity } from 'typeorm';
 
 export enum QueueStatusEnum {

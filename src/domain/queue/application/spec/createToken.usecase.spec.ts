@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateTokenUsecase } from './createToken.usecase';
-import { QueueService } from './queue.service';
-import Queue from '../domain/queue.entity';
+import { CreateTokenUsecase } from '../usecase/createToken.usecase';
+import Queue from '../../domain/entity/queue.entity';
+import { QueueService } from '../../domain/service/queue.service';
 
 describe('CreateTokenUsecase', () => {
   let createTokenUsecase: CreateTokenUsecase;
