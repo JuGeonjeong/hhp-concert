@@ -12,11 +12,14 @@ export enum QueueStatusEnum {
 
 @Entity({ name: 'queue' })
 export default class QueueEntity extends BaseEntities {
-  @Column({ unique: true, comment: '사용자전달아이디', nullable: true })
+  @Column({ unique: true, comment: '사용자전달아이디' })
   uuid: string;
 
-  @Column({ type: 'datetime', nullable: true, comment: '입장 후 활동시간' })
+  @Column({ type: 'datetime', nullable: true, comment: '입장시간' })
   enteredAt: Date;
+
+  @Column({ type: 'datetime', nullable: true, comment: '만료시간' })
+  expiredAt: Date;
 
   //   @IsEnum(QueueStatusEnum)
   @Column({
@@ -27,7 +30,7 @@ export default class QueueEntity extends BaseEntities {
   })
   status: QueueStatusEnum;
 
-  // constructor(partial: Partial<Queue>) {
+  // constructor(partial: Partial<QueueEntity>) {
   //   super();
   //   Object.assign(this, partial);
   // }

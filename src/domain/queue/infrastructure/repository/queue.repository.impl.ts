@@ -14,6 +14,7 @@ export class QueueRepositoryImpl implements QueueRepository {
 
   async create(queue): Promise<Queue> {
     const entity = QueueMapper.toEntity(queue);
+    console.log(entity);
     const queueEntity = await this.manager.save(entity);
     return QueueMapper.toDomain(queueEntity);
   }
@@ -64,7 +65,7 @@ export class QueueRepositoryImpl implements QueueRepository {
         status: QueueStatusEnum.WAIT,
       })
       .orderBy('queue.createdAt', 'ASC')
-      .limit(20)
+      .limit(5)
       .getMany();
 
     return entities.map((entity) => QueueMapper.toDomain(entity));
@@ -74,7 +75,7 @@ export class QueueRepositoryImpl implements QueueRepository {
     const now = new Date();
     const entities = await this.manager
       .createQueryBuilder(QueueEntity, 'queue')
-      .where('DATE_ADD(queue.enteredAt, INTERVAL 10 MINUTE) <= :now', { now })
+      .where('queue.expiredAt <= :now', { now })
       .andWhere('queue.status = :status', {
         status: QueueStatusEnum.ENTER,
       })
