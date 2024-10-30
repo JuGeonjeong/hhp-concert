@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserUsecase } from '../../domain/user/application/usecase/createUser.usecase';
 import { UserService } from '../../domain/user/application/service/user.service';
 import { CreateUserDto } from '../../domain/user/interface/dto/req/createUser.dto';
-import User from '../../domain/user/domain/entity/user.entity';
+import User from '../../domain/user/domain/entity/user';
 
 describe('CreateUserUsecase', () => {
   let createUserUsecase: CreateUserUsecase;

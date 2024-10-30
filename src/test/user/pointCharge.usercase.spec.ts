@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PointChargeUsecase } from '../../domain/user/application/usecase/pointCharge.usecase';
 import { PointService } from '../../domain/user/application/service/point.service';
 import { UserService } from '../../domain/user/application/service/user.service';
-import User from '../../domain/user/domain/entity/user.entity';
-import Point from '../../domain/user/domain/entity/point.entity';
+import User from '../../domain/user/domain/entity/user';
+import Point from '../../domain/user/domain/entity/point';
 import { Mutex } from 'async-mutex';
 
 describe('PointChargeUsecase', () => {

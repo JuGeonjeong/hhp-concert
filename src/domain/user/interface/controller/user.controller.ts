@@ -16,8 +16,8 @@ import { PointChargeDto } from '../dto/req/pointCharge.dto';
 import { FindPointUsecase } from '../../application/usecase/findPoint.usecase';
 import { ResPointDto } from '../dto/res/resPoint.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import User from '../../domain/entity/user.entity';
 import { ApiDataResponse } from 'src/common/api/baseDataResponse';
+import { User } from '../../domain/entity/user';
 
 @ApiTags('User')
 @Controller('user')

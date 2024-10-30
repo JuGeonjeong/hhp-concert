@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PaySeatUsecase } from '../../domain/payment/application/usecase/paySeat.usecase';
 import Seat from '../../domain/concert/domain/entity/seat';
-import User from '../../domain/user/domain/entity/user.entity';
-import Point from '../../domain/user/domain/entity/point.entity';
+import User from '../../domain/user/domain/entity/user';
+import Point from '../../domain/user/domain/entity/point';
 import Payment from '../../domain/payment/domain/entity/payment';
 import { Mutex } from 'async-mutex';
 import Queue, { QueueStatusEnum } from '../../domain/queue/domain/entity/queue';
