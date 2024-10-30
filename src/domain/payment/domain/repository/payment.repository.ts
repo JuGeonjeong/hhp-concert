@@ -1,5 +1,5 @@
-import Payment from '../entity/payment.entity';
+import { Payment } from '../entity/payment';
 
 export interface PaymentRepository {
-  create(userId: number, seatId: number): Promise<Payment>;
+  create(payment: Payment): Promise<Payment>;
 }

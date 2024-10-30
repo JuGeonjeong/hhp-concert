@@ -1,4 +1,4 @@
-import Concert from '../entity/concert.entity';
+import { Concert } from '../entity/concert';
 
 export interface ConcertRepository {
   findOne(id: number): Promise<Concert>;

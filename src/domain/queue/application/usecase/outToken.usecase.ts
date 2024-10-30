@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import Queue, { QueueStatusEnum } from '../../domain/entity/queue.entity';
-import { QueueService } from '../../domain/service/queue.service';
+import { QueueService } from '../service/queue.service';
+import { Queue } from '../../domain/entity/queue';
+import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 
 export class OutTokenUsecase {
   constructor(

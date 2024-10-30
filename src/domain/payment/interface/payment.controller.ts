@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, ParseIntPipe, Query } from '@nestjs/common';
-import { PaySeatUsecase } from '../application/paySeat.usecase';
+import { PaySeatUsecase } from '../application/usecase/paySeat.usecase';
 import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 

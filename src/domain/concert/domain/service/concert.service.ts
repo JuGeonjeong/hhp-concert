@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConcertRepository } from '../repository/concertRepository';
 import { ScheduleRepository } from '../repository/scheduleRepository';
 import { SeatRepository } from '../repository/seatRepository';
-import Seat from '../entity/seat.entity';
+import { Seat } from '../entity/seat';
 
 @Injectable()
 export class ConcertService {

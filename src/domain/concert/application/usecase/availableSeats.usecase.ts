@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ConcertService } from '../../domain/service/concert.service';
+import { ConcertService } from '../service/concert.service';
 
 export class AvailableSeatsUsecase {
   constructor(

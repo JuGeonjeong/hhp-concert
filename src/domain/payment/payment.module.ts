@@ -2,23 +2,23 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import Payment from './domain/entity/payments.entity';
 import { PaymentController } from './interface/payment.controller';
-import { PaySeatUsecase } from './application/paySeat.usecase';
-import { PaymentRepositoryImpl } from './infrastructure/paymentRepository.impl';
-import { SeatRepositoryImpl } from '../concert/infrastructure/seatRepository.impl';
+import { PaySeatUsecase } from './application/usecase/paySeat.usecase';
+import { PaymentRepositoryImpl } from './infrastructure/repository/payment.repository.impl';
 import { PointRepositoryImpl } from '../user/infrastructure/database/pointRepository.impl';
-import { QueueRepositoryImpl } from '../queue/infrastructure/queueRepository.impl';
+import { QueueRepositoryImpl } from '../queue/infrastructure/repository/queue.repository.impl';
 import { UserRepositoryImpl } from '../user/infrastructure/database/userRepository.impl';
-import Payment from './domain/entity/payment.entity';
-import { ConcertService } from '../concert/domain/service/concert.service';
-import { ConcertRepositoryImpl } from '../concert/infrastructure/concertRepository.impl';
-import { ScheduleRepositoryImpl } from '../concert/infrastructure/scheduleRepository.impl';
-import { PaymentService } from './domain/service/payment.service';
-import { PointService } from '../user/domain/service/point.service';
-import { QueueService } from '../queue/domain/service/queue.service';
-import { UserService } from '../user/domain/service/user.service';
+import { PointService } from '../user/application/service/point.service';
+import { QueueService } from '../queue/application/service/queue.service';
+import { UserService } from '../user/application/service/user.service';
+import { PaymentService } from './application/service/payment.service';
+import { ConcertService } from '../concert/application/service/concert.service';
+import { ConcertRepositoryImpl } from '../concert/infrastructure/repository/concert.repository.impl';
+import { ScheduleRepositoryImpl } from '../concert/infrastructure/repository/schedule.repository.impl';
+import { SeatRepositoryImpl } from '../concert/infrastructure/repository/seat.repository.impl';
+import PaymentEntity from './infrastructure/entity/payment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Payment])],
+  imports: [TypeOrmModule.forFeature([PaymentEntity])],
   controllers: [PaymentController],
   providers: [
     {

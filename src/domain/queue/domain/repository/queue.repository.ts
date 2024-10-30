@@ -1,7 +1,7 @@
-import Queue from '../entity/queue.entity';
+import { Queue } from '../entity/queue';
 
 export interface QueueRepository {
-  create(): Promise<Queue>;
+  create(queue: Queue): Promise<Queue>;
   findOne(uuid: string, status?: string): Promise<Queue>;
   findStatusEnter(): Promise<Queue>;
   waitingCount(): Promise<number>;
