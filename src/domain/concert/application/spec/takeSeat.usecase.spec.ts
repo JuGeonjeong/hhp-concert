@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TakeSeatUsecase } from '../../application/usecase/takeSeat.usecase';
+import { TakeSeatUsecase } from '../usecase/takeSeat.usecase';
 import { ConcertService } from '../../domain/service/concert.service';
-import Seat from '../../domain/entity/seat.entity';
+import SeatEntity from '../../infrastructure/entity/seat.typeorm.entity';
 
 describe('takeSeatUsecase', () => {
   let takeSeatUsecase: TakeSeatUsecase;
@@ -34,7 +34,7 @@ describe('takeSeatUsecase', () => {
       const body = { userId: 1, seatNumber: 10, scheduleId: 5 };
 
       jest.spyOn(concertService, 'cancelSeat').mockResolvedValue(null);
-      const mockSeat = new Seat();
+      const mockSeat = new SeatEntity();
       jest.spyOn(concertService, 'create').mockResolvedValue(mockSeat);
 
       const result = await takeSeatUsecase.reserv(body);

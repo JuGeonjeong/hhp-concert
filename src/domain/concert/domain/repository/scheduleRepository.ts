@@ -1,4 +1,4 @@
-import Schedule from '../entity/schedule.entity';
+import Schedule from '../../infrastructure/entity/schedule.typeorm.entity';
 
 export interface ScheduleRepository {
   findOne(id: number): Promise<Schedule>;

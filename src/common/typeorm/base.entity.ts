@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 export class BaseEntities {
-  @PrimaryGeneratedColumn({ type: 'int', comment: '고유키' })
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @CreateDateColumn({ type: 'datetime', comment: '생성일' })

@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 @Entity({ name: 'schedule' })
-export default class Schedule extends BaseEntities {
+export default class ScheduleEntity extends BaseEntities {
   @Column({ type: 'datetime', comment: '일자' })
   date: Date;
 

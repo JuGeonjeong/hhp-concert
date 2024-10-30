@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConcertRepository } from '../repository/concertRepository';
 import { ScheduleRepository } from '../repository/scheduleRepository';
 import { SeatRepository } from '../repository/seatRepository';
-import Seat from '../entity/seat.entity';
+import Seat from '../../infrastructure/entity/seat.typeorm.entity';
 
 @Injectable()
 export class ConcertService {
@@ -26,8 +26,8 @@ export class ConcertService {
   }
 
   // scheduleRepository
-  async findSchedules(concertId: number) {
-    const schedules = await this.scheduleRepository.findSchedules(concertId);
+  async findSchedules(id: number) {
+    const schedules = await this.scheduleRepository.findSchedules(id);
     if (schedules) {
       return schedules;
     } else {

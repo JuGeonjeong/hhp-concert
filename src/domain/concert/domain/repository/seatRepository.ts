@@ -1,4 +1,4 @@
-import Seat from '../entity/seat.entity';
+import Seat from '../../infrastructure/entity/seat.typeorm.entity';
 
 export interface SeatRepository {
   // 임시예약

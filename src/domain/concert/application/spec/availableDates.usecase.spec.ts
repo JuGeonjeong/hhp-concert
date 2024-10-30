@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AvailableDatesUsecase } from '../../application/usecase/availableDates.usecase';
+import { AvailableDatesUsecase } from '../usecase/availableDates.usecase';
 import { BadRequestException } from '@nestjs/common';
 import { ConcertService } from '../../domain/service/concert.service';
 

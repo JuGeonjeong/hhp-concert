@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager, LessThan, MoreThan } from 'typeorm';
-import { SeatRepository } from '../domain/repository/seatRepository';
-import Seat, { SeatStatusEnum } from '../domain/entity/seat.entity';
+import { SeatRepository } from '../../domain/repository/seatRepository';
+import Seat, { SeatStatusEnum } from '../entity/seat.typeorm.entity';
 import * as dayjs from 'dayjs';
 
 @Injectable()

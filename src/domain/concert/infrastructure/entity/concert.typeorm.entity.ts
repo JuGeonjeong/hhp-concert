@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 @Entity({ name: 'concert' })
-export default class Concert extends BaseEntities {
+export default class ConcertEntity extends BaseEntities {
   @Column({ comment: '이름' })
   name: string;
 

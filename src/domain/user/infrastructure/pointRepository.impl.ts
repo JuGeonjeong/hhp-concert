@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
-import { PointRepository } from '../../domain/repository/pointRepository';
-import Point from '../../domain/entity/point.entity';
-import User from '../../domain/entity/user.entity';
+import Point from '../domain/entity/point.entity';
+import User from '../domain/entity/user.entity';
+import { PointRepository } from '../domain/repository/pointRepository';
 
 @Injectable()
 export class PointRepositoryImpl implements PointRepository {

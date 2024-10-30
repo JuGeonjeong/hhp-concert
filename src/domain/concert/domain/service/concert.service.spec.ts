@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConcertService } from './concert.service';
+import { ConcertService } from '../service/concert.service';
 import { ConcertRepository } from '../repository/concertRepository';
 import { ScheduleRepository } from '../repository/scheduleRepository';
 import { BadRequestException } from '@nestjs/common';
-import Concert from '../entity/concert.entity';
-import Schedule from '../entity/schedule.entity';
+import Schedule from '../../infrastructure/entity/schedule.typeorm.entity';
 import { SeatRepository } from '../repository/seatRepository';
-import Seat from '../entity/seat.entity';
+import Seat from '../../infrastructure/entity/seat.typeorm.entity';
+import ConcertEntity from '../../infrastructure/entity/concert.typeorm.entity';
 
 describe('ConcertService', () => {
   let concertService: ConcertService;
@@ -56,7 +56,7 @@ describe('ConcertService', () => {
 
   describe('findConcert', () => {
     it('콘서트를 찾으면 반환해야 한다.', async () => {
-      const mockConcert = new Concert();
+      const mockConcert = new ConcertEntity();
       jest.spyOn(concertRepository, 'findOne').mockResolvedValue(mockConcert);
 
       const result = await concertService.findConcert(1);

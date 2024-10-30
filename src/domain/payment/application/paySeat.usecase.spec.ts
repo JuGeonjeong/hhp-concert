@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PaySeatUsecase } from './paySeat.usecase';
-import Seat from '../../concert/domain/entity/seat.entity';
+import Seat from '../../concert/infrastructure/entity/seat.typeorm.entity';
 import User from '../../user/domain/entity/user.entity';
 import Point from '../../user/domain/entity/point.entity';
 import Payment from '../domain/entity/payment.entity';

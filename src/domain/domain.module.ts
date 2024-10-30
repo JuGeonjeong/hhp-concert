@@ -6,9 +6,9 @@ import { QueueModule } from './queue/queue.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import Payment from './payment/domain/entity/payment.entity';
 import User from './user/domain/entity/user.entity';
-import Concert from './concert/domain/entity/concert.entity';
-import Seat from './concert/domain/entity/seat.entity';
+import Seat from './concert/infrastructure/entity/seat.typeorm.entity';
 import Queue from './queue/domain/entity/queue.entity';
+import Concert from './concert/infrastructure/entity/concert.typeorm.entity';
 
 @Module({
   imports: [

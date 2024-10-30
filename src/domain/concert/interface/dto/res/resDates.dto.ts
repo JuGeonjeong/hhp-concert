@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import * as dayjs from 'dayjs';
-import Schedule from '../../../domain/entity/schedule.entity';
+import Schedule from '../../../infrastructure/entity/schedule.typeorm.entity';
 
 export class ResDatesDto {
   @ApiProperty({ description: '콘서트고유키', example: 1 })

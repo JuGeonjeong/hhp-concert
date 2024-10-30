@@ -6,12 +6,12 @@ export enum SeatStatusEnum {
   AVAILABLE = 'AVAILABLE',
   // 좌석 예약완료
   RESERVED = 'RESERVED',
-  // 좌석 예약완료
+  // 좌석 취소
   CANCEL = 'CANCEL',
 }
 
 @Entity({ name: 'seat' })
-export default class Seat extends BaseEntities {
+export default class SeatEntity extends BaseEntities {
   @Column({ type: 'int', comment: '좌석번호' })
   seatNumber: number;
 
