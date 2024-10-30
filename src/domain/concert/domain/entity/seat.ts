@@ -1,6 +1,6 @@
-import User from 'src/domain/user/domain/entity/user.entity';
 import { Schedule } from './schedule';
 import { SeatStatusEnum } from '../../infrastructure/entity/seat.entity';
+import { User } from 'src/domain/user/domain/entity/user';
 
 export class Seat {
   id: number;

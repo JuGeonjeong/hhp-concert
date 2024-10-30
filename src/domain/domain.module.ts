@@ -4,17 +4,17 @@ import { ConcertModule } from './concert/concert.module';
 import { PaymentModule } from './payment/payment.module';
 import { QueueModule } from './queue/queue.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import User from './user/domain/entity/user.entity';
 import ConcertEntity from './concert/infrastructure/entity/concert.entity';
 import SeatEntity from './concert/infrastructure/entity/seat.entity';
 import PaymentEntity from './payment/infrastructure/entity/payment.entity';
 import QueueEntity from './queue/infrastructure/entity/queue.entity';
+import UserEntity from './user/infrastructure/entity/user.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       PaymentEntity,
-      User,
+      UserEntity,
       ConcertEntity,
       SeatEntity,
       QueueEntity,

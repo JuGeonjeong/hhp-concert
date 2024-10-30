@@ -15,7 +15,7 @@ export class PointChargeUsecase {
     const mutex = new Mutex();
     return mutex.runExclusive(async () => {
       const user = await this.userService.findOne(userId);
-      const point = await this.pointService.charge(userId, points, user);
+      const point = await this.pointService.charge(userId, points);
       return { user, point };
     });
   }

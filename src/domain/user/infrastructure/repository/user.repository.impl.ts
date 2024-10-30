@@ -1,20 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
-import User from '../../domain/entity/user.entity';
 import { UserRepository } from '../../domain/repository/userRepository';
+import { User } from '../../domain/entity/user';
+import { UserMapper } from '../mapper/user.mapper';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
   async create(body): Promise<User> {
-    const user = this.manager.create(User, body);
-    return await this.manager.save(user);
+    const entity = UserMapper.toEntity(body);
+    const userEntity = await this.manager.save(entity);
+    return UserMapper.toDomain(userEntity);
   }
 
   async findOne(id): Promise<User> {
-    return await this.manager.findOne(User, { where: { id } });
+    const entity = await this.manager.findOne(User, { where: { id } });
+    return UserMapper.toDomain(entity);
   }
 
   async existsByEmail(email: string): Promise<boolean> {

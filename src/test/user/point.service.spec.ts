@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PointService } from '../../domain/user/application/service/point.service';
 import { PointRepository } from '../../domain/user/domain/repository/pointRepository';
 import { BadRequestException } from '@nestjs/common';
-import Point from '../../domain/user/domain/entity/point.entity';
-import User from '../../domain/user/domain/entity/user.entity';
+import Point from '../../domain/user/domain/entity/point';
+import User from '../../domain/user/domain/entity/user';
 
 describe('PointService', () => {
   let pointService: PointService;

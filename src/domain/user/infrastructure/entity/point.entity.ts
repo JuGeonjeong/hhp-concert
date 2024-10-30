@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 @Entity({ name: 'point' })
-export default class Point extends BaseEntities {
+export default class PointEntity extends BaseEntities {
   @Column('int')
   amount: number;
 

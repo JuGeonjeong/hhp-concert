@@ -1,7 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import Point from '../../domain/entity/point.entity';
 import { PointRepository } from '../../domain/repository/pointRepository';
-import User from '../../domain/entity/user.entity';
+import { Point } from '../../domain/entity/point';
 
 @Injectable()
 export class PointService {
@@ -10,7 +9,7 @@ export class PointService {
     private readonly pointRepository: PointRepository,
   ) {}
 
-  async charge(userId: number, point: number, user: User): Promise<Point> {
+  async charge(userId: number, point: number): Promise<Point> {
     const exPoint = await this.pointRepository.findOne(userId);
     if (exPoint) {
       if (exPoint.amount <= 100000) {
@@ -19,7 +18,11 @@ export class PointService {
         );
       }
     }
-    return await this.pointRepository.charge(userId, point, user);
+    const pointEntity = new Point({
+      userId,
+      amount: point,
+    });
+    return await this.pointRepository.charge(pointEntity);
   }
 
   async findPoint(userId: number): Promise<Point> {
@@ -37,7 +40,11 @@ export class PointService {
         `보유 포인트를 초과했습니다. 보유포인트: ${point.amount}`,
       );
     const calcPoint = point.amount - price;
-    await this.pointRepository.usePoint(point, calcPoint);
+    const pointEntity = new Point({
+      userId,
+      amount: calcPoint,
+    });
+    await this.pointRepository.usePoint(pointEntity);
 
     return await this.pointRepository.findOne(userId);
   }

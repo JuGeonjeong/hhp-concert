@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from '../../domain/repository/userRepository';
 import { NotFoundException404 } from 'src/common/exception/not.fount.exception.404';
-import { User } from '../../domain/entity/user';
+import { User } from '../entity/user';
 // import { ResourceNotFoundException } from 'src/common/exception/not.found.exception';
 
 @Injectable()
