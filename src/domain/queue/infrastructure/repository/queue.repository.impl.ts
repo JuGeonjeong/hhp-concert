@@ -3,7 +3,7 @@ import { QueueRepository } from '../../domain/repository/queue.repository';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager, LessThan } from 'typeorm';
 import { Queue } from '../../domain/entity/queue';
-import { QueueStatusEnum } from '../entity/queue.entity';
+import QueueEntity, { QueueStatusEnum } from '../entity/queue.entity';
 import { QueueMapper } from '../mapper/queue.mapper';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class QueueRepositoryImpl implements QueueRepository {
   }
 
   async findOne(uuid: string): Promise<Queue> {
-    const entity = await this.manager.findOne(Queue, { where: { uuid } });
+    const entity = await this.manager.findOne(QueueEntity, { where: { uuid } });
     return QueueMapper.toDomain(entity);
   }
 
@@ -31,7 +31,7 @@ export class QueueRepositoryImpl implements QueueRepository {
   }
 
   async findStatusEnter(): Promise<Queue> {
-    const entity = await this.manager.findOne(Queue, {
+    const entity = await this.manager.findOne(QueueEntity, {
       where: { status: QueueStatusEnum.ENTER },
       order: { id: 'DESC' },
     });
@@ -39,7 +39,7 @@ export class QueueRepositoryImpl implements QueueRepository {
   }
 
   async waitingCount(): Promise<number> {
-    return await this.manager.count(Queue, {
+    return await this.manager.count(QueueEntity, {
       where: { status: QueueStatusEnum.WAIT },
     });
   }
@@ -48,12 +48,43 @@ export class QueueRepositoryImpl implements QueueRepository {
     const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
     console.log(tenMinutesAgo);
 
-    const entities = await this.manager.find(Queue, {
+    const entities = await this.manager.find(QueueEntity, {
       where: {
         status: QueueStatusEnum.ENTER,
-        activeAt: LessThan(tenMinutesAgo),
+        enteredAt: LessThan(tenMinutesAgo),
       },
     });
     return entities.map(QueueMapper.toDomain);
+  }
+
+  async getWaitingQueue(): Promise<Queue[]> {
+    const entities = await this.manager
+      .createQueryBuilder(QueueEntity, 'queue')
+      .andWhere('queue.status = :status', {
+        status: QueueStatusEnum.WAIT,
+      })
+      .orderBy('queue.createdAt', 'ASC')
+      .limit(20)
+      .getMany();
+
+    return entities.map((entity) => QueueMapper.toDomain(entity));
+  }
+
+  async findExpiredQueues(): Promise<Queue[]> {
+    const now = new Date();
+    const entities = await this.manager
+      .createQueryBuilder(QueueEntity, 'queue')
+      .where('DATE_ADD(queue.enteredAt, INTERVAL 10 MINUTE) <= :now', { now })
+      .andWhere('queue.status = :status', {
+        status: QueueStatusEnum.ENTER,
+      })
+      .getMany();
+    return entities.map(QueueMapper.toDomain);
+  }
+
+  // 대기열 상태 업데이트
+  async updateQueues(queues: Queue[]): Promise<void> {
+    const entities = queues.map((queue) => QueueMapper.toEntity(queue));
+    await this.manager.save(entities);
   }
 }
