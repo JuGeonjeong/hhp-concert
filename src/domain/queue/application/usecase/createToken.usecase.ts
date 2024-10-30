@@ -10,6 +10,7 @@ export class CreateTokenUsecase {
 
   async create(): Promise<{ queue: Queue; token: string; expiryDate: Date }> {
     const queue = await this.queueService.createQueue();
+    console.log('111111');
     const token = await this.queueService.createJwt(queue);
     const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 2);
     console.log(token);

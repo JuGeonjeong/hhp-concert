@@ -16,8 +16,11 @@ export class QueueMapper {
 
   static toEntity(domain: Queue): QueueEntity {
     const entity = new QueueEntity();
+    entity.id = domain.id;
+    entity.uuid = domain.uuid;
     entity.status = domain.status;
     entity.enteredAt = domain.enteredAt;
+    entity.expiredAt = domain.expiredAt;
     return entity;
   }
 }

@@ -5,6 +5,7 @@ export class Queue {
   uuid: string;
   status: QueueStatusEnum;
   enteredAt: Date;
+  expiredAt: Date;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
@@ -14,6 +15,7 @@ export class Queue {
     uuid?: string;
     status?: QueueStatusEnum;
     enteredAt?: Date;
+    expiredAt?: Date;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -22,6 +24,7 @@ export class Queue {
     this.uuid = uuidv4();
     this.status = args.status;
     this.enteredAt = args.enteredAt;
+    this.expiredAt = args.enteredAt;
     this.createdAt = args.createdAt;
     this.updatedAt = args.updatedAt;
     this.deletedAt = args.deletedAt;
@@ -31,6 +34,7 @@ export class Queue {
     if (this.status === QueueStatusEnum.WAIT) {
       this.status = QueueStatusEnum.ENTER;
       // 활성화 후 5분 동안 유효
+      this.expiredAt = new Date(new Date().getTime() + 5 * 60 * 1000);
       this.enteredAt = new Date(new Date().getTime());
     }
   }
