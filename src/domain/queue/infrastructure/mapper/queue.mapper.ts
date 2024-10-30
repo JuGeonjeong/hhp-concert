@@ -7,7 +7,7 @@ export class QueueMapper {
       id: entity.id,
       uuid: entity.uuid,
       status: entity.status,
-      activeAt: entity.activeAt,
+      enteredAt: entity.enteredAt,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
@@ -17,7 +17,7 @@ export class QueueMapper {
   static toEntity(domain: Queue): QueueEntity {
     const entity = new QueueEntity();
     entity.status = domain.status;
-    entity.activeAt = domain.activeAt;
+    entity.enteredAt = domain.enteredAt;
     return entity;
   }
 }
