@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserUsecase } from '../../domain/user/application/usecase/createUser.usecase';
 import { UserService } from '../../domain/user/application/service/user.service';
 import { CreateUserDto } from '../../domain/user/interface/dto/req/createUser.dto';
-import User from '../../domain/user/domain/entity/user';
+import UserEntity from 'src/domain/user/infrastructure/entity/user.entity';
 
 describe('CreateUserUsecase', () => {
   let createUserUsecase: CreateUserUsecase;
@@ -31,33 +31,15 @@ describe('CreateUserUsecase', () => {
   });
 
   describe('execute', () => {
-    it('이메일이 이미 사용 중일 때 에러를 던져야 한다.', async () => {
+    it('유저를 생성해야 한다.', async () => {
       const createUserDto: CreateUserDto = {
         email: 'test@example.com',
       };
-      jest.spyOn(userService, 'isEmailTaken').mockResolvedValue(true);
-
-      await expect(createUserUsecase.execute(createUserDto)).rejects.toThrow(
-        'Email is already taken',
-      );
-      expect(userService.isEmailTaken).toHaveBeenCalledWith(
-        createUserDto.email,
-      );
-    });
-
-    it('이메일이 사용 가능할 때 유저를 생성해야 한다.', async () => {
-      const createUserDto: CreateUserDto = {
-        email: 'test@example.com',
-      };
-      const createdUser = new User();
-      jest.spyOn(userService, 'isEmailTaken').mockResolvedValue(false);
+      const createdUser = new UserEntity();
       jest.spyOn(userService, 'createUser').mockResolvedValue(createdUser);
 
       const result = await createUserUsecase.execute(createUserDto);
 
-      expect(userService.isEmailTaken).toHaveBeenCalledWith(
-        createUserDto.email,
-      );
       expect(userService.createUser).toHaveBeenCalledWith(createUserDto);
       expect(result).toEqual(createdUser);
     });

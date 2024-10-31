@@ -1,4 +1,3 @@
-import { Schedule } from './schedule';
 import { SeatStatusEnum } from '../../infrastructure/entity/seat.entity';
 import { User } from 'src/domain/user/domain/entity/user';
 
@@ -11,7 +10,6 @@ export class Seat {
   price: number;
   status: SeatStatusEnum;
   isReserved: boolean;
-  concertDate: Schedule;
   userInfo: User;
   version: number;
   createdAt: Date;
@@ -27,7 +25,6 @@ export class Seat {
     price?: number;
     status?: SeatStatusEnum;
     isReserved?: boolean;
-    concertDate?: Schedule;
     userInfo?: User;
     version?: number;
     createdAt?: Date;
@@ -37,7 +34,6 @@ export class Seat {
     this.id = args.id;
     this.scheduleId = args.scheduleId;
     this.userId = args.userId;
-    this.concertDate = args.concertDate;
     this.expiredAt = args.expiredAt;
     this.userInfo = args.userInfo;
     this.seatNumber = args.seatNumber;
@@ -50,16 +46,16 @@ export class Seat {
     this.deletedAt = args.deletedAt;
   }
 
-  reserve(): void {
-    if (this.isReserved) {
-      throw new Error('이미 예약된 좌석입니다.');
-    }
-    this.concertDate.reserveSeat();
-    this.isReserved = true;
-  }
+  // reserve(): void {
+  //   if (this.isReserved) {
+  //     throw new Error('이미 예약된 좌석입니다.');
+  //   }
+  //   this.concertDate.reserveSeat();
+  //   this.isReserved = true;
+  // }
 
-  release(): void {
-    this.concertDate.releaseSeat();
-    this.isReserved = false;
-  }
+  // release(): void {
+  //   this.concertDate.releaseSeat();
+  //   this.isReserved = false;
+  // }
 }
