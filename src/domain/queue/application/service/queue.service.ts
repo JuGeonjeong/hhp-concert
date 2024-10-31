@@ -92,7 +92,6 @@ export class QueueService {
 
   @Cron('*/1 * * * *')
   async joinQueue() {
-    // wait상태인 20명 가져오기
     const waitingQueues = await this.queueRepository.getWaitingQueue();
     waitingQueues.forEach(async (queue) => {
       queue.activate();
@@ -103,12 +102,9 @@ export class QueueService {
 
   @Cron('*/1 * * * *')
   async expireQueue() {
-    // status.join -> 10분간 행동없으면 아웃
     const expiredQueues = await this.queueRepository.findExpiredQueues();
     expiredQueues.forEach((queue) => queue.expire());
 
     await this.queueRepository.updateQueues(expiredQueues);
-    // const ghostJoiner = await this.ghostQueue();
-    // return ghostJoiner;
   }
 }
