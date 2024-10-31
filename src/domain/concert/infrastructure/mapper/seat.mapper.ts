@@ -11,6 +11,7 @@ export class SeatMapper {
       expiredAt: entity.expiredAt,
       price: entity.price,
       status: entity.status,
+      version: entity.version,
       isReserved: entity.status === SeatStatusEnum.RESERVED ? true : false,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,

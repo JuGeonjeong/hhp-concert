@@ -3,8 +3,9 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { QueueRepository } from '../../domain/repository/queue.repository';
 import { Queue } from '../../domain/entity/queue';
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { Cron } from '@nestjs/schedule';
+import { v4 as uuidv4 } from 'uuid';
+import { UserRepository } from 'src/domain/user/domain/repository/userRepository';
 // import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
@@ -12,6 +13,8 @@ export class QueueService {
   constructor(
     @Inject('IQueueRepository')
     private readonly queueRepository: QueueRepository,
+    @Inject('IUserRepository')
+    private readonly userRepository: UserRepository,
   ) {}
 
   async createQueue(): Promise<Queue> {
@@ -19,13 +22,17 @@ export class QueueService {
       uuid: uuidv4(),
       status: QueueStatusEnum.WAIT,
     });
-    return await this.queueRepository.create(queue);
+    const result = await this.queueRepository.create(queue);
+    console.log(result.uuid);
+    return result;
   }
 
   async createJwt(queue: Queue): Promise<string> {
-    const { uuid, createdAt } = queue;
+    const { id, uuid, createdAt } = queue;
+    console.log('queue', queue);
     return sign(
       {
+        id,
         uuid,
         createdAt,
       },
@@ -39,6 +46,7 @@ export class QueueService {
 
   async findOne(uuid): Promise<Queue> {
     const queue = await this.queueRepository.findOne(uuid);
+    console.log(queue);
     if (queue) {
       if (queue.status === QueueStatusEnum.WAIT) {
         return queue;
@@ -86,8 +94,9 @@ export class QueueService {
   async joinQueue() {
     // wait상태인 20명 가져오기
     const waitingQueues = await this.queueRepository.getWaitingQueue();
-    waitingQueues.forEach((queue) => {
+    waitingQueues.forEach(async (queue) => {
       queue.activate();
+      await this.userRepository.create({ uuid: queue.uuid });
     });
     await this.queueRepository.updateQueues(waitingQueues);
   }
