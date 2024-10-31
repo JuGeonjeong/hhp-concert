@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 export class Queue {
   id: number;
@@ -12,7 +11,7 @@ export class Queue {
 
   constructor(args: {
     id?: number;
-    uuid?: string;
+    uuid: string;
     status?: QueueStatusEnum;
     enteredAt?: Date;
     expiredAt?: Date;
@@ -21,7 +20,7 @@ export class Queue {
     deletedAt?: Date;
   }) {
     this.id = args.id;
-    this.uuid = uuidv4();
+    this.uuid = args.uuid;
     this.status = args.status;
     this.enteredAt = args.enteredAt;
     this.expiredAt = args.enteredAt;

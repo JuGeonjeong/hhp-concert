@@ -20,8 +20,8 @@ export class UserRepositoryImpl implements UserRepository {
     return UserMapper.toDomain(entity);
   }
 
-  async existsByEmail(email: string): Promise<boolean> {
-    const user = await this.manager.findOne(User, { where: { email } });
-    return !!user;
-  }
+  // async existsByEmail(email: string): Promise<boolean> {
+  //   const user = await this.manager.findOne(User, { where: { email } });
+  //   return !!user;
+  // }
 }

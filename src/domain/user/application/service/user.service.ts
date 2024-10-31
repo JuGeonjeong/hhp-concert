@@ -22,7 +22,7 @@ export class UserService {
     return data;
   }
 
-  async isEmailTaken(email: string): Promise<boolean> {
-    return await this.userRepository.existsByEmail(email);
-  }
+  // async isEmailTaken(email: string): Promise<boolean> {
+  //   return await this.userRepository.existsByEmail(email);
+  // }
 }

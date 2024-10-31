@@ -6,7 +6,6 @@ export class UserMapper {
     return new User({
       id: entity.id,
       uuid: entity.uuid,
-      email: entity.email,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
@@ -17,7 +16,6 @@ export class UserMapper {
     const entity = new UserEntity();
     entity.id = domain.id;
     entity.uuid = domain.uuid;
-    entity.email = domain.email;
     return entity;
   }
 }

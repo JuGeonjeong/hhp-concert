@@ -9,6 +9,7 @@ import { OutTokenUsecase } from './application/usecase/outToken.usecase';
 import { ScheduleModule } from '@nestjs/schedule';
 import { QueueService } from './application/service/queue.service';
 import QueueEntity from './infrastructure/entity/queue.entity';
+import { UserRepositoryImpl } from '../user/infrastructure/repository/user.repository.impl';
 
 @Module({
   imports: [ScheduleModule.forRoot(), TypeOrmModule.forFeature([QueueEntity])],
@@ -17,6 +18,10 @@ import QueueEntity from './infrastructure/entity/queue.entity';
     {
       provide: 'IQueueRepository',
       useClass: QueueRepositoryImpl,
+    },
+    {
+      provide: 'IUserRepository',
+      useClass: UserRepositoryImpl,
     },
     QueueService,
     CreateTokenUsecase,

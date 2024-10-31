@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, VersionColumn } from 'typeorm';
 import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 export enum SeatStatusEnum {
@@ -38,6 +38,9 @@ export default class SeatEntity extends BaseEntities {
     foreignKeyConstraintName: 'fk_seat_userId',
   })
   userId: number;
+
+  @VersionColumn() // 낙관적 락을 위한 버전 관리 컬럼
+  version: number;
 
   // constructor(partial: Partial<Seat>) {
   //   super();

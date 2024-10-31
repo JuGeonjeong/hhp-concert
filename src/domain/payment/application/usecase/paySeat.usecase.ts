@@ -27,7 +27,6 @@ export class PaySeatUsecase {
       // 좌석유무 검색
       const seat = await this.concertService.findOne(seatId);
       // 유저 포인트 조회 가능여부
-      // 유저 포인트 차감
       const user = await this.userService.findOne(userId);
       await this.pointService.isPoint(userId, seat.price);
       // 좌석 상태값 변경

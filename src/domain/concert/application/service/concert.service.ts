@@ -3,6 +3,7 @@ import { ConcertRepository } from '../../domain/repository/concertRepository';
 import { ScheduleRepository } from '../../domain/repository/scheduleRepository';
 import { SeatRepository } from '../../domain/repository/seatRepository';
 import { Seat } from '../../domain/entity/seat';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class ConcertService {
@@ -43,6 +44,12 @@ export class ConcertService {
   }
 
   // seatsRepository
+  /**
+   * 새로운 좌석을 생성합니다.
+   *
+   * @param {Object} body - 생성할 좌석의 정보가 포함된 객체
+   * @returns {Promise<Object>} 생성된 좌석 객체를 반환
+   */
   async create(body) {
     return await this.seatsRepository.create(body);
   }
@@ -83,5 +90,11 @@ export class ConcertService {
 
   async updateStatus(seat: Seat) {
     return await this.seatsRepository.update(seat);
+  }
+
+  // 매 1분마다 만료된 예약을 처리
+  @Cron('*/1 * * * *')
+  async handleReservationExpiry(): Promise<void> {
+    await this.seatsRepository.expireReservations();
   }
 }

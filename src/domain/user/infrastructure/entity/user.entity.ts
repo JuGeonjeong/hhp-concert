@@ -3,9 +3,6 @@ import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 @Entity({ name: 'user' })
 export default class UserEntity extends BaseEntities {
-  @Column({ comment: '이메일' })
-  email: string;
-
   @Column({ comment: '대기열 uuid' })
   uuid: string;
 

@@ -13,6 +13,7 @@ export class Seat {
   isReserved: boolean;
   concertDate: Schedule;
   userInfo: User;
+  version: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
@@ -23,13 +24,14 @@ export class Seat {
     userId?: number;
     seatNumber: number;
     expiredAt: Date;
-    price: number;
-    status: SeatStatusEnum;
-    isReserved: boolean;
+    price?: number;
+    status?: SeatStatusEnum;
+    isReserved?: boolean;
     concertDate?: Schedule;
     userInfo?: User;
-    createdAt: Date;
-    updatedAt: Date;
+    version?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
     deletedAt?: Date;
   }) {
     this.id = args.id;
@@ -42,6 +44,7 @@ export class Seat {
     this.status = args.status;
     this.price = args.price;
     this.isReserved = args.isReserved;
+    this.version = args.version;
     this.createdAt = args.createdAt;
     this.updatedAt = args.updatedAt;
     this.deletedAt = args.deletedAt;

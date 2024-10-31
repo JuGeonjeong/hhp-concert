@@ -8,7 +8,6 @@ export class QueueScheduler {
 
   @Cron('*/1 * * * *')
   async enterQueue() {
-    console.log('123');
     await this.queueService.joinQueue();
   }
 }

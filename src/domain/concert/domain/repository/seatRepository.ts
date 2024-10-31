@@ -13,4 +13,6 @@ export interface SeatRepository {
   cancel(seatNumber: number): Promise<Seat>;
   // 좌석검색
   findSeats(id: number): Promise<Seat[] | []>;
+  // 만료좌석 찾기
+  expireReservations(): Promise<void>;
 }
