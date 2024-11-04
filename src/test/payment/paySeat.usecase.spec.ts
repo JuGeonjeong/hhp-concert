@@ -85,12 +85,12 @@ describe('PaySeatUsecase', () => {
       const mockQueue = new QueueEntity();
       const mockPayment = new PaymentEntity();
 
-      jest.spyOn(concertService, 'findOne').mockResolvedValue(mockSeat);
+      // jest.spyOn(concertService, 'findOne').mockResolvedValue(mockSeat);
       jest.spyOn(userService, 'findOne').mockResolvedValue(mockUser);
       jest.spyOn(pointService, 'isPoint').mockResolvedValue(mockPoint);
-      jest.spyOn(concertService, 'updateStatus').mockResolvedValue(mockSeat);
-      jest.spyOn(queueService, 'findOne').mockResolvedValue(mockQueue);
-      jest.spyOn(queueService, 'update').mockResolvedValue(mockQueue);
+      // jest.spyOn(concertService, 'updateStatus').mockResolvedValue(mockSeat);
+      // jest.spyOn(queueService, 'findOne').mockResolvedValue(mockQueue);
+      // jest.spyOn(queueService, 'update').mockResolvedValue(mockQueue);
       jest.spyOn(paymentService, 'create').mockResolvedValue(mockPayment);
 
       const mutex = new Mutex();
