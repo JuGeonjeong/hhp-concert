@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PointChargeUsecase } from '../../domain/user/application/usecase/pointCharge.usecase';
 import { PointService } from '../../domain/user/application/service/point.service';
 import { UserService } from '../../domain/user/application/service/user.service';
-import User from '../../domain/user/domain/entity/user';
-import Point from '../../domain/user/domain/entity/point';
 import { Mutex } from 'async-mutex';
+import UserEntity from 'src/domain/user/infrastructure/entity/user.entity';
+import PointEntity from 'src/domain/user/infrastructure/entity/point.entity';
 
 describe('PointChargeUsecase', () => {
   let pointChargeUsecase: PointChargeUsecase;
@@ -43,8 +43,8 @@ describe('PointChargeUsecase', () => {
     it('유저와 포인트 정보를 반환해야 한다', async () => {
       const userId = 1;
       const points = 5000;
-      const user = new User();
-      const point = new Point();
+      const user = new UserEntity();
+      const point = new PointEntity();
 
       jest.spyOn(userService, 'findOne').mockResolvedValue(user);
       jest.spyOn(pointService, 'charge').mockResolvedValue(point);
@@ -62,8 +62,8 @@ describe('PointChargeUsecase', () => {
 
       const userId = 1;
       const points = 100;
-      const mockUser = new User();
-      const mockPoint = new Point();
+      const mockUser = new UserEntity();
+      const mockPoint = new PointEntity();
 
       jest.spyOn(userService, 'findOne').mockResolvedValue(mockUser);
       jest.spyOn(pointService, 'charge').mockResolvedValue(mockPoint);

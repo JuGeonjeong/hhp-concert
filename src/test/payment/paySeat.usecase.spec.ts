@@ -1,16 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PaySeatUsecase } from '../../domain/payment/application/usecase/paySeat.usecase';
-import Seat from '../../domain/concert/domain/entity/seat';
-import User from '../../domain/user/domain/entity/user';
-import Point from '../../domain/user/domain/entity/point';
-import Payment from '../../domain/payment/domain/entity/payment';
 import { Mutex } from 'async-mutex';
-import Queue, { QueueStatusEnum } from '../../domain/queue/domain/entity/queue';
 import { PointService } from 'src/domain/user/application/service/point.service';
 import { QueueService } from 'src/domain/queue/application/service/queue.service';
 import { UserService } from 'src/domain/user/application/service/user.service';
 import { ConcertService } from 'src/domain/concert/application/service/concert.service';
 import { PaymentService } from 'src/domain/payment/application/service/payment.service';
+import SeatEntity from 'src/domain/concert/infrastructure/entity/seat.entity';
+import PaymentEntity from 'src/domain/payment/infrastructure/entity/payment.entity';
+import QueueEntity, {
+  QueueStatusEnum,
+} from 'src/domain/queue/infrastructure/entity/queue.entity';
+import PointEntity from 'src/domain/user/infrastructure/entity/point.entity';
+import UserEntity from 'src/domain/user/infrastructure/entity/user.entity';
 
 describe('PaySeatUsecase', () => {
   let paySeatUsecase: PaySeatUsecase;
@@ -75,20 +77,20 @@ describe('PaySeatUsecase', () => {
     it('좌석을 결제하고 좌석 상태를 업데이트하고 토큰을 만료시킨다 (동시성 제어 포함)', async () => {
       const userId = 1;
       const seatId = 2;
-      const mockSeat = new Seat();
+      const mockSeat = new SeatEntity();
       mockSeat.price = 10000;
-      const mockUser = new User();
+      const mockUser = new UserEntity();
       mockUser.uuid = 'test-uuid';
-      const mockPoint = new Point();
-      const mockQueue = new Queue();
-      const mockPayment = new Payment();
+      const mockPoint = new PointEntity();
+      const mockQueue = new QueueEntity();
+      const mockPayment = new PaymentEntity();
 
-      jest.spyOn(concertService, 'findOne').mockResolvedValue(mockSeat);
+      // jest.spyOn(concertService, 'findOne').mockResolvedValue(mockSeat);
       jest.spyOn(userService, 'findOne').mockResolvedValue(mockUser);
       jest.spyOn(pointService, 'isPoint').mockResolvedValue(mockPoint);
-      jest.spyOn(concertService, 'updateStatus').mockResolvedValue(mockSeat);
-      jest.spyOn(queueService, 'findOne').mockResolvedValue(mockQueue);
-      jest.spyOn(queueService, 'update').mockResolvedValue(mockQueue);
+      // jest.spyOn(concertService, 'updateStatus').mockResolvedValue(mockSeat);
+      // jest.spyOn(queueService, 'findOne').mockResolvedValue(mockQueue);
+      // jest.spyOn(queueService, 'update').mockResolvedValue(mockQueue);
       jest.spyOn(paymentService, 'create').mockResolvedValue(mockPayment);
 
       const mutex = new Mutex();

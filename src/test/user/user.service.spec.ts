@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '../../domain/user/application/service/user.service';
 import { UserRepository } from '../../domain/user/domain/repository/userRepository';
-import User from '../../domain/user/domain/entity/user';
+import UserEntity from 'src/domain/user/infrastructure/entity/user.entity';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -36,7 +36,7 @@ describe('UserService', () => {
   describe('createUser', () => {
     it('사용자를 생성해야 한다.', async () => {
       const userDto = { email: 'test@example.com' };
-      const createdUser = new User();
+      const createdUser = new UserEntity();
       jest.spyOn(userRepository, 'create').mockResolvedValue(createdUser);
 
       const result = await userService.createUser(userDto);
@@ -50,36 +50,13 @@ describe('UserService', () => {
   describe('findOne', () => {
     it('사용자를 찾아야 한다.', async () => {
       const userId = 1;
-      const foundUser = new User();
+      const foundUser = new UserEntity();
       jest.spyOn(userRepository, 'findOne').mockResolvedValue(foundUser);
 
       const result = await userService.findOne(userId);
 
       expect(userRepository.findOne).toHaveBeenCalledWith(userId);
       expect(result).toEqual(foundUser);
-    });
-  });
-
-  // isEmailTaken 메서드 테스트
-  describe('isEmailTaken', () => {
-    it('이메일이 사용 중인지 확인해야 한다.', async () => {
-      const email = 'test@example.com';
-      jest.spyOn(userRepository, 'existsByEmail').mockResolvedValue(true);
-
-      const result = await userService.isEmailTaken(email);
-
-      expect(userRepository.existsByEmail).toHaveBeenCalledWith(email);
-      expect(result).toBe(true);
-    });
-
-    it('이메일이 사용되지 않았음을 반환해야 한다.', async () => {
-      const email = 'test@example.com';
-      jest.spyOn(userRepository, 'existsByEmail').mockResolvedValue(false);
-
-      const result = await userService.isEmailTaken(email);
-
-      expect(userRepository.existsByEmail).toHaveBeenCalledWith(email);
-      expect(result).toBe(false);
     });
   });
 });

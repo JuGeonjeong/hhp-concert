@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FindPointUsecase } from '../../domain/user/application/usecase/findPoint.usecase';
 import { PointService } from '../../domain/user/application/service/point.service';
 import { UserService } from '../../domain/user/application/service/user.service';
-import User from '../../domain/user/domain/entity/user';
-import Point from '../../domain/user/domain/entity/point';
+import UserEntity from 'src/domain/user/infrastructure/entity/user.entity';
+import PointEntity from 'src/domain/user/infrastructure/entity/point.entity';
 
 describe('FindPointUsecase', () => {
   let findPointUsecase: FindPointUsecase;
@@ -41,8 +41,8 @@ describe('FindPointUsecase', () => {
   describe('findOne', () => {
     it('유저와 포인트 정보를 반환해야 한다.', async () => {
       const userId = 1;
-      const user = new User();
-      const point = new Point();
+      const user = new UserEntity();
+      const point = new PointEntity();
 
       jest.spyOn(userService, 'findOne').mockResolvedValue(user);
       jest.spyOn(pointService, 'findPoint').mockResolvedValue(point);
