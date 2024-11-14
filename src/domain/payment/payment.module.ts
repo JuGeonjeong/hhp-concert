@@ -16,6 +16,9 @@ import { ConcertRepositoryImpl } from '../concert/infrastructure/repository/conc
 import { ScheduleRepositoryImpl } from '../concert/infrastructure/repository/schedule.repository.impl';
 import { SeatRepositoryImpl } from '../concert/infrastructure/repository/seat.repository.impl';
 import PaymentEntity from './infrastructure/entity/payment.entity';
+import { PaymentEventPublisher } from './application/event/paymentEventPublisher';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { CreateOrderUsecase } from './application/usecase/createOrder.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PaymentEntity])],
@@ -49,12 +52,15 @@ import PaymentEntity from './infrastructure/entity/payment.entity';
       provide: 'IScheduleRepository',
       useClass: ScheduleRepositoryImpl,
     },
+    PaymentEventPublisher,
+    EventEmitter2,
     PaySeatUsecase,
     PaymentService,
     PointService,
     ConcertService,
     QueueService,
     UserService,
+    CreateOrderUsecase,
   ],
 })
 export class PaymentModule {}

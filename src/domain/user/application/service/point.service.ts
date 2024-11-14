@@ -37,7 +37,7 @@ export class PointService {
     return data;
   }
 
-  async isPoint(userId: number, price: number): Promise<Point> {
+  async useCheck(userId: number, price: number): Promise<Point> {
     const point = await this.findPoint(userId);
     if (point.amount < price)
       throw new BadRequestException(

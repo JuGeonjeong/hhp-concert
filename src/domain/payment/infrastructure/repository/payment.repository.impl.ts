@@ -4,7 +4,7 @@ import { EntityManager } from 'typeorm';
 import { PaymentRepository } from '../../domain/repository/payment.repository';
 import { Payment } from '../../domain/entity/payment';
 import { PaymentMapper } from '../mapper/payment.mappter';
-import PaymentEntity from '../entity/payment.entity';
+import PaymentEntity, { PaymentStatusEnum } from '../entity/payment.entity';
 
 @Injectable()
 export class PaymentRepositoryImpl implements PaymentRepository {
@@ -29,5 +29,20 @@ export class PaymentRepositoryImpl implements PaymentRepository {
         return PaymentMapper.toDomain(paymentEntity);
       },
     );
+  }
+
+  async findOne(orderKey): Promise<Payment> {
+    const entity = await this.manager.findOne(PaymentEntity, {
+      where: { orderKey },
+    });
+    return PaymentMapper.toDomain(entity);
+  }
+
+  async save(
+    transactionManager: EntityManager,
+    payment: Payment,
+  ): Promise<Payment> {
+    PaymentMapper.toEntity({ ...payment, status: PaymentStatusEnum.SUCCESS });
+    return transactionManager.save(Payment, payment);
   }
 }

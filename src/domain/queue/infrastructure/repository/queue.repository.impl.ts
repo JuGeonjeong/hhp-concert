@@ -8,9 +8,7 @@ import { QueueMapper } from '../mapper/queue.mapper';
 
 @Injectable()
 export class QueueRepositoryImpl implements QueueRepository {
-  constructor(
-    @InjectEntityManager() private readonly manager: EntityManager, // 엔티티 제거
-  ) {}
+  constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
   async create(queue): Promise<Queue> {
     const entity = QueueMapper.toEntity(queue);

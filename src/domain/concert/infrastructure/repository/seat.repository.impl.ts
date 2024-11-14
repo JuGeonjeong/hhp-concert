@@ -81,8 +81,7 @@ export class SeatRepositoryImpl implements SeatRepository {
 
   async update(seat: Seat): Promise<Seat> {
     const entity = SeatMapper.toEntity(seat);
-    entity.status = SeatStatusEnum.RESERVED;
-    const SeatEntity = await this.manager.save(seat);
+    const SeatEntity = await this.manager.save(entity);
     return SeatMapper.toDomain(SeatEntity);
   }
 

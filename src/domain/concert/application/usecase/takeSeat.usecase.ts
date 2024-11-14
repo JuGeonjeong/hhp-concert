@@ -9,6 +9,7 @@ export class TakeSeatUsecase {
 
   async reserv(body) {
     await this.concertService.cancelSeat(body);
-    return await this.concertService.create(body);
+    const seat = await this.concertService.create(body);
+    return seat;
   }
 }
