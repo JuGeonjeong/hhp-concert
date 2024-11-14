@@ -15,6 +15,8 @@ export class SeatRepositoryImpl implements SeatRepository {
     const { userId, scheduleId, seatNumber } = data;
     const expiredAt = dayjs().add(5, 'minute').toDate();
 
+    // 낙관적락
+    // 좌석 조회 후 좌석 예약, 나머지 처리는 에러 반환
     return await this.manager.transaction(async (transactional) => {
       const existingSeat = await transactional.findOne(SeatEntity, {
         where: { scheduleId, seatNumber },
@@ -84,6 +86,7 @@ export class SeatRepositoryImpl implements SeatRepository {
     return SeatMapper.toDomain(SeatEntity);
   }
 
+  // 좌석 찾기
   async findSeats(scheduleId: number): Promise<Seat[]> {
     const now = dayjs().toDate();
     const entities = await this.manager.find(SeatEntity, {
@@ -102,6 +105,8 @@ export class SeatRepositoryImpl implements SeatRepository {
     return entities.map(SeatMapper.toDomain);
   }
 
+  // 비관적락
+  // 임시예약된 좌석 중 만료시간 지난 좌석 조회 후 상태변경
   async expireReservations(): Promise<void> {
     const now = dayjs().toDate();
     await this.manager.transaction(async (transactionalEntityManager) => {

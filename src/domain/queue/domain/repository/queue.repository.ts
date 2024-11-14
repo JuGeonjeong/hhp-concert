@@ -7,7 +7,7 @@ export interface QueueRepository {
   waitingCount(): Promise<number>;
   update(queue: Queue, data: Partial<Queue>): Promise<Queue>;
   ghostQueue(): Promise<Queue[]>;
-  getWaitingQueue(): Promise<Queue[]>;
+  getWaitingQueue(limit: number): Promise<Queue[]>;
   findExpiredQueues(): Promise<Queue[]>;
   updateQueues(queue: Queue[]): Promise<void>;
 }

@@ -57,19 +57,21 @@ export class QueueRepositoryImpl implements QueueRepository {
     return entities.map(QueueMapper.toDomain);
   }
 
-  async getWaitingQueue(): Promise<Queue[]> {
+  // 대기중 상태 대기열 5개 불러오기
+  async getWaitingQueue(limit): Promise<Queue[]> {
     const entities = await this.manager
       .createQueryBuilder(QueueEntity, 'queue')
       .andWhere('queue.status = :status', {
         status: QueueStatusEnum.WAIT,
       })
       .orderBy('queue.createdAt', 'ASC')
-      .limit(5)
+      .limit(limit)
       .getMany();
 
     return entities.map((entity) => QueueMapper.toDomain(entity));
   }
 
+  // 만료시간 초과 대기열 조회
   async findExpiredQueues(): Promise<Queue[]> {
     const now = new Date();
     const entities = await this.manager

@@ -30,7 +30,7 @@ export class QueueController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<ResponseSuccessDto<any>> {
     const data = await this.createTokenUseCase.create();
-    await this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
+    this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
     return new ResponseSuccessDto<any>({ data: new ResTokenDto(data.queue) });
   }
 
@@ -58,7 +58,7 @@ export class QueueController {
     @ReqToken() token,
   ): Promise<ResponseSuccessDto<any>> {
     const data = await this.outTokenUseCase.update(token);
-    await this.cookieAdapter.clearCookie(response);
+    this.cookieAdapter.clearCookie(response);
     return new ResponseSuccessDto<any>({ data });
   }
 }

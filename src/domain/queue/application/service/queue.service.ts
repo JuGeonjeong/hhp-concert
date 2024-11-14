@@ -6,7 +6,6 @@ import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 import { Cron } from '@nestjs/schedule';
 import { v4 as uuidv4 } from 'uuid';
 import { UserRepository } from 'src/domain/user/domain/repository/userRepository';
-// import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class QueueService {
@@ -23,7 +22,6 @@ export class QueueService {
       status: QueueStatusEnum.WAIT,
     });
     const result = await this.queueRepository.create(queue);
-    console.log(result.uuid);
     return result;
   }
 
@@ -46,7 +44,6 @@ export class QueueService {
 
   async findOne(uuid): Promise<Queue> {
     const queue = await this.queueRepository.findOne(uuid);
-    console.log(queue);
     if (queue) {
       if (queue.status === QueueStatusEnum.WAIT) {
         return queue;
@@ -90,9 +87,11 @@ export class QueueService {
     return await this.queueRepository.ghostQueue();
   }
 
+  // 1분마다 상태를 입장으로 바꿈
   @Cron('*/1 * * * *')
   async joinQueue() {
-    const waitingQueues = await this.queueRepository.getWaitingQueue();
+    const limit = 5;
+    const waitingQueues = await this.queueRepository.getWaitingQueue(limit);
     waitingQueues.forEach(async (queue) => {
       queue.activate();
       await this.userRepository.create({ uuid: queue.uuid });
@@ -100,6 +99,7 @@ export class QueueService {
     await this.queueRepository.updateQueues(waitingQueues);
   }
 
+  // 1분마다 상태를 만료로 바꿈
   @Cron('*/1 * * * *')
   async expireQueue() {
     const expiredQueues = await this.queueRepository.findExpiredQueues();
