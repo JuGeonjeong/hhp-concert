@@ -67,7 +67,6 @@ export class ConcertService {
     if (!data) {
       throw new BadRequestException(`없는 좌석 입니다. id: ${id}`);
     }
-    console.log(data);
     return data;
   }
 
