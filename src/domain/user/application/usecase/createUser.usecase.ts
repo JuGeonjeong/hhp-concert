@@ -9,13 +9,6 @@ export class CreateUserUsecase {
   ) {}
 
   async execute(createUserDto: CreateUserDto) {
-    // const isEmailTaken = await this.userService.isEmailTaken(
-    //   createUserDto.email,
-    // );
-    // if (isEmailTaken) {
-    //   throw new Error('Email is already taken');
-    // }
-
     // 유저 생성
     const user = await this.userService.createUser(createUserDto);
     return user;

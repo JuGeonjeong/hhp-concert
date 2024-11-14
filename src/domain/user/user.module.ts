@@ -10,9 +10,12 @@ import { PointService } from './application/service/point.service';
 import { UserService } from './application/service/user.service';
 import PointEntity from './infrastructure/entity/point.entity';
 import UserEntity from './infrastructure/entity/user.entity';
+import PointHistoryEntity from './infrastructure/entity/point-history.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, PointEntity])],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity, PointEntity, PointHistoryEntity]),
+  ],
   controllers: [UserController],
   providers: [
     {

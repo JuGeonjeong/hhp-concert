@@ -21,8 +21,4 @@ export class UserService {
       throw new NotFoundException404(`없는 유저 입니다. id: ${userId}`);
     return data;
   }
-
-  // async isEmailTaken(email: string): Promise<boolean> {
-  //   return await this.userRepository.existsByEmail(email);
-  // }
 }

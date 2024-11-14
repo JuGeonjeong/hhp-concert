@@ -3,6 +3,22 @@
     {
       "path": "hhp-concert/src/domain/",
       "color": "foldercustomization.AnsiColor14"
+    },
+    {
+      "path": "hhp-concert/src/domain/concert/",
+      "badge": "콘서"
+    },
+    {
+      "path": "hhp-concert/src/domain/payment/",
+      "badge": "결제"
+    },
+    {
+      "path": "hhp-concert/src/domain/queue/",
+      "badge": "큐"
+    },
+    {
+      "path": "hhp-concert/src/domain/user/",
+      "badge": "유저"
     }
   ]
 }

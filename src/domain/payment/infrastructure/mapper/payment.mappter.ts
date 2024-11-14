@@ -7,6 +7,9 @@ export class PaymentMapper {
       id: entity.id,
       seatId: entity.seatId,
       userId: entity.userId,
+      orderKey: entity.orderKey,
+      status: entity.status,
+      amount: entity.amount,
     });
   }
 
@@ -14,6 +17,9 @@ export class PaymentMapper {
     const entity = new PaymentEntity();
     entity.seatId = domain.seatId;
     entity.userId = domain.userId;
+    entity.orderKey = domain.orderKey;
+    entity.amount = domain.amount;
+    entity.status = domain.status;
     return entity;
   }
 }

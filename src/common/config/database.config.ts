@@ -13,6 +13,6 @@ export const MysqlDataSource = new DataSource({
   // timezone: '+09:00',
   charset: 'utf8mb4',
   logging: true,
-  synchronize: false,
+  synchronize: true,
 });
 // console.log('MySQL DataSource 설정:', MysqlDataSource.options);

@@ -87,7 +87,7 @@ export class ConcertService {
     return availableSeats;
   }
 
-  async updateStatus(seat: Seat) {
+  async update(seat: Seat) {
     return await this.seatsRepository.update(seat);
   }
 

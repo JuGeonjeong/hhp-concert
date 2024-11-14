@@ -1,3 +1,4 @@
+import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 import { SeatStatusEnum } from '../../infrastructure/entity/seat.entity';
 import { User } from 'src/domain/user/domain/entity/user';
 
@@ -15,6 +16,7 @@ export class Seat {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+  add10ExpiredAt: any;
 
   constructor(args: {
     id?: number;
@@ -58,4 +60,14 @@ export class Seat {
   //   this.concertDate.releaseSeat();
   //   this.isReserved = false;
   // }
+  static availablePayment(request): void {
+    if (request.status === 'CANCEL' || request.status === 'RESERVED')
+      throw new BadRequestException400(
+        '시간초과 혹은 결제 불가능 상태입니다. ',
+      );
+  }
+
+  static add29ExpiredAt(expiredAt): Date {
+    return new Date(new Date(expiredAt).getTime() + 29 * 60 * 1000);
+  }
 }
