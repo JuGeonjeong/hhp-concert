@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConcertController } from './interface/controller/concert.controller';
+import { ConcertController } from './interface/api/concert.controller';
 import { AvailableDatesUsecase } from './application/usecase/availableDates.usecase';
 import { AvailableSeatsUsecase } from './application/usecase/availableSeats.usecase';
 import { TakeSeatUsecase } from './application/usecase/takeSeat.usecase';

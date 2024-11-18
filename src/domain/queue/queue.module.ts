@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { QueueController } from './interface/controller/queue.controller';
+import { QueueController } from './interface/api/queue.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QueueRepositoryImpl } from './infrastructure/repository/queue.repository.impl';
 import { CreateTokenUsecase } from './application/usecase/createToken.usecase';
