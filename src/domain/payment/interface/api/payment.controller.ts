@@ -1,10 +1,10 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { PaySeatUsecase } from '../application/usecase/paySeat.usecase';
 import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PaymentRequestDto } from './paymentRequest.dto';
-import { CreateOrderUsecase } from '../application/usecase/createOrder.usecase';
-import { OrderRequestDto } from './orderRequest.dto';
+import { CreateOrderUsecase } from '../../application/usecase/createOrder.usecase';
+import { PaySeatUsecase } from '../../application/usecase/paySeat.usecase';
+import { OrderRequestDto } from '../dto/orderRequest.dto';
+import { PaymentRequestDto } from '../dto/paymentRequest.dto';
 
 @ApiTags('Payment')
 @Controller('payment')
@@ -18,7 +18,7 @@ export class PaymentController {
   @HttpCode(200)
   @ApiOperation({
     summary: '좌석 주문',
-    description: '좌석 주문서를 만듭니다.',
+    description: '좌석 주문을 생성합니다.',
   })
   async order(@Body() body: OrderRequestDto): Promise<ResponseSuccessDto<any>> {
     const data = await this.createOrderUsecase.create(body);
