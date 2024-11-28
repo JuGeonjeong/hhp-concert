@@ -6,19 +6,23 @@
     },
     {
       "path": "hhp-concert/src/domain/concert/",
-      "badge": "콘서"
+      "badge": "콘서",
+      "color": "foldercustomization.AnsiColor76"
     },
     {
       "path": "hhp-concert/src/domain/payment/",
-      "badge": "결제"
+      "badge": "결제",
+      "color": "foldercustomization.AnsiColor61"
     },
     {
       "path": "hhp-concert/src/domain/queue/",
-      "badge": "큐"
+      "badge": "큐",
+      "color": "foldercustomization.AnsiColor222"
     },
     {
       "path": "hhp-concert/src/domain/user/",
-      "badge": "유저"
+      "badge": "유저",
+      "color": "foldercustomization.AnsiColor202"
     }
   ]
 }

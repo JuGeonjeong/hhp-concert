@@ -29,10 +29,7 @@ import { KAFKA_OPTION } from './common/kafka/kafka';
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
+    { provide: APP_PIPE, useClass: ValidationPipe },
     { provide: APP_FILTER, useClass: CustomExceptionFilter },
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
   ],
