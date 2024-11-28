@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import Payment from './domain/entity/payments.entity';
-import { PaymentController } from './interface/payment.controller';
 import { PaySeatUsecase } from './application/usecase/paySeat.usecase';
 import { PaymentRepositoryImpl } from './infrastructure/repository/payment.repository.impl';
 import { PointRepositoryImpl } from '../user/infrastructure/repository/point.repository.impl';
@@ -19,6 +18,7 @@ import PaymentEntity from './infrastructure/entity/payment.entity';
 import { PaymentEventPublisher } from './application/event/paymentEventPublisher';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateOrderUsecase } from './application/usecase/createOrder.usecase';
+import { PaymentController } from './interface/api/payment.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PaymentEntity])],
