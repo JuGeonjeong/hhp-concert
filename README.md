@@ -10,9 +10,8 @@
   - Mysql
   - TypeORM
 - Api docs
-  - openapi.yaml + swagger editor
+  - swagger
 - Test
-
   - Jest
 
 ## API 명세 및 Mock API 작성
@@ -24,16 +23,17 @@
 ```javascript
 /src
 ├── /application
-│ ├── /usecases
-│ └── /services
+│ ├── /usecase
+│ └── /service
 ├── /domain
-│ ├── /entities
-│ └── /repositories
+│ ├── /entity
+│ └── /repository - 추상
 ├── /infrastructure
-│ ├── /modules
-│ └── /database
-├── /interfaces
-│ ├── /controllers
+│ ├── /entity
+│ ├── /mapper
+│ └── /repository - 구현
+├── /interface
+│ ├── /api
 │ ├── /dto
 │ │ ├── /req
 │ │ └── /res

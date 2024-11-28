@@ -17,9 +17,9 @@ import {
 @Injectable()
 export class PaymentService {
   constructor(
+    private dataSource: DataSource,
     @Inject('IPaymentRepository')
     private readonly paymentRepository: PaymentRepository,
-    private dataSource: DataSource,
     private readonly paymentEventPublisher: PaymentEventPublisher,
     @Inject(UserService)
     private readonly userService: UserService,
