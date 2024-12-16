@@ -27,11 +27,11 @@
 │ └── /service
 ├── /domain
 │ ├── /entity
-│ └── /repository - 추상
+│ └── /repository
 ├── /infrastructure
 │ ├── /entity
 │ ├── /mapper
-│ └── /repository - 구현
+│ └── /repository
 ├── /interface
 │ ├── /api
 │ ├── /dto
