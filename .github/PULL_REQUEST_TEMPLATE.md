@@ -1,30 +1,5 @@
-## PR 제목
+Click the `Preview` tab and select a PR template:
 
-<!-- 간단한 설명을 작성해 주세요 -->
-
-### 변경 사항
-
-<!-- 변경된 내용을 간단히 요약해 주세요 -->
-
-- [ ] 기능 1
-- [ ] 기능 2
-
-### 변경 이유
-
-<!-- 이 변경이 왜 필요한지 이유를 설명해 주세요 -->
-
-- 이유 1
-- 이유 2
-
-### 테스트 방법
-
-<!-- PR에서 추가/변경된 기능을 테스트하는 방법을 설명해 주세요 -->
-
-1. 기능 1 테스트 방법
-2. 기능 2 테스트 방법
-
-### 관련 이슈
-
-<!-- 연결된 이슈가 있다면 `resolves #이슈번호` 형태로 작성해 주세요 -->
-
-resolves #
+- [Feature](?expand=1&template=feature_request.md)
+- [Bug Fix](?expand=1&template=bug_fix.md)
+- [Hot Fix](?expand=1&template=hotfix.me)
