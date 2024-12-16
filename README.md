@@ -12,7 +12,7 @@
 - Api docs
   - swagger
 - Test
-  - Jest
+  - Jest.
 
 ## API 명세 및 Mock API 작성
 
