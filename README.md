@@ -1,24 +1,23 @@
-## swagger
+# 콘서트 예약 서비스
 
-![이미지 설명](swagger-screenshot.png)
+## 1. 설계 문서
 
-## 개발 환경
+- [마일 스톤](https://github.com/users/JuGeonjeong/projects/2)
+- [시퀀스 다이어그램](docs/시퀀스다이어그램.md)
+- [플로우 차트](docs/플로우차트.md)
+- [ERD 설계서](docs/image/erd.png)
+- [API 명세 및 Mock API 작성](docs/image/swagger-screenshot.png)
 
-- Architecture
-  - Layered Architecture Based + clean Architecture
-- DB, ORM
-  - Mysql
-  - TypeORM
-- Api docs
-  - swagger
-- Test
-  - Jest.
+## 2. 서버 환경
 
-## API 명세 및 Mock API 작성
+- Programming Language: `Typescript ^5.0.0`
+- Runtime: `Node.js ^20.15.0`
+- Framework: `Nestjs ^10.0.0`
+- ORM: `Typeorm ^0.3.x`
+- DataBase: `Mysql 8`
+- Test: `Jest ^29.5.0`
 
-- openapi.yaml
-
-## 폴더 구조
+## 3. 패키지 구조
 
 ```javascript
 /src
@@ -37,135 +36,4 @@
 │ ├── /dto
 │ │ ├── /req
 │ │ └── /res
-└── app.module.ts
-```
-
-## erd
-
-![이미지 설명](erd.png)
-
-## 플로우 차트
-
-```mermaid
-flowchart TD
-%% Nodes
-A("콘서트 예매"):::green
-B("날짜 조회"):::orange
-C("대기열 토큰 발급"):::orange
-CA("대기열 조회"):::purple
-CAA("좌석 조회"):::purple
-CAB("대기"):::pink
-DA("좌석 선택"):::orange
-DB("좌석 없음"):::pink
-E("좌석 예약"):::orange
-F("잔여금 조회"):::purple
-FA("충전"):::orange
-G("결제"):::orange
-H("예약 잔여시간 확인"):::purple
-HA("잔여시간 없음"):::pink
-HAA("좌석 예매 실패"):::pink
-HB("좌석 결제 완료"):::orange
-HAB("좌석 예매 성공"):::blue
-%% Edges
-A --> B --> C
-C  --> CA
-CA -- 통과 --> CAA
-CA --> CAB
-CAA -- 유 --> DA --> E --> F -- 유 --> G --> H  --> HB --> HAB
-CAA --> DB
-F -- 무 --> FA
-H --> HA --> HAA
-%% Styling
-classDef green fill:#B2DFDB,stroke:#00897B,stroke-width:2px,color:#000;
-classDef orange fill:#FFE0B2,stroke:#FB8C00,stroke-width:2px,color:#000;
-classDef blue fill:#BBDEFB,stroke:#1976D2,stroke-width:2px,color:#000;
-classDef yellow fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px,color:#000;
-classDef pink fill:#F8BBD0,stroke:#C2185B,stroke-width:2px,color:#000;
-classDef purple fill:#E1BEE7,stroke:#8E24AA,stroke-width:2px,color:#000;
-```
-
-## 시퀀스 다이어그램
-
-#### 유저 대기열 토큰 조회/요청 기능
-
-```mermaid
-sequenceDiagram
-participant USER
-participant API
-participant DB
-USER ->> API: 1. 대기 요청
-API ->> DB: 2. 대기 토큰 등록 요청
-alt 토큰 있음
-DB ->> API: 3. 기존 대기열 반환
-else 토큰 없음
-DB ->> API: 4. 신규 대기열 토큰 등록, 반환
-end
-API ->> USER: 5. 대기열 정보
-loop 5초
-USER ->> API: 6. 확인 요청 [Token]
-API ->> DB: 7. 대기열 확인 요청
-alt 토큰 만료
-DB ->> API: 8. 신규 대기열 토큰 등록, 반환
-API ->> USER: 9. 대기열 정보
-else 토큰 유지
-DB ->> USER: 10. 대기열 정보
-end
-end
-```
-
-#### 예약 가능 날짜/좌석 조회 & 예약 요청
-
-```mermaid
-sequenceDiagram
-  participant USER
-  participant API
-  participant DB
-    USER ->> API: 1. 조회 요청
-    API ->> DB: 2. 데이터 조회
-    DB ->> API: 3. 데이터 반환
-    API ->> USER: 4. 좌석 정보
-    USER ->> API: 5. 좌석 예약 요청[Token]
-    API ->> DB: 6. 좌석 상태 조희
-alt 예약 불가능
-    DB ->> USER: 7. 에러 반환
-else 예약 가능
-    DB ->> API: 8. 좌석 상태 변경 & 정보 반환
-end
-    API ->> USER: 5. 좌석 예약 확인
-```
-
-#### 잔액 충전
-
-```mermaid
-sequenceDiagram
-  participant USER
-  participant API
-  participant DB
-USER ->> API: 1. 충전 요청[Token]
-API ->> DB: 5. 충전 & 기록 저장
-DB ->> API: 6. 잔액 반환
-API ->> USER: 6. 잔액 확인
-```
-
-#### 예약 결제
-
-```mermaid
-sequenceDiagram
-  participant USER
-  participant API
-  participant DB
-    USER ->> API: 1. 결제 요청[Token]
-    API ->> DB: 2. 유저 잔액 조회
-alt 잔액 없음
-    DB ->> USER: 3. 에러 전달
-else 잔액 있음
-loop 5분
-    alt 초과
-        DB ->> USER: 4. 에러
-    else 미만
-        DB ->> API: 5. 좌석 소유권 & 결제 기록 & 토큰 만료
-        API ->> USER: 6. 예약 정보 확인
-end
-end
-end
 ```
