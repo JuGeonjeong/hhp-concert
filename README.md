@@ -3,10 +3,10 @@
 ## 1. 설계 문서
 
 - [마일 스톤](https://github.com/users/JuGeonjeong/projects/2)
-- [시퀀스 다이어그램](doc/시퀀스다이어그램.md)
-- [플로우 차트](doc/플로우차트.md)
-- [ERD 설계서](doc/image/erd.png)
-- [Swagger 이미지](doc/image/swagger-screenshot.png)
+- [시퀀스 다이어그램](docs/시퀀스다이어그램.md)
+- [플로우 차트](docs/플로우차트.md)
+- [ERD 설계서](docs/image/erd.png)
+- [API 명세 및 Mock API 작성](docs/image/swagger-screenshot.png)
 
 ## 2. 서버 환경
 
@@ -36,5 +36,4 @@
 │ ├── /dto
 │ │ ├── /req
 │ │ └── /res
-└── app.module.ts
 ```
