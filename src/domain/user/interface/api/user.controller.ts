@@ -6,7 +6,6 @@ import {
   ParseIntPipe,
   Post,
   Query,
-  Version,
 } from '@nestjs/common';
 import { CreateUserUsecase } from '../../application/usecase/createUser.usecase';
 import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
@@ -30,22 +29,9 @@ export class UserController {
 
   @Post('')
   @HttpCode(200)
-  @Version('1')
   @ApiOperation({ summary: '유저 생성', description: '유저를 생성 합니다.' })
   @ApiDataResponse(User)
   async registerUserV1(@Body() createUserDto: CreateUserDto) {
-    const data = await this.registerUserUseCase.execute(createUserDto);
-    return new ResponseSuccessDto<any>({ data });
-  }
-
-  @Post('')
-  @HttpCode(200)
-  @Version('2')
-  @ApiOperation({
-    summary: 'v2유저 생성',
-    description: 'v2유저를 생성 합니다.',
-  })
-  async registerUserV2(@Body() createUserDto: CreateUserDto) {
     const data = await this.registerUserUseCase.execute(createUserDto);
     return new ResponseSuccessDto<any>({ data });
   }

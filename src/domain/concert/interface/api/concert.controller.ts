@@ -27,20 +27,19 @@ export class ConcertController {
     private readonly availableSeatsUsecase: AvailableSeatsUsecase,
     private readonly takeSeatUsecase: TakeSeatUsecase,
     private readonly createOrderUsecase: CreateOrderUsecase,
-    @Inject('KAFKA_CLIENT')
-    private readonly kafkaClient: ClientKafka,
+    // @Inject('KAFKA_CLIENT')
+    // private readonly kafkaClient: ClientKafka,
   ) {}
 
   async onModuleInit(): Promise<void> {
-    this.kafkaClient.subscribeToResponseOf('reservation');
-    this.kafkaClient.subscribeToResponseOf('payment');
-
-    await this.kafkaClient.connect();
+    // this.kafkaClient.subscribeToResponseOf('reservation');
+    // this.kafkaClient.subscribeToResponseOf('payment');
+    // await this.kafkaClient.connect();
   }
 
-  async onModuleDestroy(): Promise<void> {
-    await this.kafkaClient.close();
-  }
+  // async onModuleDestroy(): Promise<void> {
+  // await this.kafkaClient.close();
+  // }
 
   // GET /concert/available-dates
   @Get('available-dates')
