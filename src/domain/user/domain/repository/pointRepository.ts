@@ -1,7 +1,7 @@
 import { Point } from '../entity/point';
 
 export interface PointRepository {
-  charge(point: Point): Promise<Point>;
+  charge(body: { userId: number; point: number }): Promise<Point>;
   findOne(userId: number): Promise<Point>;
-  usePoint(point: Point): Promise<Point>;
+  usePoint(point: any): Promise<Point>;
 }

@@ -11,9 +11,9 @@ export class PointChargeUsecase {
     private readonly userService: UserService,
   ) {}
 
-  async charge(userId: number, points: number) {
-    const user = await this.userService.findOne(userId);
-    const point = await this.pointService.charge(userId, points);
-    return { user, point };
+  async charge({ userId, point }) {
+    const exUser = await this.userService.findOne(userId);
+    const exPoint = await this.pointService.charge({ userId, point });
+    return { user: exUser, point: exPoint };
   }
 }

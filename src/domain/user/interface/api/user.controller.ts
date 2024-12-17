@@ -43,7 +43,10 @@ export class UserController {
     @Query('userId', ParseIntPipe) userId: number,
     @Body() body: PointChargeDto,
   ): Promise<ResponseSuccessDto<any>> {
-    const data = await this.pointChargeUsecase.charge(userId, body.point);
+    const data = await this.pointChargeUsecase.charge({
+      userId,
+      point: body.point,
+    });
     return new ResponseSuccessDto<any>({
       data: new ResPointDto(data.user, data.point),
     });

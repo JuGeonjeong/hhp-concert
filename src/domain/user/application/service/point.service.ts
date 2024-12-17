@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { PointRepository } from '../../domain/repository/pointRepository';
 import { Point } from '../../domain/entity/point';
-import { Mutex } from 'async-mutex';
+// import { Mutex } from 'async-mutex';
 
 @Injectable()
 export class PointService {
@@ -10,23 +10,20 @@ export class PointService {
     private readonly pointRepository: PointRepository,
   ) {}
 
-  async charge(userId: number, point: number): Promise<Point> {
-    const mutex = new Mutex();
-    return mutex.runExclusive(async () => {
-      const exPoint = await this.pointRepository.findOne(userId);
-      if (exPoint) {
-        if (exPoint.amount <= 100000) {
-          throw new BadRequestException(
-            `최대보유금을 초과했습니다. 현재: ${100000 - exPoint.amount}`,
-          );
-        }
+  async charge(body: { userId: number; point: number }): Promise<Point> {
+    const { userId, point } = body;
+    // const mutex = new Mutex();
+    // return mutex.runExclusive(async () => {
+    const exPoint = await this.pointRepository.findOne(userId);
+    if (exPoint) {
+      if (exPoint.amount <= 100000) {
+        throw new BadRequestException(
+          `최대보유금을 초과했습니다. 현재: ${100000 - exPoint.amount}`,
+        );
       }
-      const pointEntity = new Point({
-        userId,
-        amount: point,
-      });
-      return await this.pointRepository.charge(pointEntity);
-    });
+    }
+    return await this.pointRepository.charge({ userId, point });
+    // });
   }
 
   async findPoint(userId: number): Promise<Point> {
