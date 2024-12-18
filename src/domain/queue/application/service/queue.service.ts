@@ -42,7 +42,7 @@ export class QueueService {
     );
   }
 
-  async findOne(uuid): Promise<Queue> {
+  async findOne(uuid: string): Promise<Queue> {
     const queue = await this.queueRepository.findOne(uuid);
     if (queue) {
       if (queue.status === QueueStatusEnum.WAIT) {
@@ -59,7 +59,7 @@ export class QueueService {
     return await this.queueRepository.update(queue, data);
   }
 
-  async findStatus(uuid) {
+  async findStatus(uuid: string) {
     const queue = await this.queueRepository.findOne(uuid);
     const status = queue.status;
     if (status === QueueStatusEnum.WAIT) {

@@ -4,6 +4,7 @@ import { EntityManager } from 'typeorm';
 import { UserRepository } from '../../domain/repository/userRepository';
 import { User } from '../../domain/entity/user';
 import { UserMapper } from '../mapper/user.mapper';
+import { SeatReservDto } from 'src/domain/concert/interface/dto/req/seatReserv.dto';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -13,10 +14,11 @@ export class UserRepositoryImpl implements UserRepository {
    * @interface
    * @see {UserRepository.create}
    */
-  async create(body: any): Promise<User> {
-    const entity = UserMapper.toEntity(body);
-    const userEntity = await this.manager.save(entity);
-    return UserMapper.toDomain(userEntity);
+  async create(body: SeatReservDto): Promise<any> {
+    // const entity = UserMapper.toEntity(body);
+    // console.log(body);
+    // const userEntity = await this.manager.save(entity);
+    // return UserMapper.toDomain(userEntity);
   }
 
   /**

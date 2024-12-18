@@ -46,18 +46,6 @@ export class SeatRepositoryImpl implements SeatRepository {
     });
   }
 
-  async exSeat(data: any): Promise<Seat> {
-    const now = dayjs().toDate();
-    const entity = await this.manager.findOne(SeatEntity, {
-      where: {
-        seatNumber: data.seatNumber,
-        status: SeatStatusEnum.AVAILABLE,
-        expiredAt: LessThan(now),
-      },
-    });
-    return SeatMapper.toDomain(entity);
-  }
-
   async cancel(seatNumber: number): Promise<Seat> {
     await this.manager.update(
       SeatEntity,

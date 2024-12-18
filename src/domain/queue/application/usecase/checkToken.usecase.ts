@@ -8,11 +8,9 @@ export class CheckTokenUsecase {
   ) {}
 
   async check(token) {
-    // uuid로 queueT을 검증
     await this.queueService.findOne(token.uuid);
     const waitingCount = await this.queueService.waitingCount();
-
-    // return: 대기인원, 대기시간
-    return { waitingCount, waitingMin: waitingCount * 5 };
+    const data = { waitingCount, waitingTime: waitingCount * 5 };
+    return data;
   }
 }

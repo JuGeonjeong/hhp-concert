@@ -81,7 +81,7 @@ export class ConcertController {
   async createReserv(
     @Body() body: SeatReservDto,
   ): Promise<ResponseSuccessDto<any>> {
-    const data = await this.takeSeatUsecase.reserv(body);
+    const data = await this.takeSeatUsecase.reservationSeat(body);
     return new ResponseSuccessDto<any>({ data });
   }
 
