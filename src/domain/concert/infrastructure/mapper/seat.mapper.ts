@@ -2,7 +2,7 @@ import SeatEntity, { SeatStatusEnum } from '../entity/seat.entity';
 import { Seat } from '../../domain/entity/seat';
 
 export class SeatMapper {
-  static toDomain(entity: SeatEntity): Seat {
+  static toDomain(entity: Partial<SeatEntity>): Seat {
     return new Seat({
       id: entity.id,
       scheduleId: entity.scheduleId,
@@ -19,10 +19,13 @@ export class SeatMapper {
     });
   }
 
-  static toEntity(seat: Seat): SeatEntity {
+  static toEntity(seat: Partial<Seat>): SeatEntity {
     const entity = new SeatEntity();
     entity.id = seat.id;
-    entity.price = seat.price;
+    entity.userId = seat.userId;
+    entity.scheduleId = seat.scheduleId;
+    entity.seatNumber = seat.seatNumber;
+    entity.expiredAt = seat.expiredAt;
     return entity;
   }
 }

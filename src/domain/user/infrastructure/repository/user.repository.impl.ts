@@ -3,9 +3,9 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from '../../domain/repository/userRepository';
 import { UserMapper } from '../mapper/user.mapper';
-import { SeatReservDto } from 'src/domain/concert/interface/dto/req/seatReserv.dto';
 import { User } from '../../domain/entity/user';
 import UserEntity from '../entity/user.entity';
+import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -15,11 +15,10 @@ export class UserRepositoryImpl implements UserRepository {
    * @interface
    * @see {UserRepository.create}
    */
-  async create(body: SeatReservDto): Promise<any> {
-    // const entity = UserMapper.toEntity(body);
-    // console.log(body);
-    // const userEntity = await this.manager.save(entity);
-    // return UserMapper.toDomain(userEntity);
+  async create(body: CreateUserDto): Promise<any> {
+    const entity = UserMapper.toEntity(body);
+    const userEntity = await this.manager.save(entity);
+    return UserMapper.toDomain(userEntity);
   }
 
   /**
@@ -28,6 +27,6 @@ export class UserRepositoryImpl implements UserRepository {
    */
   async findOne(id: number): Promise<User> {
     const entity = await this.manager.findOne(UserEntity, { where: { id } });
-    return UserMapper.toDomain(entity);
+    return entity ? UserMapper.toDomain(entity) : null;
   }
 }

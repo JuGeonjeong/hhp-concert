@@ -12,8 +12,8 @@ export class TakeSeatUsecase {
   ) {}
 
   async reservationSeat(body: SeatReservDto) {
+    await this.userService.findOne(body.userId);
     const data = await this.concertService.create(body);
-    await this.userService.createUser(body);
     return data;
   }
 }

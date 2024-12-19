@@ -2,7 +2,7 @@ import { User } from '../../domain/entity/user';
 import UserEntity from '../entity/user.entity';
 
 export class UserMapper {
-  static toDomain(entity: UserEntity): User {
+  static toDomain(entity: Partial<UserEntity>): User {
     return new User({
       id: entity.id,
       name: entity.name,
@@ -14,7 +14,7 @@ export class UserMapper {
     });
   }
 
-  static toEntity(domain: User): UserEntity {
+  static toEntity(domain: Partial<User>): UserEntity {
     const entity = new UserEntity();
     entity.id = domain.id;
     entity.name = domain.name;

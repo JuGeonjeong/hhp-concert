@@ -74,7 +74,6 @@ export class ConcertService {
       throw new BadRequestException(`없는 스케줄 입니다. id: ${id}`);
     }
     const haveSeats = seats?.map((v) => v.seatNumber);
-    console.log(haveSeats);
     const emptySeats = await this.getAvailableSeats(haveSeats);
     return emptySeats;
   }

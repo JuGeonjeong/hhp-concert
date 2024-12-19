@@ -15,6 +15,7 @@ import { ResPointDto } from '../dto/res/resPoint.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiDataResponse } from 'src/common/api/baseDataResponse';
 import { User } from '../../domain/entity/user';
+import { CreateUserDto } from '../dto/req/createUser.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -24,6 +25,14 @@ export class UserController {
     private readonly pointChargeUsecase: PointChargeUsecase,
     private readonly findPointUsecase: FindPointUsecase,
   ) {}
+
+  @ApiOperation({ summary: '유저 생성', description: '유저를 생성 합니다.' })
+  @ApiDataResponse(User)
+  @HttpCode(200)
+  @Post('')
+  async register(@Body() createUserDto: CreateUserDto): Promise<any> {
+    return await this.registerUserUseCase.execute(createUserDto);
+  }
 
   @ApiOperation({ summary: '포인트 충전', description: '포인트 충전 합니다.' })
   @ApiDataResponse(ResPointDto)
