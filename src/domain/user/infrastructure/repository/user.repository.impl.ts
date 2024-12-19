@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { UserRepository } from '../../domain/repository/userRepository';
-import { User } from '../../domain/entity/user';
 import { UserMapper } from '../mapper/user.mapper';
 import { SeatReservDto } from 'src/domain/concert/interface/dto/req/seatReserv.dto';
+import { User } from '../../domain/entity/user';
+import UserEntity from '../entity/user.entity';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
@@ -26,7 +27,7 @@ export class UserRepositoryImpl implements UserRepository {
    * @see {UserRepository.findOne}
    */
   async findOne(id: number): Promise<User> {
-    const entity = await this.manager.findOne(User, { where: { id } });
+    const entity = await this.manager.findOne(UserEntity, { where: { id } });
     return UserMapper.toDomain(entity);
   }
 }

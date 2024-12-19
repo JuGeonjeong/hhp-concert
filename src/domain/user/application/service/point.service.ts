@@ -11,18 +11,18 @@ export class PointService {
   ) {}
 
   async charge(body: { userId: number; point: number }): Promise<Point> {
-    const { userId, point } = body;
+    const { userId } = body;
     // const mutex = new Mutex();
     // return mutex.runExclusive(async () => {
     const exPoint = await this.pointRepository.findOne(userId);
     if (exPoint) {
-      if (exPoint.amount <= 100000) {
+      if (exPoint.amount + body.point > 100000) {
         throw new BadRequestException(
-          `최대보유금을 초과했습니다. 현재: ${100000 - exPoint.amount}`,
+          `최대보유금을 초과했습니다. 현재: ${exPoint.amount + body.point - 100000}`,
         );
       }
     }
-    return await this.pointRepository.charge({ userId, point });
+    return await this.pointRepository.charge(body);
     // });
   }
 

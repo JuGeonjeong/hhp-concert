@@ -8,9 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateUserUsecase } from '../../application/usecase/createUser.usecase';
-import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
 import { PointChargeUsecase } from '../../application/usecase/pointCharge.usecase';
-import { CreateUserDto } from '../dto/req/createUser.dto';
 import { PointChargeDto } from '../dto/req/pointCharge.dto';
 import { FindPointUsecase } from '../../application/usecase/findPoint.usecase';
 import { ResPointDto } from '../dto/res/resPoint.dto';
@@ -27,38 +25,23 @@ export class UserController {
     private readonly findPointUsecase: FindPointUsecase,
   ) {}
 
-  @Post('')
-  @HttpCode(200)
-  @ApiOperation({ summary: '유저 생성', description: '유저를 생성 합니다.' })
-  @ApiDataResponse(User)
-  async registerUserV1(@Body() createUserDto: CreateUserDto) {
-    const data = await this.registerUserUseCase.execute(createUserDto);
-    return new ResponseSuccessDto<any>({ data });
-  }
-
-  @Post('charge')
-  @HttpCode(200)
   @ApiOperation({ summary: '포인트 충전', description: '포인트 충전 합니다.' })
-  async charge(
-    @Query('userId', ParseIntPipe) userId: number,
-    @Body() body: PointChargeDto,
-  ): Promise<ResponseSuccessDto<any>> {
-    const data = await this.pointChargeUsecase.charge({
-      userId,
-      point: body.point,
-    });
-    return new ResponseSuccessDto<any>({
-      data: new ResPointDto(data.user, data.point),
-    });
+  @ApiDataResponse(ResPointDto)
+  @HttpCode(200)
+  @Post('charge')
+  async charge(@Body() body: PointChargeDto): Promise<any> {
+    const data = await this.pointChargeUsecase.charge(body);
+    return new ResPointDto(data);
   }
 
-  @Get('point')
-  @HttpCode(200)
   @ApiOperation({ summary: '포인트 조회', description: '포인트 조회 합니다.' })
+  @ApiDataResponse(User)
+  @HttpCode(200)
+  @Get('point')
   async findPoints(
     @Query('userId', ParseIntPipe) userId: number,
   ): Promise<ResPointDto> {
     const data = await this.findPointUsecase.findOne(userId);
-    return new ResPointDto(data.user, data.point);
+    return new ResPointDto(data);
   }
 }

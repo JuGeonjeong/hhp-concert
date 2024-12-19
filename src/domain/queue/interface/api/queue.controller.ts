@@ -44,8 +44,7 @@ export class QueueController {
   @ApiDataResponse(TokenInfo)
   @Get('check')
   async checkToken(@ReqToken() token): Promise<any> {
-    const data = await this.checkTokenUseCase.check(token);
-    return data;
+    return await this.checkTokenUseCase.check(token);
   }
 
   @ApiOperation({

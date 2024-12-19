@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class TokenInfo {
+  @ApiProperty({ description: 'uuid' })
+  readonly uuid: string;
+
   @ApiProperty({ description: '대기인원수' })
   readonly waitingCount: number;
 
@@ -8,6 +11,7 @@ export class TokenInfo {
   readonly waitingMin: number;
 
   constructor(queue: any) {
+    this.uuid = queue.uuit;
     this.waitingCount = queue.waitingCount;
     this.waitingMin = queue.waitingMin;
   }

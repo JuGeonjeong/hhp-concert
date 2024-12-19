@@ -15,6 +15,7 @@ export class PointRepositoryImpl implements PointRepository {
    * @see {PointRepository.charge}
    */
   async charge(body: { userId: number; point: number }): Promise<Point> {
+    console.log(body);
     return await this.manager.transaction(
       async (transactionalEntityManager) => {
         const existingPoint = await transactionalEntityManager
@@ -40,8 +41,9 @@ export class PointRepositoryImpl implements PointRepository {
    * @see {PointRepository.findOne}
    */
   async findOne(userId: number): Promise<Point> {
-    const entity = await this.manager.findOne(Point, { where: { userId } });
-    // return PointMapper.toDomain(entity);
+    const entity = await this.manager.findOne(PointEntity, {
+      where: { userId },
+    });
     return PointMapper.toDomain(entity);
   }
 

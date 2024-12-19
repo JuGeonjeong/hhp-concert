@@ -8,7 +8,6 @@ export class CreateUserUsecase {
   ) {}
 
   async execute(createUserDto) {
-    const user = await this.userService.createUser(createUserDto);
-    return user;
+    return await this.userService.createUser(createUserDto);
   }
 }
