@@ -10,7 +10,7 @@ export class CheckTokenUsecase {
   async check(token) {
     await this.queueService.findOne(token.uuid);
     const waitingCount = await this.queueService.waitingCount();
-    const data = { waitingCount, waitingTime: waitingCount * 5 };
+    const data = { waitingCount, waitingMin: waitingCount * 2 };
     return data;
   }
 }

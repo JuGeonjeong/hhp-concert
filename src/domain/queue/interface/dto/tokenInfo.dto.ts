@@ -5,10 +5,10 @@ export class TokenInfo {
   readonly waitingCount: number;
 
   @ApiProperty({ description: '대기시간(분)' })
-  readonly waitingTime: number;
+  readonly waitingMin: number;
 
   constructor(queue: any) {
     this.waitingCount = queue.waitingCount;
-    this.waitingTime = queue.waitingTime;
+    this.waitingMin = queue.waitingMin;
   }
 }
