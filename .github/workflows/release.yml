@@ -34,13 +34,14 @@ jobs:
             false
 
             # Push a dummy commit to the same branch
-      - name: PUSH_DUMMY_COMMIT
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Create a dummy commit to trigger the PR button
-          echo "Dummy commit for release ${{ env.version }}" >> dummy.txt
-          git add dummy.txt
-          git commit -m "chore: Trigger PR button for release ${{ env.version }}"
-          git push origin HEAD
+          # Create a pull request for new changes
+      - name: CREATE_PR_FOR_NEW_CHANGES
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          commit-message: 'chore: Prepare release ${{ env.version }}'
+          title: 'Release ${{ env.version }}'
+          body: |
+            This PR includes the changes for release version ${{ env.version }}.
+            Please review and merge.
