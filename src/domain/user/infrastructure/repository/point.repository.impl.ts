@@ -10,21 +10,24 @@ import PointEntity from '../entity/point.entity';
 export class PointRepositoryImpl implements PointRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async charge(point: Point): Promise<Point> {
+  /**
+   * @interface
+   * @see {PointRepository.charge}
+   */
+  async charge(body: { userId: number; point: number }): Promise<Point> {
+    console.log(body);
     return await this.manager.transaction(
       async (transactionalEntityManager) => {
         const existingPoint = await transactionalEntityManager
           .createQueryBuilder(PointEntity, 'point')
           .setLock('pessimistic_write')
-          .where('point.userId = :userId', { userId: point.userId })
+          .where('point.userId = :userId', { userId: body.userId })
           .getOne();
 
         if (!existingPoint) {
           throw new Error('포인트 정보를 찾을 수 없습니다.');
         }
-
-        existingPoint.amount += point.amount;
-
+        existingPoint.amount += body.point;
         const updatedPointEntity =
           await transactionalEntityManager.save(existingPoint);
 
@@ -33,13 +36,23 @@ export class PointRepositoryImpl implements PointRepository {
     );
   }
 
+  /**
+   * @interface
+   * @see {PointRepository.findOne}
+   */
   async findOne(userId: number): Promise<Point> {
-    const entity = await this.manager.findOne(Point, { where: { userId } });
+    const entity = await this.manager.findOne(PointEntity, {
+      where: { userId },
+    });
     return PointMapper.toDomain(entity);
   }
 
-  async usePoint(point: Point): Promise<Point> {
-    const entity = PointMapper.toEntity(new Point(point));
+  /**
+   * @interface
+   * @see {PointRepository.usePoint}
+   */
+  async usePoint(point: any): Promise<Point> {
+    const entity = PointMapper.toEntity(point);
     const pointEntity = await this.manager.save(entity);
     return await this.manager.save(pointEntity);
   }

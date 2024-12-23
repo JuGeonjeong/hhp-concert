@@ -11,7 +11,7 @@ import { SeatMapper } from '../mapper/seat.mapper';
 export class SeatRepositoryImpl implements SeatRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async create(data): Promise<Seat> {
+  async create(data: any): Promise<Seat> {
     const { userId, scheduleId, seatNumber } = data;
     const expiredAt = dayjs().add(5, 'minute').toDate();
 
@@ -26,16 +26,16 @@ export class SeatRepositoryImpl implements SeatRepository {
         throw new Error('이미 예약된 좌석입니다.');
       }
 
-      const seat = new Seat({
+      const data = SeatMapper.toEntity({
         userId,
         scheduleId,
         seatNumber,
         expiredAt,
       });
-      console.log(seat);
+      console.log(data);
 
       try {
-        const entity = await transactional.save(seat);
+        const entity = await transactional.save(data);
         return SeatMapper.toDomain(entity);
       } catch (error) {
         if (error.name === 'OptimisticLockVersionMismatchError') {
@@ -44,18 +44,6 @@ export class SeatRepositoryImpl implements SeatRepository {
         throw error;
       }
     });
-  }
-
-  async exSeat(data: any): Promise<Seat> {
-    const now = dayjs().toDate();
-    const entity = await this.manager.findOne(SeatEntity, {
-      where: {
-        seatNumber: data.seatNumber,
-        status: SeatStatusEnum.AVAILABLE,
-        expiredAt: LessThan(now),
-      },
-    });
-    return SeatMapper.toDomain(entity);
   }
 
   async cancel(seatNumber: number): Promise<Seat> {

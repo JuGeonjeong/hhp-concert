@@ -7,12 +7,13 @@ export class CheckTokenUsecase {
     private readonly queueService: QueueService,
   ) {}
 
-  async check(token) {
-    // uuid로 queueT을 검증
+  async check(token: any) {
     await this.queueService.findOne(token.uuid);
     const waitingCount = await this.queueService.waitingCount();
-
-    // return: 대기인원, 대기시간
-    return { waitingCount, waitingMin: waitingCount * 5 };
+    return {
+      uuid: token.uuid,
+      waitingCount,
+      waitingMin: waitingCount * 2,
+    };
   }
 }

@@ -16,7 +16,9 @@ export class ConcertService {
     private readonly seatsRepository: SeatRepository,
   ) {}
 
-  // concertRepository
+  /**
+   * 콘서트 조회 합니다.
+   */
   async findConcert(id: number) {
     const concert = await this.concertRepository.findOne(id);
     if (concert) {
@@ -26,7 +28,9 @@ export class ConcertService {
     }
   }
 
-  // scheduleRepository
+  /**
+   * 콘서트의 날짜를 조회 합니다.
+   */
   async findSchedules(concertId: number) {
     const schedules = await this.scheduleRepository.findSchedules(concertId);
     if (schedules) {
@@ -36,6 +40,9 @@ export class ConcertService {
     }
   }
 
+  /**
+   * 콘서트 스케줄을 합니다.
+   */
   async findSchedule(id: number) {
     const schedule = await this.scheduleRepository.findOne(id);
     if (!schedule) {
@@ -43,25 +50,16 @@ export class ConcertService {
     }
   }
 
-  // seatsRepository
   /**
    * 새로운 좌석을 생성합니다.
-   *
-   * @param {Object} body - 생성할 좌석의 정보가 포함된 객체
-   * @returns {Promise<Object>} 생성된 좌석 객체를 반환
    */
   async create(body) {
     return await this.seatsRepository.create(body);
   }
 
-  async cancelSeat(body) {
-    const exSeat = await this.seatsRepository.exSeat(body);
-    if (exSeat) {
-      await this.seatsRepository.cancel(exSeat.seatNumber);
-    }
-    return exSeat;
-  }
-
+  /**
+   * 좌석의 정보를 조회합니다.
+   */
   async findOne(id) {
     const data = await this.seatsRepository.findOne(id);
     if (!data) {
@@ -76,7 +74,6 @@ export class ConcertService {
       throw new BadRequestException(`없는 스케줄 입니다. id: ${id}`);
     }
     const haveSeats = seats?.map((v) => v.seatNumber);
-    console.log(haveSeats);
     const emptySeats = await this.getAvailableSeats(haveSeats);
     return emptySeats;
   }
@@ -94,6 +91,6 @@ export class ConcertService {
   // 매 1분마다 만료된 예약을 처리
   @Cron('*/1 * * * *')
   async handleReservationExpiry(): Promise<void> {
-    await this.seatsRepository.expireReservations();
+    // await this.seatsRepository.expireReservations();
   }
 }

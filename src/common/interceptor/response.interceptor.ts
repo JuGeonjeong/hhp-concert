@@ -15,7 +15,7 @@ export class ResponseInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       map((data) => {
-        new ResponseSuccessDto({ statusCode, message: '성공', data });
+        return new ResponseSuccessDto({ statusCode, message: 'success', data });
       }),
     );
   }

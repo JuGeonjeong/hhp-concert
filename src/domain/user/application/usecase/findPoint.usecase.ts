@@ -13,6 +13,6 @@ export class FindPointUsecase {
   async findOne(userId: number) {
     const user = await this.userService.findOne(userId);
     const point = await this.pointService.findPoint(userId);
-    return { user, point };
+    return { userId: user.id, amount: point.amount };
   }
 }

@@ -1,23 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Queue } from '../../domain/entity/queue';
 
 export class ResTokenDto {
-  @ApiProperty({ description: 'uuid' })
-  uuid: string;
+  @ApiProperty({ description: '고유키' })
+  readonly id: number;
 
-  @ApiProperty({ description: '생성시간' })
-  createdAt: Date;
+  @ApiProperty({ description: '고유키' })
+  readonly uuid: string;
 
-  //   @ApiProperty({ description: '대기인원수' })
-  //   waitingCount: number;
+  @ApiProperty({ description: '생성날짜' })
+  readonly createdAt: string;
 
-  //   @ApiProperty({ description: '대기시간(분)' })
-  //   waitingTime: number;
-
-  constructor(queue: Queue) {
+  constructor(queue: any) {
+    this.id = queue.id;
     this.uuid = queue.uuid;
     this.createdAt = queue.createdAt;
-    // this.waitingCount = waitingCount;
-    // this.waitingTime = waitingTime;
   }
 }

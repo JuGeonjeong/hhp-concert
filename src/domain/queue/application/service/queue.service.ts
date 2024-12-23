@@ -42,7 +42,7 @@ export class QueueService {
     );
   }
 
-  async findOne(uuid): Promise<Queue> {
+  async findOne(uuid: string): Promise<Queue> {
     const queue = await this.queueRepository.findOne(uuid);
     if (queue) {
       if (queue.status === QueueStatusEnum.WAIT) {
@@ -59,7 +59,7 @@ export class QueueService {
     return await this.queueRepository.update(queue, data);
   }
 
-  async findStatus(uuid) {
+  async findStatus(uuid: string) {
     const queue = await this.queueRepository.findOne(uuid);
     const status = queue.status;
     if (status === QueueStatusEnum.WAIT) {
@@ -90,21 +90,20 @@ export class QueueService {
   // 1분마다 상태를 입장으로 바꿈
   @Cron('*/1 * * * *')
   async joinQueue() {
-    const limit = 5;
-    const waitingQueues = await this.queueRepository.getWaitingQueue(limit);
-    waitingQueues.forEach(async (queue) => {
-      queue.activate();
-      await this.userRepository.create({ uuid: queue.uuid });
-    });
-    await this.queueRepository.updateQueues(waitingQueues);
+    // const limit = 5;
+    // const waitingQueues = await this.queueRepository.getWaitingQueue(limit);
+    // waitingQueues.forEach(async (queue) => {
+    //   queue.activate();
+    //   await this.userRepository.create({ uuid: queue.uuid });
+    // });
+    // await this.queueRepository.updateQueues(waitingQueues);
   }
 
   // 1분마다 상태를 만료로 바꿈
   @Cron('*/1 * * * *')
   async expireQueue() {
-    const expiredQueues = await this.queueRepository.findExpiredQueues();
-    expiredQueues.forEach((queue) => queue.expire());
-
-    await this.queueRepository.updateQueues(expiredQueues);
+    // const expiredQueues = await this.queueRepository.findExpiredQueues();
+    // expiredQueues.forEach((queue) => queue.expire());
+    // await this.queueRepository.updateQueues(expiredQueues);
   }
 }

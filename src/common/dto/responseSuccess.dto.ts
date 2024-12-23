@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 interface ISuccess<T> {
+  readonly statusCode?: number;
   readonly message?: string;
   readonly data?: T;
-  readonly statusCode?: number;
 }
 
 export class baseResponse {

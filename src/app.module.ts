@@ -7,23 +7,23 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { LoggerModule } from './common/logger/logger.module';
 import { CustomExceptionFilter } from './common/filter/exception.filter';
-import { ClientsModule } from '@nestjs/microservices';
-import { KAFKA_OPTION } from './common/kafka/kafka';
+// import { ClientsModule } from '@nestjs/microservices';
+// import { KAFKA_OPTION } from './common/kafka/kafka';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async () => MysqlDataSource.options,
     }),
-    ClientsModule.register({
-      isGlobal: true,
-      clients: [
-        {
-          name: 'KAFKA_CLIENT',
-          ...KAFKA_OPTION,
-        },
-      ],
-    }),
+    // ClientsModule.register({
+    //   isGlobal: true,
+    //   clients: [
+    //     {
+    //       name: 'KAFKA_CLIENT',
+    //       ...KAFKA_OPTION,
+    //     },
+    //   ],
+    // }),
     LoggerModule,
     DomainModule,
   ],

@@ -1,13 +1,13 @@
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { applyDecorators, Type } from '@nestjs/common';
-import { baseResponse } from '../dto/responseSuccess.dto';
+// import { baseResponse } from '../dto/responseSuccess.dto';
 
-export class DataResponse<T> extends baseResponse {
-  data: T;
-}
+// export class DataResponse<T> extends baseResponse {
+//   data: T;
+// }
 
-export const ApiDataResponse = <TEntity extends Type<unknown>>(
-  entity: TEntity,
+export const ApiDataResponse = <TModel extends Type<unknown>>(
+  model: TModel,
 ) => {
   return applyDecorators(
     ApiOkResponse({
@@ -29,13 +29,13 @@ export const ApiDataResponse = <TEntity extends Type<unknown>>(
               data: {
                 description: 'data',
                 type: 'object',
-                $ref: getSchemaPath(entity),
+                $ref: getSchemaPath(model),
               },
             },
           },
         ],
       },
     }),
-    ApiExtraModels(entity),
+    ApiExtraModels(model),
   );
 };

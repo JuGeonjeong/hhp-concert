@@ -4,7 +4,7 @@ export interface SeatRepository {
   // 임시예약
   create(data): Promise<Seat>;
   // 5분 지난 예약 자리 찾기
-  exSeat(data): Promise<Seat>;
+  // exSeat(data): Promise<Seat>;
   // 자리조회
   findOne(id): Promise<Seat>;
   // 자리조회

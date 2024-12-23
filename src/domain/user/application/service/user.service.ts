@@ -15,7 +15,7 @@ export class UserService {
     return await this.userRepository.create(body);
   }
 
-  async findOne(userId): Promise<User> {
+  async findOne(userId: number): Promise<User> {
     const data = await this.userRepository.findOne(userId);
     if (!data)
       throw new NotFoundException404(`없는 유저 입니다. id: ${userId}`);

@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 import { UserService } from '../service/user.service';
 
 export class CreateUserUsecase {
@@ -8,9 +7,7 @@ export class CreateUserUsecase {
     private readonly userService: UserService,
   ) {}
 
-  async execute(createUserDto: CreateUserDto) {
-    // 유저 생성
-    const user = await this.userService.createUser(createUserDto);
-    return user;
+  async execute(createUserDto) {
+    return await this.userService.createUser(createUserDto);
   }
 }
