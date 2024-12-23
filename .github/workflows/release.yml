@@ -40,8 +40,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
-          commit-message: 'chore: Prepare release ${{ env.version }}'
-          title: 'Release ${{ env.version }}'
+          commit-message: 'chore: Prepare release 111'
+          title: 'Release 111'
           body: |
-            This PR includes the changes for release version ${{ env.version }}.
+            This PR includes the changes for release version 1111.
             Please review and merge.
