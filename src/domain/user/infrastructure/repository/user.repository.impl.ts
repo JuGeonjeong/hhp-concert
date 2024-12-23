@@ -19,7 +19,6 @@ export class UserRepositoryImpl implements UserRepository {
     const userEntity = await this.manager.save(entity);
     return UserMapper.toDomain(userEntity);
   }
-
   /**
    * @interface
    * @see {UserRepository.findOne}
