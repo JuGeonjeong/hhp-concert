@@ -10,7 +10,6 @@ import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
-
   /**
    * @interface
    * @see {UserRepository.create}
