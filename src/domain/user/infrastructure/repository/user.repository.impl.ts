@@ -10,7 +10,6 @@ import { CreateUserDto } from '../../interface/dto/req/createUser.dto';
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
-
   /**
    * @interface
    * @see {UserRepository.create}
@@ -20,6 +19,7 @@ export class UserRepositoryImpl implements UserRepository {
     const userEntity = await this.manager.save(entity);
     return UserMapper.toDomain(userEntity);
   }
+
   /**
    * @interface
    * @see {UserRepository.findOne}
