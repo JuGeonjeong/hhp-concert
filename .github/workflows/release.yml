@@ -30,18 +30,4 @@ jobs:
           tag_name: ${{ env.version }}
           release_name: ${{ env.version }}
           draft: false
-          prerelease:
-            false
-
-            # Push a dummy commit to the same branch
-          # Create a pull request for new changes
-      - name: CREATE_PR_FOR_NEW_CHANGES
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          commit-message: 'chore: Prepare release 111'
-          title: 'Release 111'
-          body: |
-            This PR includes the changes for release version 1111.
-            Please review and merge.
+          prerelease: false
