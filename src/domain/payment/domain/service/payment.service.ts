@@ -1,4 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { PaymentRepository } from '../repository/payment.repository';
+import { Payment } from '../entity/payment';
 import { DataSource } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { PaymentStatusEnum } from '../../infrastructure/entity/payment.entity';
@@ -10,8 +12,6 @@ import {
 } from '../../application/event/paymentEventPublisher';
 import { PointService } from 'src/domain/user/domain/service/point.service';
 import { UserService } from 'src/domain/user/domain/service/user.service';
-import { PaymentRepository } from '../../domain/repository/payment.repository';
-import { Payment } from '../../domain/entity/payment';
 import { ConcertService } from 'src/domain/concert/domain/service/concert.service';
 
 @Injectable()
