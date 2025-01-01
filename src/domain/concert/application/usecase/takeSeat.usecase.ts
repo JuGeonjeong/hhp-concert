@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { ConcertService } from '../service/concert.service';
 import { SeatReservDto } from '../../interface/dto/req/seatReserv.dto';
-import { UserService } from 'src/domain/user/application/service/user.service';
+import { UserService } from 'src/domain/user/domain/service/user.service';
+import { ConcertService } from '../../domain/service/concert.service';
 
 export class TakeSeatUsecase {
   constructor(

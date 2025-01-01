@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { PaymentService } from '../service/payment.service';
+import { PaymentService } from '../../domain/service/payment.service';
 
 export class CreateOrderUsecase {
   constructor(

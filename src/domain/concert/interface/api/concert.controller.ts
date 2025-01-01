@@ -8,24 +8,20 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ResponseSuccessDto } from 'src/common/dto/responseSuccess.dto';
-import { AvailableDatesUsecase } from '../../application/usecase/availableDates.usecase';
-import { AvailableSeatsUsecase } from '../../application/usecase/availableSeats.usecase';
 import { ResDatesDto } from '../dto/res/resDates.dto';
-import { TakeSeatUsecase } from '../../application/usecase/takeSeat.usecase';
 import { SeatReservDto } from '../dto/req/seatReserv.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateOrderUsecase } from 'src/domain/payment/application/usecase/createOrder.usecase';
 import { PaymentSeatDto } from '../dto/req/payment.seat.dto';
+import { ConcertFacade } from '../../application/concert.facade';
 
 @ApiTags('Concert')
 @Controller('concert')
 export class ConcertController {
   constructor(
-    private readonly availableDatesUsecase: AvailableDatesUsecase,
-    private readonly availableSeatsUsecase: AvailableSeatsUsecase,
-    private readonly takeSeatUsecase: TakeSeatUsecase,
+    @Inject(ConcertFacade)
+    private readonly concertFacade: ConcertFacade,
     private readonly createOrderUsecase: CreateOrderUsecase,
     // @Inject('KAFKA_CLIENT')
     // private readonly kafkaClient: ClientKafka,
@@ -51,7 +47,7 @@ export class ConcertController {
   async findDates(
     @Query('concertId', ParseIntPipe) concertId: number,
   ): Promise<any> {
-    const data = await this.availableDatesUsecase.findDates(concertId);
+    const data = await this.concertFacade.findDates(concertId);
     return data.map((schedule) => new ResDatesDto(schedule));
   }
 
@@ -65,7 +61,7 @@ export class ConcertController {
   async findSeats(
     @Query('scheduleId', ParseIntPipe) scheduleId: number,
   ): Promise<any> {
-    return await this.availableSeatsUsecase.findSeats(scheduleId);
+    return await this.concertFacade.findSeats(scheduleId);
   }
 
   // POST /concert/resevation 좌석 5분 임시예약
@@ -76,7 +72,7 @@ export class ConcertController {
   @HttpCode(200)
   @Post('reservation')
   async createReserv(@Body() body: SeatReservDto): Promise<any> {
-    return await this.takeSeatUsecase.reservationSeat(body);
+    return await this.concertFacade.reservationSeat(body);
   }
 
   @MessagePattern('payment')
