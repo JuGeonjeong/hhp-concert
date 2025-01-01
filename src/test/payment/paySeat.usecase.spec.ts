@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PaySeatUsecase } from '../../domain/payment/application/usecase/paySeat.usecase';
 import { Mutex } from 'async-mutex';
 import { PointService } from 'src/domain/user/application/service/point.service';
-import { QueueService } from 'src/domain/queue/application/service/queue.service';
+import { QueueService } from 'src/domain/queue/domain/service/queue.service';
 import { UserService } from 'src/domain/user/application/service/user.service';
 import { ConcertService } from 'src/domain/concert/application/service/concert.service';
 import { PaymentService } from 'src/domain/payment/application/service/payment.service';

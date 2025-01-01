@@ -7,7 +7,7 @@ import { PointRepositoryImpl } from '../user/infrastructure/repository/point.rep
 import { QueueRepositoryImpl } from '../queue/infrastructure/repository/queue.repository.impl';
 import { UserRepositoryImpl } from '../user/infrastructure/repository/user.repository.impl';
 import { PointService } from '../user/application/service/point.service';
-import { QueueService } from '../queue/application/service/queue.service';
+import { QueueService } from '../queue/domain/service/queue.service';
 import { UserService } from '../user/application/service/user.service';
 import { PaymentService } from './application/service/payment.service';
 import { ConcertService } from '../concert/application/service/concert.service';

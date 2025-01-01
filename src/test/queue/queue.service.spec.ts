@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { QueueService } from '../../domain/queue/application/service/queue.service';
+import { QueueService } from '../../domain/queue/domain/service/queue.service';
 import { BadRequestException } from '@nestjs/common';
 import { QueueRepository } from '../../domain/queue/domain/repository/queue.repository';
 import Queue, { QueueStatusEnum } from '../../domain/queue/domain/entity/queue';

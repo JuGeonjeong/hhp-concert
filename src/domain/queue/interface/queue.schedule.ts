@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { QueueService } from '../application/service/queue.service';
+import { QueueService } from '../domain/service/queue.service';
 // import { Cron } from '@nestjs/schedule';
 
 @Injectable()
