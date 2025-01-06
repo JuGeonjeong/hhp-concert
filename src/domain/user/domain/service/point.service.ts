@@ -26,10 +26,10 @@ export class PointService {
     // });
   }
 
-  async findPoint(userId: number): Promise<Point> {
+  async findPoint(userId: number): Promise<any> {
     const data = await this.pointRepository.findOne(userId);
     if (!data) {
-      throw new BadRequestException(`보유포인트가 없습니다.`);
+      return { userId, amount: 0 };
     }
     return data;
   }

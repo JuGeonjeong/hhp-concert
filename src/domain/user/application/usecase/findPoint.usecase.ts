@@ -11,8 +11,7 @@ export class FindPointUsecase {
   ) {}
 
   async findOne(userId: number) {
-    const user = await this.userService.findOne(userId);
-    const point = await this.pointService.findPoint(userId);
-    return { userId: user.id, amount: point.amount };
+    await this.userService.findOne(userId);
+    return await this.pointService.findPoint(userId);
   }
 }

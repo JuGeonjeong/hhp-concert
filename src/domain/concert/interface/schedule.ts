@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ConcertService } from '../application/service/concert.service';
 import { Cron } from '@nestjs/schedule';
+import { ConcertService } from '../domain/service/concert.service';
 
 @Injectable()
 export class ReservationExpiryScheduler {

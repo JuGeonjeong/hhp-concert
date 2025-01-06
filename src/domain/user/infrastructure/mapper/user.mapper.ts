@@ -2,6 +2,7 @@ import { User } from '../../domain/entity/user';
 import UserEntity from '../entity/user.entity';
 
 export class UserMapper {
+  // Infrastructure(UserEntity) → Domain(User)
   static toDomain(entity: Partial<UserEntity>): User {
     return new User({
       id: entity.id,
@@ -10,16 +11,16 @@ export class UserMapper {
       uuid: entity.uuid,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,
     });
   }
 
+  // Domain(User) → Infrastructure(UserEntity)
   static toEntity(domain: Partial<User>): UserEntity {
     const entity = new UserEntity();
-    entity.id = domain.id;
-    entity.name = domain.name;
-    entity.email = domain.email;
-    entity.uuid = domain.uuid;
+    entity.id = domain.getId();
+    entity.name = domain.getName();
+    entity.email = domain.getEmail();
+    entity.uuid = domain.getUuid();
     return entity;
   }
 }

@@ -1,4 +1,5 @@
-import { NotFoundException404 } from 'src/common/exception/not.fount.exception.404';
+// import { NotFoundException404 } from '../../../../../src/common/exception/not.found.exception.404';
+import { NotFoundException404 } from 'src/common/exception/not.found.exception.404';
 import { PaymentStatusEnum } from '../../infrastructure/entity/payment.entity';
 
 export class Payment {

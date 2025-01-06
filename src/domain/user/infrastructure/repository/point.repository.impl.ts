@@ -44,7 +44,7 @@ export class PointRepositoryImpl implements PointRepository {
     const entity = await this.manager.findOne(PointEntity, {
       where: { userId },
     });
-    return PointMapper.toDomain(entity);
+    return entity ? PointMapper.toDomain(entity) : null;
   }
 
   /**
