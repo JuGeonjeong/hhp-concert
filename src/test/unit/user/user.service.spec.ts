@@ -43,6 +43,7 @@ describe('UserService unit test', () => {
 
       const result = await userService.createUser(body);
       expect(result).toEqual(createdUser);
+      expect(mockUserRepository.create).toHaveBeenCalledWith(body);
     });
     // 실패케이스: 사용자 생성 후 리턴값이 올바르지 않은 경우
     it('Mock된 값이 다를 경우 테스트를 실패한다.', async () => {
@@ -67,12 +68,13 @@ describe('UserService unit test', () => {
       expect(result.getName()).toBe('Incorrect Name');
       expect(result.getEmail()).toBe(body.email);
       expect(result.getId()).toBe(createdUser.getId());
+      expect(mockUserRepository.create).toHaveBeenCalledWith(body);
     });
   });
 
   describe('findOne', () => {
     // 성공케이스: 올바른 호출
-    it('사용자를 찾아야 한다.', async () => {
+    it('userId의 올바른 사용자를 찾아야 한다.', async () => {
       const userId = 2;
       const userMock = new User({
         id: userId,

@@ -15,23 +15,24 @@ export class PointRepositoryImpl implements PointRepository {
    * @see {PointRepository.charge}
    */
   async charge(body: { userId: number; point: number }): Promise<Point> {
-    console.log(body);
     return await this.manager.transaction(
       async (transactionalEntityManager) => {
-        const existingPoint = await transactionalEntityManager
+        let point = await transactionalEntityManager
           .createQueryBuilder(PointEntity, 'point')
           .setLock('pessimistic_write')
           .where('point.userId = :userId', { userId: body.userId })
           .getOne();
 
-        if (!existingPoint) {
-          throw new Error('포인트 정보를 찾을 수 없습니다.');
+        if (!point) {
+          point = new PointEntity();
+          point.userId = body.userId;
+          point.amount = body.point;
+        } else {
+          point.amount += body.point;
         }
-        existingPoint.amount += body.point;
-        const updatedPointEntity =
-          await transactionalEntityManager.save(existingPoint);
 
-        return PointMapper.toDomain(updatedPointEntity);
+        const savedPoint = await transactionalEntityManager.save(point);
+        return PointMapper.toDomain(savedPoint);
       },
     );
   }
@@ -51,7 +52,7 @@ export class PointRepositoryImpl implements PointRepository {
    * @interface
    * @see {PointRepository.usePoint}
    */
-  async usePoint(point: any): Promise<Point> {
+  async usePoint(point: any): Promise<any> {
     const entity = PointMapper.toEntity(point);
     const pointEntity = await this.manager.save(entity);
     return await this.manager.save(pointEntity);

@@ -12,9 +12,4 @@ export default class PointEntity extends BaseEntities {
     foreignKeyConstraintName: 'fk_seat_userId',
   })
   userId: number;
-
-  // constructor(partial: Partial<Point>) {
-  //   super();
-  //   Object.assign(this, partial);
-  // }
 }
