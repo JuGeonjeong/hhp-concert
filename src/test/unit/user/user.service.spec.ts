@@ -19,6 +19,10 @@ describe('UserService unit test', () => {
     userService = new UserService(mockUserRepository);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('UserService가 정의되어 있어야 한다.', () => {
     expect(userService).toBeDefined();
   });

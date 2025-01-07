@@ -1,13 +1,13 @@
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 export class Queue {
-  id: number;
+  readonly id: number;
   uuid: string;
   status: QueueStatusEnum;
   enteredAt: Date;
   expiredAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  readonly createdAt: Date;
+  private updatedAt: Date;
+  private readonly deletedAt: Date;
 
   constructor(args: {
     id?: number;

@@ -129,7 +129,7 @@ describe('PointService unit test', () => {
 
       mockPointRepository.findOne.mockResolvedValue(initialPoint);
 
-      await expect(pointService.useCheck(userId, price)).rejects.toThrowError(
+      await expect(pointService.useCheck(userId, price)).rejects.toThrow(
         new BadRequestException400(
           `보유 포인트를 초과했습니다. 보유포인트: ${initialPoint.amount}`,
         ),

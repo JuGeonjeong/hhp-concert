@@ -48,7 +48,7 @@ export class QueueController {
   @HttpCode(200)
   @ApiDataResponse(TokenInfo)
   @Get('check')
-  async checkToken(@ReqToken() token): Promise<any> {
+  async checkToken(@ReqToken() token: string): Promise<any> {
     return await this.queueFacade.checkToken(token);
   }
 
@@ -60,7 +60,7 @@ export class QueueController {
   @Put('out')
   async update(
     @Res({ passthrough: true }) response: Response,
-    @ReqToken() token,
+    @ReqToken() token: string,
   ): Promise<any> {
     const data = await this.queueFacade.outToken(token);
     this.cookieAdapter.clearCookie(response);

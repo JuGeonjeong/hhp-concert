@@ -1,19 +1,17 @@
 import { sign } from 'jsonwebtoken';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { QueueRepository } from '../repository/queue.repository';
 import { Queue } from '../entity/queue';
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 import { Cron } from '@nestjs/schedule';
 import { v4 as uuidv4 } from 'uuid';
-import { UserRepository } from 'src/domain/user/domain/repository/userRepository';
+import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 
 @Injectable()
 export class QueueService {
   constructor(
     @Inject('IQueueRepository')
     private readonly queueRepository: QueueRepository,
-    @Inject('IUserRepository')
-    private readonly userRepository: UserRepository,
   ) {}
 
   async createQueue(): Promise<Queue> {
@@ -48,10 +46,10 @@ export class QueueService {
       if (queue.status === QueueStatusEnum.WAIT) {
         return queue;
       } else {
-        throw new BadRequestException(`대기중이 아닙니다.`);
+        throw new BadRequestException400(`대기중이 아닙니다.`);
       }
     } else {
-      throw new BadRequestException(`없는 대기열 데이터입니다.`);
+      throw new BadRequestException400(`없는 대기열 데이터입니다.`);
     }
   }
 
@@ -59,32 +57,8 @@ export class QueueService {
     return await this.queueRepository.update(queue, data);
   }
 
-  async findStatus(uuid: string) {
-    const queue = await this.queueRepository.findOne(uuid);
-    const status = queue.status;
-    if (status === QueueStatusEnum.WAIT) {
-      return queue;
-    }
-    if (status === QueueStatusEnum.ENTER) {
-    }
-    if (status === QueueStatusEnum.OUT) {
-    }
-  }
-
   async waitingCount() {
     return await this.queueRepository.waitingCount();
-  }
-
-  async findStatusEnter() {
-    return await this.queueRepository.findStatusEnter();
-  }
-
-  async removeQueue(queue: Queue, data: Partial<Queue>): Promise<Queue> {
-    return await this.queueRepository.update(queue, data);
-  }
-
-  async ghostQueue(): Promise<Queue[]> {
-    return await this.queueRepository.ghostQueue();
   }
 
   // 1분마다 상태를 입장으로 바꿈
