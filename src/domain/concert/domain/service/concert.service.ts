@@ -1,9 +1,11 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConcertRepository } from '../../domain/repository/concertRepository';
 import { ScheduleRepository } from '../../domain/repository/scheduleRepository';
 import { SeatRepository } from '../../domain/repository/seatRepository';
 import { Seat } from '../../domain/entity/seat';
 import { Cron } from '@nestjs/schedule';
+import { NotFoundException404 } from 'src/common/exception/not.found.exception.404';
+import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 
 @Injectable()
 export class ConcertService {
@@ -19,61 +21,62 @@ export class ConcertService {
   /**
    * 콘서트 조회 합니다.
    */
-  async findConcert(id: number) {
+  async findConcert(id: number): Promise<any> {
     const concert = await this.concertRepository.findOne(id);
     if (concert) {
       return concert;
     } else {
-      throw new BadRequestException(`없는 콘서트 입니다. id: ${id}`);
+      throw new NotFoundException404(`없는 콘서트 입니다. id: ${id}`);
     }
   }
 
   /**
    * 콘서트의 날짜를 조회 합니다.
    */
-  async findSchedules(concertId: number) {
+  async findSchedules(concertId: number): Promise<any> {
     const schedules = await this.scheduleRepository.findSchedules(concertId);
     if (schedules) {
       return schedules;
     } else {
-      throw new BadRequestException(`콘서트 일정이 없습니다.`);
+      throw new BadRequestException400(`콘서트 일정이 없습니다.`);
     }
   }
 
   /**
-   * 콘서트 스케줄을 합니다.
+   * 콘서트 스케줄을 조회합니다.
    */
-  async findSchedule(id: number) {
+  async findSchedule(id: number): Promise<any> {
     const schedule = await this.scheduleRepository.findOne(id);
     if (!schedule) {
-      throw new BadRequestException(`없는 스케줄 입니다. id: ${id}`);
+      throw new NotFoundException404(`없는 스케줄 입니다. id: ${id}`);
     }
+    return schedule;
   }
 
   /**
    * 새로운 좌석을 생성합니다.
    */
-  async create(body) {
+  async create(body: any): Promise<any> {
     return await this.seatsRepository.create(body);
   }
 
   /**
    * 좌석의 정보를 조회합니다.
    */
-  async findOne(id) {
+  async findOne(id: number): Promise<any> {
     const data = await this.seatsRepository.findOne(id);
     if (!data) {
-      throw new BadRequestException(`없는 좌석 입니다. id: ${id}`);
+      throw new NotFoundException404(`없는 좌석 입니다. id: ${id}`);
     }
     return data;
   }
 
-  async findSeats(id: number) {
+  async findSeats(id: number): Promise<any> {
     const seats = await this.seatsRepository.findSeats(id);
     if (!seats) {
-      throw new BadRequestException(`없는 스케줄 입니다. id: ${id}`);
+      throw new NotFoundException404(`없는 스케줄 입니다. id: ${id}`);
     }
-    const haveSeats = seats?.map((v) => v.seatNumber);
+    const haveSeats = seats?.map((v: any) => v.seatNumber);
     const emptySeats = await this.getAvailableSeats(haveSeats);
     return emptySeats;
   }
@@ -84,7 +87,7 @@ export class ConcertService {
     return availableSeats;
   }
 
-  async update(seat: Seat) {
+  async update(seat: Seat): Promise<any> {
     return await this.seatsRepository.update(seat);
   }
 

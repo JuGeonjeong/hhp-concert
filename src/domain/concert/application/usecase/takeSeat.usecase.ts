@@ -13,7 +13,6 @@ export class TakeSeatUsecase {
 
   async reservationSeat(body: SeatReservDto) {
     await this.userService.findOne(body.userId);
-    const data = await this.concertService.create(body);
-    return data;
+    return await this.concertService.create(body);
   }
 }
