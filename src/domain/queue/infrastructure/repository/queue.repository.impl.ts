@@ -10,7 +10,7 @@ import { QueueMapper } from '../mapper/queue.mapper';
 export class QueueRepositoryImpl implements QueueRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async create(queue): Promise<Queue> {
+  async create(queue: any): Promise<Queue> {
     const entity = QueueMapper.toEntity(queue);
     const queueEntity = await this.manager.save(entity);
     return QueueMapper.toDomain(queueEntity);
@@ -26,14 +26,6 @@ export class QueueRepositoryImpl implements QueueRepository {
     const entity = QueueMapper.toEntity(queue);
     const queueEntity = await this.manager.save(entity);
     return QueueMapper.toDomain(queueEntity);
-  }
-
-  async findStatusEnter(): Promise<Queue> {
-    const entity = await this.manager.findOne(QueueEntity, {
-      where: { status: QueueStatusEnum.ENTER },
-      order: { id: 'DESC' },
-    });
-    return QueueMapper.toDomain(entity);
   }
 
   async waitingCount(): Promise<number> {

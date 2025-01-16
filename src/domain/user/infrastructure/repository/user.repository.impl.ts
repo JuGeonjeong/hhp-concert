@@ -15,7 +15,16 @@ export class UserRepositoryImpl implements UserRepository {
    * @see {UserRepository.create}
    */
   async create(body: CreateUserDto): Promise<any> {
-    const entity = UserMapper.toEntity(body);
+    const domainUser = new User({
+      id: null,
+      name: body.name,
+      email: body.email,
+      uuid: body.uuid || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const entity = UserMapper.toEntity(domainUser);
     const userEntity = await this.manager.save(entity);
     return UserMapper.toDomain(userEntity);
   }

@@ -12,9 +12,8 @@ export class OutTokenUsecase {
   async update(token: Queue): Promise<Queue> {
     const { uuid } = token;
     const queue = await this.queueService.findOne(uuid);
-    const update = await this.queueService.update(queue, {
+    return await this.queueService.update(queue, {
       status: QueueStatusEnum.OUT,
     });
-    return update;
   }
 }

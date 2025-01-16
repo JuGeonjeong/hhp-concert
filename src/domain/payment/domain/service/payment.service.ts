@@ -17,19 +17,19 @@ import { ConcertService } from 'src/domain/concert/domain/service/concert.servic
 @Injectable()
 export class PaymentService {
   constructor(
-    private dataSource: DataSource,
     @Inject('IPaymentRepository')
     private readonly paymentRepository: PaymentRepository,
-    private readonly paymentEventPublisher: PaymentEventPublisher,
     @Inject(UserService)
     private readonly userService: UserService,
     @Inject(PointService)
     private readonly pointService: PointService,
     @Inject(ConcertService)
     private readonly concertService: ConcertService,
+    private readonly paymentEventPublisher: PaymentEventPublisher,
+    private dataSource: DataSource,
   ) {}
 
-  async create(request) {
+  async create(request: any) {
     const { userId, seatId, amount } = request;
     const seat = await this.concertService.findOne(seatId);
     Seat.availablePayment(seat);
@@ -49,7 +49,7 @@ export class PaymentService {
     return await this.paymentRepository.findOne(orderKey);
   }
 
-  async pay(request) {
+  async pay(request: any) {
     const { userId, seatId, amount } = request;
     await this.dataSource.transaction(async (transactionManager) => {
       // (1) 결제 요청 검증

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager, LessThan, MoreThan } from 'typeorm';
+import { EntityManager, MoreThan } from 'typeorm';
 import * as dayjs from 'dayjs';
 import { Seat } from '../../domain/entity/seat';
 import { SeatRepository } from '../../domain/repository/seatRepository';

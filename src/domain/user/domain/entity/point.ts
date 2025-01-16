@@ -1,25 +1,10 @@
 export class Point {
-  id: number;
   userId: number;
   amount: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
 
-  constructor(args: {
-    id?: number;
-    userId: number;
-    amount: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    deletedAt?: Date;
-  }) {
-    this.id = args.id;
+  constructor(args: { userId: number; amount: number }) {
     this.userId = args.userId;
     this.amount = args.amount;
-    this.createdAt = args.createdAt;
-    this.updatedAt = args.updatedAt;
-    this.deletedAt = args.deletedAt;
   }
   // getBalance(): number {
   //   return this.amount;
