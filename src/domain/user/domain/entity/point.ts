@@ -16,7 +16,7 @@ export class Point {
 
   // use(amount: number): void {
   //   if (this.balance < amount) {
-  //     throw new Error('잔액이 부족합니다.');
+  //     throw new BadRequestException400('잔액이 부족합니다.');
   //   }
   //   this.balance -= amount;
   // }

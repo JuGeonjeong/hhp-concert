@@ -50,7 +50,7 @@ export class Seat {
 
   // reserve(): void {
   //   if (this.isReserved) {
-  //     throw new Error('이미 예약된 좌석입니다.');
+  //     throw new BadRequestException400('이미 예약된 좌석입니다.');
   //   }
   //   this.concertDate.reserveSeat();
   //   this.isReserved = true;

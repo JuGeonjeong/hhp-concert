@@ -1,9 +1,6 @@
-import {
-  BadRequestException,
-  createParamDecorator,
-  ExecutionContext,
-} from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
+import { BadRequestException400 } from '../exception/bad.request.exception.400';
 
 export const ReqToken = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
@@ -23,7 +20,7 @@ export const ReqToken = createParamDecorator(
         process.env.JWT_SECRET_KEY,
       );
     } else {
-      throw new BadRequestException(`토큰이 없습니다.`);
+      throw new BadRequestException400(`토큰이 없습니다.`);
     }
     console.log('tokenInfo', tokenInfo);
     return tokenInfo;

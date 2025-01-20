@@ -6,6 +6,7 @@ import { Seat } from '../../domain/entity/seat';
 import { SeatRepository } from '../../domain/repository/seatRepository';
 import SeatEntity, { SeatStatusEnum } from '../entity/seat.entity';
 import { SeatMapper } from '../mapper/seat.mapper';
+import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 
 @Injectable()
 export class SeatRepositoryImpl implements SeatRepository {
@@ -23,7 +24,7 @@ export class SeatRepositoryImpl implements SeatRepository {
       });
 
       if (existingSeat) {
-        throw new Error('이미 예약된 좌석입니다.');
+        throw new BadRequestException400('이미 예약된 좌석입니다.');
       }
 
       const data = SeatMapper.toEntity({
@@ -39,7 +40,7 @@ export class SeatRepositoryImpl implements SeatRepository {
         return SeatMapper.toDomain(entity);
       } catch (error) {
         if (error.name === 'OptimisticLockVersionMismatchError') {
-          throw new Error('좌석 예약 충돌이 발생했습니다.');
+          throw new BadRequestException400('좌석 예약 충돌이 발생했습니다.');
         }
         throw error;
       }
