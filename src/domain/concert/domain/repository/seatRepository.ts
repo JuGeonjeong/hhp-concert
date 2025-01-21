@@ -2,11 +2,11 @@ import { Seat } from '../entity/seat';
 
 export interface SeatRepository {
   // 임시예약
-  create(data): Promise<Seat>;
+  create(data: any): Promise<Seat>;
   // 5분 지난 예약 자리 찾기
   // exSeat(data): Promise<Seat>;
   // 자리조회
-  findOne(id): Promise<Seat>;
+  findOne(id: number): Promise<Seat>;
   // 자리조회
   update(seat: Seat): Promise<Seat>;
   // 임시예약 취소

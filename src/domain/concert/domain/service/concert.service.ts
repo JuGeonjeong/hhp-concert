@@ -6,6 +6,8 @@ import { Seat } from '../../domain/entity/seat';
 import { Cron } from '@nestjs/schedule';
 import { NotFoundException404 } from 'src/common/exception/not.found.exception.404';
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
+import { SeatReservDto } from '../../interface/dto/req/seatReserv.dto';
+import { UserRepository } from 'src/domain/user/domain/repository/userRepository';
 
 @Injectable()
 export class ConcertService {
@@ -16,6 +18,8 @@ export class ConcertService {
     private readonly scheduleRepository: ScheduleRepository,
     @Inject('ISeatRepository')
     private readonly seatsRepository: SeatRepository,
+    @Inject('IUserRepository')
+    private readonly userRepository: UserRepository,
   ) {}
 
   /**
@@ -56,8 +60,25 @@ export class ConcertService {
   /**
    * 새로운 좌석을 생성합니다.
    */
-  async create(body: any): Promise<any> {
-    return await this.seatsRepository.create(body);
+  async create(body: SeatReservDto): Promise<any> {
+    let user: any;
+    const name = this.generateRandomName();
+    const email = this.generateRandomEmail();
+    const exUser = await this.userRepository.findByUuid(body.uuid);
+    if (exUser) {
+      user = exUser;
+    } else {
+      user = await this.userRepository.create({
+        uuid: body.uuid,
+        name,
+        email,
+      });
+    }
+    return await this.seatsRepository.create({
+      userId: user.getId(),
+      scheduleId: body.scheduleId,
+      seatNumber: body.seatNumber,
+    });
   }
 
   /**
@@ -95,5 +116,51 @@ export class ConcertService {
   @Cron('*/1 * * * *')
   async handleReservationExpiry(): Promise<void> {
     // await this.seatsRepository.expireReservations();
+  }
+
+  generateRandomName(): string {
+    const firstNames = [
+      'John',
+      'Jane',
+      'Alex',
+      'Chris',
+      'Taylor',
+      'Jordan',
+      'Pat',
+      'Sam',
+      'Casey',
+      'Jamie',
+    ];
+    const lastNames = [
+      'Smith',
+      'Doe',
+      'Johnson',
+      'Brown',
+      'Davis',
+      'Garcia',
+      'Lee',
+      'Martinez',
+      'Clark',
+      'Lopez',
+    ];
+
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+    return `${firstName} ${lastName}`;
+  }
+
+  generateRandomEmail(): string {
+    const domains = [
+      'example.com',
+      'test.com',
+      'demo.com',
+      'mail.com',
+      'sample.org',
+    ];
+    const randomUser = Math.random().toString(36).substring(2, 10); // 랜덤 문자열
+    const domain = domains[Math.floor(Math.random() * domains.length)];
+
+    return `${randomUser}@${domain}`;
   }
 }

@@ -26,6 +26,7 @@ export class SeatMapper {
     entity.scheduleId = seat.scheduleId;
     entity.seatNumber = seat.seatNumber;
     entity.expiredAt = seat.expiredAt;
+    entity.version = seat.version;
     return entity;
   }
 }

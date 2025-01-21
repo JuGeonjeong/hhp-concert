@@ -3,7 +3,7 @@ import { BaseEntities } from '../../../../common/typeorm/base.entity';
 
 export enum SeatStatusEnum {
   // 결제 가능함
-  AVAILABLE = 'AVAILABLE',
+  PENDING = 'PENDING',
   // 좌석 예약완료
   RESERVED = 'RESERVED',
   // 좌석 취소
@@ -22,7 +22,7 @@ export default class SeatEntity extends BaseEntities {
   price: number;
 
   //   @IsEnum(AdjustmentStatusType)
-  @Column({ type: 'enum', enum: SeatStatusEnum, default: 'AVAILABLE' })
+  @Column({ type: 'enum', enum: SeatStatusEnum, default: 'PENDING' })
   status: SeatStatusEnum;
 
   @Column('int')
