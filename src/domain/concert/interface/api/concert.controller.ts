@@ -37,7 +37,6 @@ export class ConcertController {
   // await this.kafkaClient.close();
   // }
 
-  // GET /concert/available-dates
   @ApiOperation({
     summary: '예약가능 날짜 조회',
     description: '예약가능 날짜를 조회 합니다.',
@@ -48,10 +47,9 @@ export class ConcertController {
     @Query('concertId', ParseIntPipe) concertId: number,
   ): Promise<any> {
     const data = await this.concertFacade.findDates(concertId);
-    return data.map((schedule) => new ResDatesDto(schedule));
+    return data.map((schedule: any) => new ResDatesDto(schedule));
   }
 
-  // GET /concert/available-seats
   @ApiOperation({
     summary: '예약가능 좌석 조회',
     description: '예약가능 좌석을 조회 합니다.',
@@ -64,7 +62,6 @@ export class ConcertController {
     return await this.concertFacade.findSeats(scheduleId);
   }
 
-  // POST /concert/resevation 좌석 5분 임시예약
   @ApiOperation({
     summary: '좌석 임시예약',
     description: '좌석 5분 임시예약 합니다.',
