@@ -7,7 +7,7 @@ export class CreateOrderUsecase {
     private readonly paymentService: PaymentService,
   ) {}
 
-  async create(request) {
+  async create(request: any) {
     return await this.paymentService.create(request);
   }
 }

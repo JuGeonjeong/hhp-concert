@@ -4,7 +4,7 @@ import { BaseEntities } from '../../../../common/typeorm/base.entity';
 @Entity({ name: 'point' })
 export default class PointEntity extends BaseEntities {
   @Column('int')
-  amount: number;
+  point: number;
 
   @Column('int')
   @JoinColumn({

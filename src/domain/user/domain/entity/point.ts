@@ -1,23 +1,24 @@
+import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
+
 export class Point {
+  private static readonly MAX_POINTS = 100000;
   userId: number;
-  amount: number;
+  point: number;
 
-  constructor(args: { userId: number; amount: number }) {
+  constructor(args: { userId: number; point: number }) {
     this.userId = args.userId;
-    this.amount = args.amount;
+    this.point = args.point;
   }
-  // getBalance(): number {
-  //   return this.amount;
-  // }
 
-  // charge(amount: number): void {
-  //   this.amount += amount;
-  // }
+  check(amount: number): void {
+    if (this.point + amount > Point.MAX_POINTS) {
+      throw new BadRequestException400(
+        `최대 충전 가능한 포인트는 ${Point.MAX_POINTS}입니다. 다시 시도해주세요.`,
+      );
+    }
+  }
 
-  // use(amount: number): void {
-  //   if (this.balance < amount) {
-  //     throw new BadRequestException400('잔액이 부족합니다.');
-  //   }
-  //   this.balance -= amount;
-  // }
+  charge(amount: number): void {
+    this.point += amount;
+  }
 }

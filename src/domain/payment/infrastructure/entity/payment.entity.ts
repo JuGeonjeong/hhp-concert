@@ -31,9 +31,4 @@ export default class PaymentEntity extends BaseEntities {
 
   @Column()
   amount: number;
-
-  // constructor(partial: Partial<Payment>) {
-  //   super();
-  //   Object.assign(this, partial);
-  // }
 }
