@@ -3,7 +3,7 @@ import { ConcertRepository } from '../../domain/repository/concertRepository';
 import { ScheduleRepository } from '../../domain/repository/scheduleRepository';
 import { SeatRepository } from '../../domain/repository/seatRepository';
 import { Seat } from '../../domain/entity/seat';
-import { Cron } from '@nestjs/schedule';
+// import { Cron } from '@nestjs/schedule';
 import { NotFoundException404 } from 'src/common/exception/not.found.exception.404';
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 import { SeatReservDto } from '../../interface/dto/req/seatReserv.dto';
@@ -113,7 +113,7 @@ export class ConcertService {
   }
 
   // 매 1분마다 만료된 예약을 처리
-  @Cron('*/1 * * * *')
+  // @Cron('*/1 * * * *')
   async handleReservationExpiry(): Promise<void> {
     // await this.seatsRepository.expireReservations();
   }

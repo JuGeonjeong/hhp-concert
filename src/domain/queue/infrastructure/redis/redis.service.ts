@@ -1,19 +1,26 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { createClient, RedisClientType } from 'redis';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 @Injectable()
 export class RedisService implements OnModuleInit {
   private client: RedisClientType;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
     this.client = createClient({
-      url: `redis://${this.configService.get('REDIS_HOST')}:${this.configService.get('REDIS_PORT')}`,
+      url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+      legacyMode: false,
     });
   }
 
   async onModuleInit() {
-    await this.client.connect();
+    try {
+      await this.client.connect();
+      console.log('✅ Redis connected successfully');
+    } catch (error) {
+      console.error('❌ Redis connection failed:', error);
+    }
   }
 
   getClient() {
