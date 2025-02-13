@@ -12,8 +12,8 @@ import QueueEntity from './infrastructure/entity/queue.entity';
 import { UserRepositoryImpl } from '../user/infrastructure/repository/user.repository.impl';
 import { QueueFacadeImpl } from './application/queue.facade.impl';
 import { QueueFacade } from './application/queue.facade';
-import { RedisModule } from './infrastructure/redis/redis.module';
-import { RedisService } from './infrastructure/redis/redis.service';
+import { RedisModule } from '../../common/redis/redis.module';
+import { RedisService } from '../../common/redis/redis.service';
 import { QueueScheduler } from './interface/queue.schedule';
 
 @Module({

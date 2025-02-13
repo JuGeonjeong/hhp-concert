@@ -26,6 +26,7 @@ export class QueueMapper {
     entity.id = domain.id;
     entity.uuid = domain.uuid;
     entity.status = domain.status;
+    entity.enteredAt = domain.enteredAt;
     entity.expiredAt = domain.expiredAt;
     return entity;
   }

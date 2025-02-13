@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { QueueService } from '../../domain/service/queue.service';
-import { RedisService } from '../../infrastructure/redis/redis.service';
+import { RedisService } from '../../../../common/redis/redis.service';
 
 export class CheckTokenUsecase {
   constructor(

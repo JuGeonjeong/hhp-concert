@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RedisService } from '../infrastructure/redis/redis.service';
+import { RedisService } from '../../../common/redis/redis.service';
 import { Cron } from '@nestjs/schedule';
 import { QueueService } from '../domain/service/queue.service';
+import { QueueStatusEnum } from '../infrastructure/entity/queue.entity';
 
 @Injectable()
 export class QueueScheduler {
@@ -25,5 +26,17 @@ export class QueueScheduler {
       await this.queueService.enterQueue(item);
     }
     console.log('🚀 10개 삭제 & MySQL 저장 완료');
+  }
+
+  /** 1분마다 대기열 만료 */
+  @Cron('*/1 * * * *')
+  async quitQueue() {
+    const queue = await this.queueService.expiredQueue();
+    for (const item of queue) {
+      await this.queueService.update(item, {
+        ...item,
+        status: QueueStatusEnum.OUT,
+      });
+    }
   }
 }

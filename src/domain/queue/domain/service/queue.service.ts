@@ -5,7 +5,7 @@ import { Queue } from '../entity/queue';
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
-import { RedisService } from '../../infrastructure/redis/redis.service';
+import { RedisService } from '../../../../common/redis/redis.service';
 
 @Injectable()
 export class QueueService {
@@ -18,8 +18,8 @@ export class QueueService {
   async enterQueue(uuid: string): Promise<void> {
     const queue = new Queue({
       uuid,
-      status: QueueStatusEnum.ENTER,
     });
+    queue.createQueue();
     await this.queueRepository.create(queue);
   }
 
@@ -66,7 +66,11 @@ export class QueueService {
     return await this.queueRepository.update(queue, data);
   }
 
-  async waitingCount() {
+  async waitingCount(): Promise<any> {
     return await this.queueRepository.waitingCount();
+  }
+
+  async expiredQueue(): Promise<Queue[]> {
+    return await this.queueRepository.findExpiredQueues();
   }
 }
