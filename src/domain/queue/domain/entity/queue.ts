@@ -38,6 +38,12 @@ export class Queue {
     }
   }
 
+  createQueue(): void {
+    this.status = QueueStatusEnum.ENTER;
+    this.enteredAt = new Date();
+    this.expiredAt = new Date(new Date().getTime() + 60 * 60 * 1000);
+  }
+
   expire(): void {
     this.enteredAt = null;
     this.status = QueueStatusEnum.OUT;

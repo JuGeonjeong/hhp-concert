@@ -7,10 +7,10 @@ export class PointChargeDto {
   @IsInt()
   readonly userId: number;
 
-  @ApiProperty({ description: '포인트', example: 1000 })
+  @ApiProperty({ description: '금액', example: 1000 })
   @IsNotEmpty()
   @IsInt()
   @Min(1)
   @Max(100000)
-  readonly point: number;
+  readonly amount: number;
 }

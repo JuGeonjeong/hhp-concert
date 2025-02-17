@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, Max, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 
 export class SeatReservDto {
-  @ApiProperty({ description: '유저 고유키' })
+  @ApiProperty({ description: 'uuid' })
   @IsNotEmpty()
-  @IsInt()
-  readonly userId: number;
+  @IsString()
+  readonly uuid: string;
 
   @ApiProperty({ description: '스케줄 고유키' })
   @IsNotEmpty()

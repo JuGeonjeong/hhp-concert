@@ -2,29 +2,28 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PointRepository } from '../../domain/repository/pointRepository';
 import { Point } from '../../domain/entity/point';
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
-// import { Mutex } from 'async-mutex';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PointService {
   constructor(
     @Inject('IPointRepository')
     private readonly pointRepository: PointRepository,
+    private readonly dataSource: DataSource,
   ) {}
 
-  async charge(body: { userId: number; point: number }): Promise<Point> {
-    const { userId, point } = body;
-    // const mutex = new Mutex();
-    // return mutex.runExclusive(async () => {
-    const exPoint = await this.pointRepository.findOne(userId);
-    if (exPoint) {
-      if (exPoint.amount + point > 100000) {
-        throw new BadRequestException400(
-          '최대 충전 가능한 포인트는 100,000입니다. 다시 시도해주세요.',
-        );
+  async charge(body: any): Promise<any> {
+    const { userId, amount } = body;
+
+    return await this.dataSource.transaction(async (manager) => {
+      const point = await this.pointRepository.findOneWithLock(userId, manager);
+      if (point) {
+        point.check(amount);
+        point.charge(amount);
       }
-    }
-    return await this.pointRepository.charge(body);
-    // });
+
+      return await this.pointRepository.save(point, body, manager);
+    });
   }
 
   async findPoint(userId: number): Promise<any> {
@@ -44,7 +43,7 @@ export class PointService {
     const calcPoint = point.amount - price;
     const pointEntity = new Point({
       userId,
-      amount: calcPoint,
+      point: calcPoint,
     });
     await this.pointRepository.usePoint(pointEntity);
 

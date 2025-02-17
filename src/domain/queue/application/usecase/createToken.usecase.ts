@@ -12,7 +12,7 @@ export class CreateTokenUsecase {
     const queue = await this.queueService.createQueue();
     const token = await this.queueService.createJwt(queue);
     const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 2);
-    console.warn(token);
+
     return { queue, token, expiryDate };
   }
 }

@@ -19,7 +19,7 @@ export class UserRepositoryImpl implements UserRepository {
       id: null,
       name: body.name,
       email: body.email,
-      uuid: body.uuid || null,
+      uuid: body.uuid,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -34,6 +34,14 @@ export class UserRepositoryImpl implements UserRepository {
    */
   async findOne(id: number): Promise<User> {
     const entity = await this.manager.findOne(UserEntity, { where: { id } });
+    return entity ? UserMapper.toDomain(entity) : null;
+  }
+  /**
+   * @interface
+   * @see {UserRepository.findOne}
+   */
+  async findByUuid(uuid: string): Promise<User> {
+    const entity = await this.manager.findOne(UserEntity, { where: { uuid } });
     return entity ? UserMapper.toDomain(entity) : null;
   }
 }

@@ -11,6 +11,7 @@ export class QueueRepositoryImpl implements QueueRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
   async create(queue: any): Promise<Queue> {
+    console.log(queue);
     const entity = QueueMapper.toEntity(queue);
     const queueEntity = await this.manager.save(entity);
     return QueueMapper.toDomain(queueEntity);

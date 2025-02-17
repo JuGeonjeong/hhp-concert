@@ -12,38 +12,44 @@ import { BadRequestException400 } from 'src/common/exception/bad.request.excepti
 export class SeatRepositoryImpl implements SeatRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async create(data: any): Promise<Seat> {
-    const { userId, scheduleId, seatNumber } = data;
+  async create(dto: any): Promise<Seat> {
+    const { userId, scheduleId, seatNumber } = dto;
     const expiredAt = dayjs().add(5, 'minute').toDate();
 
-    // 낙관적락
-    // 좌석 조회 후 좌석 예약, 나머지 처리는 에러 반환
     return await this.manager.transaction(async (transactional) => {
-      const existingSeat = await transactional.findOne(SeatEntity, {
+      const exSeat = await transactional.findOne(SeatEntity, {
         where: { scheduleId, seatNumber },
+        lock: { mode: 'optimistic', version: 1 },
       });
 
-      if (existingSeat) {
+      // 좌석이 없는 경우 새로 생성
+      if (!exSeat) {
+        const newSeat = SeatMapper.toEntity({
+          userId,
+          scheduleId,
+          seatNumber,
+          expiredAt,
+          version: 1,
+        });
+        const entity = await transactional.save(newSeat);
+        return SeatMapper.toDomain(entity);
+      }
+
+      // 예약된 상태인 경우 처리
+      if (
+        exSeat.status === SeatStatusEnum.PENDING ||
+        exSeat.status === SeatStatusEnum.RESERVED
+      ) {
         throw new BadRequestException400('이미 예약된 좌석입니다.');
       }
 
-      const data = SeatMapper.toEntity({
-        userId,
-        scheduleId,
-        seatNumber,
-        expiredAt,
-      });
-      console.log(data);
+      // 기존 좌석의 상태 업데이트
+      exSeat.userId = userId;
+      exSeat.expiredAt = expiredAt;
+      exSeat.version += 1;
+      const updatedSeat = await transactional.save(exSeat);
 
-      try {
-        const entity = await transactional.save(data);
-        return SeatMapper.toDomain(entity);
-      } catch (error) {
-        if (error.name === 'OptimisticLockVersionMismatchError') {
-          throw new BadRequestException400('좌석 예약 충돌이 발생했습니다.');
-        }
-        throw error;
-      }
+      return SeatMapper.toDomain(updatedSeat);
     });
   }
 
@@ -81,7 +87,7 @@ export class SeatRepositoryImpl implements SeatRepository {
       where: [
         {
           scheduleId,
-          status: SeatStatusEnum.AVAILABLE,
+          status: SeatStatusEnum.PENDING,
           expiredAt: MoreThan(now),
         },
         {
@@ -101,7 +107,7 @@ export class SeatRepositoryImpl implements SeatRepository {
       const expiredSeats = await transactionalEntityManager
         .createQueryBuilder(SeatEntity, 'seat')
         .setLock('pessimistic_write')
-        .where('seat.status = :status', { status: SeatStatusEnum.AVAILABLE })
+        .where('seat.status = :status', { status: SeatStatusEnum.PENDING })
         .andWhere('seat.expiredAt < :now', { now })
         .getMany();
 

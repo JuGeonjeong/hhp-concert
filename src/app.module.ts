@@ -7,6 +7,7 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { LoggerModule } from './common/logger/logger.module';
 import { CustomExceptionFilter } from './common/filter/exception.filter';
+// import { RedisModule } from './domain/queue/infrastructure/redis/redis.module';
 // import { ClientsModule } from '@nestjs/microservices';
 // import { KAFKA_OPTION } from './common/kafka/kafka';
 
@@ -24,6 +25,7 @@ import { CustomExceptionFilter } from './common/filter/exception.filter';
     //     },
     //   ],
     // }),
+    // RedisModule,
     LoggerModule,
     DomainModule,
   ],

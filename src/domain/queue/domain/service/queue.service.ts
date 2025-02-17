@@ -3,34 +3,52 @@ import { Inject, Injectable } from '@nestjs/common';
 import { QueueRepository } from '../repository/queue.repository';
 import { Queue } from '../entity/queue';
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
-import { Cron } from '@nestjs/schedule';
 import { v4 as uuidv4 } from 'uuid';
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
+import { RedisService } from '../../../../common/redis/redis.service';
 
 @Injectable()
 export class QueueService {
   constructor(
     @Inject('IQueueRepository')
     private readonly queueRepository: QueueRepository,
+    private readonly redisService: RedisService,
   ) {}
 
-  async createQueue(): Promise<Queue> {
+  async enterQueue(uuid: string): Promise<void> {
     const queue = new Queue({
-      uuid: uuidv4(),
-      status: QueueStatusEnum.WAIT,
+      uuid,
     });
-    const result = await this.queueRepository.create(queue);
-    return result;
+    queue.createQueue();
+    await this.queueRepository.create(queue);
   }
 
-  async createJwt(queue: Queue): Promise<string> {
-    const { id, uuid, createdAt } = queue;
-    console.log('queue', queue);
+  async createQueue(): Promise<any> {
+    const redis = this.redisService.getClient();
+    const uuid = uuidv4();
+    const createdAt = Date.now();
+
+    /** redis 대기열 추가 */
+    await redis
+      .multi()
+      .zAdd('sorted_concert_queue', { score: createdAt, value: uuid })
+      .hSet(`queue_data:${uuid}`, {
+        status: 'WAITING',
+        createdAt: new Date(createdAt).toISOString(),
+      })
+      .exec();
+
+    return { uuid, createdAt };
+  }
+
+  async createJwt(queue: any): Promise<string> {
+    const { id, uuid } = queue;
+    console.log('queue', queue.uuid);
     return sign(
       {
         id,
         uuid,
-        createdAt,
+        createdAt: new Date(),
       },
       process.env.JWT_SECRET_KEY,
       {
@@ -57,27 +75,11 @@ export class QueueService {
     return await this.queueRepository.update(queue, data);
   }
 
-  async waitingCount() {
+  async waitingCount(): Promise<any> {
     return await this.queueRepository.waitingCount();
   }
 
-  // 1분마다 상태를 입장으로 바꿈
-  @Cron('*/1 * * * *')
-  async joinQueue() {
-    // const limit = 5;
-    // const waitingQueues = await this.queueRepository.getWaitingQueue(limit);
-    // waitingQueues.forEach(async (queue) => {
-    //   queue.activate();
-    //   await this.userRepository.create({ uuid: queue.uuid });
-    // });
-    // await this.queueRepository.updateQueues(waitingQueues);
-  }
-
-  // 1분마다 상태를 만료로 바꿈
-  @Cron('*/1 * * * *')
-  async expireQueue() {
-    // const expiredQueues = await this.queueRepository.findExpiredQueues();
-    // expiredQueues.forEach((queue) => queue.expire());
-    // await this.queueRepository.updateQueues(expiredQueues);
+  async expiredQueue(): Promise<Queue[]> {
+    return await this.queueRepository.findExpiredQueues();
   }
 }
