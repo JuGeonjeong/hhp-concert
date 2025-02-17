@@ -10,28 +10,29 @@ export class QueueScheduler {
     private readonly queueService: QueueService,
   ) {}
 
-  /** 1분마다 대기열 입장 */
+  /** 1분마다 대기열 입장 (ZSET → ENTER 상태) */
   @Cron('*/1 * * * *')
   async joinQueue() {
     const redis = this.redisService.getClient();
     const now = Date.now();
-    const expiredAt = now + 60 * 1000; // 1분 후 만료
+    const expiredAt = now + 60 * 1000;
 
-    /** 처음 10개 조회 */
-    const queue = await redis.lRange('concert_queue', 0, 9);
+    // 처음 10명 조회
+    const queue = await redis.zRange('sorted_concert_queue', 0, 9);
+    console.log('🎯 현재 대기열 (조회된 10개):', queue);
+
     if (queue.length > 0) {
-      /** Redis Pipeline을 사용하여 `Sorted Set`에 한 번에 추가 */
+      // Pipeline을 사용하여 상태 변경 + 만료 시간 설정
       const pipeline = redis.multi();
-      queue.forEach((item) => {
-        pipeline.zAdd('sorted_concert_queue', {
-          score: expiredAt,
-          value: item,
+      queue.forEach((uuid) => {
+        pipeline.hSet(`queue_data:${uuid}`, {
+          status: 'ENTER',
+          expiredAt: new Date(expiredAt).toISOString(),
         });
       });
       await pipeline.exec();
     }
 
-    /** 만료된 유저 삭제 */
     await this.cleanExpiredUsers();
   }
 
@@ -41,30 +42,39 @@ export class QueueScheduler {
     const redis = this.redisService.getClient();
     const now = Date.now();
 
-    // 만료된 유저 조회
-    const expiredUsers = await redis.zRangeByScore(
+    // `ZSET`에서 만료 시간이 지난 데이터 가져오기 (전체 조회)
+    const expiredUuids = await redis.zRangeByScore(
       'sorted_concert_queue',
       0,
       now,
     );
-    if (expiredUsers.length === 0) {
+    if (expiredUuids.length === 0) {
       console.log('⏳ 만료된 유저 없음');
       return;
     }
 
-    // Redis Pipeline을 사용하여 삭제 최적화
+    // `status = ENTER`인 데이터만 필터링 (Redis Pipeline 사용)
     const pipeline = redis.multi();
-    // ZSET에서 삭제
-    pipeline.zRemRangeByScore('sorted_concert_queue', 0, now);
-    // List에서도 삭제
-    expiredUsers.forEach((uuid) => {
-      pipeline.lRem('concert_queue', 1, uuid);
-    });
+    const uuidsToDelete: string[] = [];
 
-    await pipeline.exec();
+    for (const uuid of expiredUuids) {
+      const status = await redis.hGet(`queue_data:${uuid}`, 'status');
+      if (status === 'ENTER') {
+        uuidsToDelete.push(uuid);
+        pipeline.del(`queue_data:${uuid}`);
+      }
+    }
+
+    if (uuidsToDelete.length > 0) {
+      pipeline.zRem(
+        'sorted_concert_queue',
+        uuidsToDelete as [string, ...string[]],
+      );
+      await pipeline.exec();
+    }
 
     // 현재 대기열 확인
-    const queue = await redis.lRange('concert_queue', 0, -1);
-    console.log('🚀 현재 대기열 (List 확인):', `(${queue.length} 명)`);
+    const queue = await redis.zRangeWithScores('sorted_concert_queue', 0, -1);
+    console.log('🚀 현재 대기열:', `(${queue.length} 명)`);
   }
 }

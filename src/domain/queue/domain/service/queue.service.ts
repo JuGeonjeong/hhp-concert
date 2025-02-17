@@ -26,10 +26,17 @@ export class QueueService {
   async createQueue(): Promise<any> {
     const redis = this.redisService.getClient();
     const uuid = uuidv4();
-    const createdAt = new Date();
+    const createdAt = Date.now();
+
     /** redis 대기열 추가 */
-    await redis.rPush('concert_queue', uuid);
-    await redis.hSet(`queue_data:${uuid}`, 'status', 'WAITING');
+    await redis
+      .multi()
+      .zAdd('sorted_concert_queue', { score: createdAt, value: uuid })
+      .hSet(`queue_data:${uuid}`, {
+        status: 'WAITING',
+        createdAt: new Date(createdAt).toISOString(),
+      })
+      .exec();
 
     return { uuid, createdAt };
   }
