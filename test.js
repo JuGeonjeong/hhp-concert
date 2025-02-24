@@ -13,7 +13,7 @@ function generateUUID() {
 // 옵션 설정: 테스트의 단계별 사용자 수와 지속 시간 정의
 export const options = {
   stages: [
-    { duration: '1m', target: 50 }, // 1분 동안 동시 사용자 50명 도달
+    { duration: '1m', target: 300 }, // 1분 동안 동시 사용자 50명 도달
     { duration: '3m', target: 200 }, // 3분 동안 동시 사용자 200명 유지
     { duration: '1m', target: 0 }, // 1분 동안 사용자 0명으로 감소
   ],
@@ -29,9 +29,7 @@ export default function () {
   const headers = { 'Content-Type': 'application/json' };
 
   // 콘서트 대기열 API에 POST 요청 보내기
-  const res = http.post('http://localhost:3000/waiting-queue/issue', payload, {
-    headers,
-  });
+  const res = http.post('http://localhost:3000/waiting-queue/issue');
 
   // 응답 상태와 지연 시간을 확인하는 체크
   check(res, {

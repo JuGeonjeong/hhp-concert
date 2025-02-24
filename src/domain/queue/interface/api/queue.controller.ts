@@ -33,11 +33,10 @@ export class QueueController {
   @HttpCode(200)
   @ApiDataResponse(ResTokenDto)
   @Post('issue')
-  async createToken(
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<any> {
+  async createToken() // @Res({ passthrough: true }) response: Response,
+  : Promise<any> {
     const data = await this.queueFacade.createToken();
-    this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
+    // this.cookieAdapter.setCookie(response, data.token, data.expiryDate);
     return new ResTokenDto(data.queue);
   }
 
