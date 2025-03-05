@@ -7,6 +7,7 @@ import { LoggerService } from './common/logger/logger.service';
 import { KAFKA_OPTION } from './common/kafka/kafka';
 import { MicroserviceOptions } from '@nestjs/microservices';
 
+// version 1.3.2
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
