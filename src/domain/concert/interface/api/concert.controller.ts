@@ -100,7 +100,7 @@ export class ConcertController {
     // return;
     // }
 
-    console.log(`✅ 좌석 예약 성공: 좌석 ${seatId}, 사용자 ${userId}`);
+    console.log(`좌석 예약 성공: 좌석 ${seatId}, 사용자 ${userId}`);
 
     // await redis.hSet(`reservation:${seatId}`, 'userId', userId);
     // await redis.hSet(`reservation:${seatId}`, 'status', 'reserved');
