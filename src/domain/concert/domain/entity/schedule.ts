@@ -1,28 +1,31 @@
 import { Seat } from './seat';
 
 export class Schedule {
-  id: number;
+  readonly id: number;
   concertId: number;
+  scheduleId: number;
   date: Date;
   seats: Seat[];
   maximum: number;
   count: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
+  readonly deletedAt: Date;
 
   constructor(args: {
     id?: number;
-    concertId: number;
+    scheduleId?: number;
+    concertId?: number;
     date: Date;
     seats?: Seat[];
-    maximum: number;
+    maximum?: number;
     count?: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
     deletedAt?: Date;
   }) {
     this.id = args.id;
+    this.scheduleId = args.id;
     this.concertId = args.concertId;
     this.date = args.date;
     this.seats = args.seats || [];

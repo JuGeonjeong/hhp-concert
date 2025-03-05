@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { PaymentService } from '../service/payment.service';
+import { PaymentService } from '../../domain/service/payment.service';
 
 export class CreateOrderUsecase {
   constructor(
@@ -7,7 +7,7 @@ export class CreateOrderUsecase {
     private readonly paymentService: PaymentService,
   ) {}
 
-  async create(request) {
+  async create(request: any) {
     return await this.paymentService.create(request);
   }
 }

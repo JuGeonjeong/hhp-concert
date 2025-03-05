@@ -6,11 +6,8 @@ import { PaymentRepositoryImpl } from './infrastructure/repository/payment.repos
 import { PointRepositoryImpl } from '../user/infrastructure/repository/point.repository.impl';
 import { QueueRepositoryImpl } from '../queue/infrastructure/repository/queue.repository.impl';
 import { UserRepositoryImpl } from '../user/infrastructure/repository/user.repository.impl';
-import { PointService } from '../user/application/service/point.service';
-import { QueueService } from '../queue/application/service/queue.service';
-import { UserService } from '../user/application/service/user.service';
-import { PaymentService } from './application/service/payment.service';
-import { ConcertService } from '../concert/application/service/concert.service';
+import { QueueService } from '../queue/domain/service/queue.service';
+import { PaymentService } from './domain/service/payment.service';
 import { ConcertRepositoryImpl } from '../concert/infrastructure/repository/concert.repository.impl';
 import { ScheduleRepositoryImpl } from '../concert/infrastructure/repository/schedule.repository.impl';
 import { SeatRepositoryImpl } from '../concert/infrastructure/repository/seat.repository.impl';
@@ -19,11 +16,20 @@ import { PaymentEventPublisher } from './application/event/paymentEventPublisher
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateOrderUsecase } from './application/usecase/createOrder.usecase';
 import { PaymentController } from './interface/api/payment.controller';
+import { PointService } from '../user/domain/service/point.service';
+import { UserService } from '../user/domain/service/user.service';
+import { PaymentFacade } from './application/payment.facade';
+import { PaymentFacadeImpl } from './application/payment.facade.impl';
+import { ConcertService } from '../concert/domain/service/concert.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PaymentEntity])],
   controllers: [PaymentController],
   providers: [
+    {
+      provide: PaymentFacade,
+      useClass: PaymentFacadeImpl,
+    },
     {
       provide: 'IPaymentRepository',
       useClass: PaymentRepositoryImpl,

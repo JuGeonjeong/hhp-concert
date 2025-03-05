@@ -21,5 +21,5 @@ export class BaseEntities {
     nullable: true,
     default: null,
   })
-  deletedAt: Date;
+  deletedAt: Date | null;
 }

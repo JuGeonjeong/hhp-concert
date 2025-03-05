@@ -6,11 +6,13 @@ import { CreateUserUsecase } from './application/usecase/createUser.usecase';
 import { PointChargeUsecase } from './application/usecase/pointCharge.usecase';
 import { PointRepositoryImpl } from './infrastructure/repository/point.repository.impl';
 import { FindPointUsecase } from './application/usecase/findPoint.usecase';
-import { PointService } from './application/service/point.service';
-import { UserService } from './application/service/user.service';
 import PointEntity from './infrastructure/entity/point.entity';
 import UserEntity from './infrastructure/entity/user.entity';
 import PointHistoryEntity from './infrastructure/entity/point-history.entity';
+import { PointService } from './domain/service/point.service';
+import { UserService } from './domain/service/user.service';
+import { UserFacade } from './application/user.facade';
+import { UserFacadeImpl } from './application/user.facade.impl';
 
 @Module({
   imports: [
@@ -18,6 +20,10 @@ import PointHistoryEntity from './infrastructure/entity/point-history.entity';
   ],
   controllers: [UserController],
   providers: [
+    {
+      provide: UserFacade,
+      useClass: UserFacadeImpl,
+    },
     {
       provide: 'IUserRepository',
       useClass: UserRepositoryImpl,

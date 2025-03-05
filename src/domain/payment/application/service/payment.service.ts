@@ -1,18 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PaymentRepository } from '../../domain/repository/payment.repository';
-import { Payment } from '../../domain/entity/payment';
 import { DataSource } from 'typeorm';
-import { UserService } from 'src/domain/user/application/service/user.service';
 import { v4 as uuidv4 } from 'uuid';
 import { PaymentStatusEnum } from '../../infrastructure/entity/payment.entity';
-import { PointService } from 'src/domain/user/application/service/point.service';
-import { ConcertService } from 'src/domain/concert/application/service/concert.service';
 import { Seat } from 'src/domain/concert/domain/entity/seat';
 import { SeatStatusEnum } from 'src/domain/concert/infrastructure/entity/seat.entity';
 import {
   PaymentEventPublisher,
   PaymentSuccessEvent,
-} from '../event/paymentEventPublisher';
+} from '../../application/event/paymentEventPublisher';
+import { PointService } from 'src/domain/user/domain/service/point.service';
+import { UserService } from 'src/domain/user/domain/service/user.service';
+import { PaymentRepository } from '../../domain/repository/payment.repository';
+import { Payment } from '../../domain/entity/payment';
+import { ConcertService } from 'src/domain/concert/domain/service/concert.service';
 
 @Injectable()
 export class PaymentService {

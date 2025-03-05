@@ -12,28 +12,22 @@ export class PointRepositoryImpl implements PointRepository {
 
   /**
    * @interface
-   * @see {PointRepository.charge}
+   * @see {PointRepository.save}
    */
-  async charge(body: { userId: number; point: number }): Promise<Point> {
-    console.log(body);
-    return await this.manager.transaction(
-      async (transactionalEntityManager) => {
-        const existingPoint = await transactionalEntityManager
-          .createQueryBuilder(PointEntity, 'point')
-          .setLock('pessimistic_write')
-          .where('point.userId = :userId', { userId: body.userId })
-          .getOne();
+  async save(point: any, body: any, manager: EntityManager): Promise<Point> {
+    let entity = await manager.findOne(PointEntity, {
+      where: { userId: point ? point.userId : body.userId },
+    });
 
-        if (!existingPoint) {
-          throw new Error('포인트 정보를 찾을 수 없습니다.');
-        }
-        existingPoint.amount += body.point;
-        const updatedPointEntity =
-          await transactionalEntityManager.save(existingPoint);
-
-        return PointMapper.toDomain(updatedPointEntity);
-      },
-    );
+    if (entity) {
+      entity.point = point.point;
+    } else {
+      entity = new PointEntity();
+      entity.userId = body.userId;
+      entity.point = body.amount;
+    }
+    const savedPoint = await manager.save(entity);
+    return PointMapper.toDomain(savedPoint);
   }
 
   /**
@@ -44,16 +38,31 @@ export class PointRepositoryImpl implements PointRepository {
     const entity = await this.manager.findOne(PointEntity, {
       where: { userId },
     });
-    return PointMapper.toDomain(entity);
+    return entity ? PointMapper.toDomain(entity) : null;
   }
 
   /**
    * @interface
    * @see {PointRepository.usePoint}
    */
-  async usePoint(point: any): Promise<Point> {
+  async usePoint(point: any): Promise<any> {
     const entity = PointMapper.toEntity(point);
     const pointEntity = await this.manager.save(entity);
     return await this.manager.save(pointEntity);
+  }
+
+  /**
+   * @interface
+   * @see {PointRepository.findOne}
+   */
+  async findOneWithLock(
+    userId: number,
+    manager: EntityManager,
+  ): Promise<Point> {
+    const entity = await manager.findOne(PointEntity, {
+      where: { userId },
+      lock: { mode: 'pessimistic_write' },
+    });
+    return entity ? PointMapper.toDomain(entity) : null;
   }
 }

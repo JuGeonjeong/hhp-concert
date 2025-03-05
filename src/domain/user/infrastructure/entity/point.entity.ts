@@ -4,7 +4,7 @@ import { BaseEntities } from '../../../../common/typeorm/base.entity';
 @Entity({ name: 'point' })
 export default class PointEntity extends BaseEntities {
   @Column('int')
-  amount: number;
+  point: number;
 
   @Column('int')
   @JoinColumn({
@@ -12,9 +12,4 @@ export default class PointEntity extends BaseEntities {
     foreignKeyConstraintName: 'fk_seat_userId',
   })
   userId: number;
-
-  // constructor(partial: Partial<Point>) {
-  //   super();
-  //   Object.assign(this, partial);
-  // }
 }

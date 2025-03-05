@@ -1,13 +1,13 @@
 import { QueueStatusEnum } from '../../infrastructure/entity/queue.entity';
 export class Queue {
-  id: number;
+  readonly id: number;
   uuid: string;
   status: QueueStatusEnum;
   enteredAt: Date;
   expiredAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  readonly createdAt: Date;
+  private updatedAt: Date;
+  private readonly deletedAt: Date;
 
   constructor(args: {
     id?: number;
@@ -36,6 +36,12 @@ export class Queue {
       this.expiredAt = new Date(new Date().getTime() + 5 * 60 * 1000);
       this.enteredAt = new Date(new Date().getTime());
     }
+  }
+
+  createQueue(): void {
+    this.status = QueueStatusEnum.ENTER;
+    this.enteredAt = new Date();
+    this.expiredAt = new Date(new Date().getTime() + 60 * 60 * 1000);
   }
 
   expire(): void {

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { PointService } from '../service/point.service';
-import { UserService } from '../service/user.service';
+import { PointService } from '../../domain/service/point.service';
+import { UserService } from '../../domain/service/user.service';
 
 export class FindPointUsecase {
   constructor(
@@ -11,8 +11,7 @@ export class FindPointUsecase {
   ) {}
 
   async findOne(userId: number) {
-    const user = await this.userService.findOne(userId);
-    const point = await this.pointService.findPoint(userId);
-    return { userId: user.id, amount: point.amount };
+    await this.userService.findOne(userId);
+    return await this.pointService.findPoint(userId);
   }
 }
