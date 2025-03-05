@@ -38,3 +38,11 @@
 │ │ ├── /req
 │ │ └── /res
 ```
+
+## 4. 주차 보고서
+
+- [콘서트 대기열 부하 테스트 보고서](doc/report/queue.report.md)
+- [좌석 예매 및 결제 락 전략 보고서](doc/report/lock.report.md)
+- [성능 개선을 위한 레디스 분석 문서](doc/report/redis.report.md)
+- [쿠키 제거로 개선된 API 성능: K6 테스트 보고서](doc/report/k6.test.md)
+- [이벤트 기반 결제 서비스 확장 전략](doc/report/payment.test.md)

@@ -18,8 +18,8 @@ export class QueueScheduler {
     const expiredAt = now + 60 * 1000;
 
     // 처음 10명 조회
-    const queue = await redis.zRange('sorted_concert_queue', 0, 9);
-    console.log('🎯 현재 대기열 (조회된 10개):', queue);
+    const queue = await redis.zRange('sorted_concert_queue', 0, 39999);
+    // console.log('🎯 현재 대기열 (조회된 100개):', queue);
 
     if (queue.length > 0) {
       // Pipeline을 사용하여 상태 변경 + 만료 시간 설정

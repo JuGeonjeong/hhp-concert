@@ -23,19 +23,19 @@ export class ConcertController {
     @Inject(ConcertFacade)
     private readonly concertFacade: ConcertFacade,
     private readonly createOrderUsecase: CreateOrderUsecase,
-    // @Inject('KAFKA_CLIENT')
-    // private readonly kafkaClient: ClientKafka,
+    @Inject('KAFKA_CLIENT')
+    private readonly kafkaClient: ClientKafka,
   ) {}
 
   async onModuleInit(): Promise<void> {
-    // this.kafkaClient.subscribeToResponseOf('reservation');
-    // this.kafkaClient.subscribeToResponseOf('payment');
-    // await this.kafkaClient.connect();
+    this.kafkaClient.subscribeToResponseOf('reservation');
+    this.kafkaClient.subscribeToResponseOf('payment');
+    await this.kafkaClient.connect();
   }
 
-  // async onModuleDestroy(): Promise<void> {
-  // await this.kafkaClient.close();
-  // }
+  async onModuleDestroy(): Promise<void> {
+    await this.kafkaClient.close();
+  }
 
   @ApiOperation({
     summary: '예약가능 날짜 조회',
@@ -85,5 +85,28 @@ export class ConcertController {
       createdAt,
       seatNumber,
     });
+  }
+
+  @MessagePattern('seat-reservation')
+  async handleReservation(@Payload() message: any) {
+    const { userId, seatId } = message;
+
+    // const redis = this.redisService.getClient();
+    const lockKey = `lock:seat:${seatId}`;
+
+    // const lock = await redis.set(lockKey, userId, 'NX', 'EX', 60);
+    // if (!lock) {
+    // console.log(`❌ 좌석 ${seatId} 이미 예약됨`);
+    // return;
+    // }
+
+    console.log(`✅ 좌석 예약 성공: 좌석 ${seatId}, 사용자 ${userId}`);
+
+    // await redis.hSet(`reservation:${seatId}`, 'userId', userId);
+    // await redis.hSet(`reservation:${seatId}`, 'status', 'reserved');
+
+    // 결과 전송
+    const resultMessage = { seatId, status: 'reserved', userId };
+    // this.redisService.getClient().publish('reservation-result', JSON.stringify(resultMessage));
   }
 }

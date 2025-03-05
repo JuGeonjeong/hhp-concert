@@ -8,6 +8,7 @@ import { NotFoundException404 } from 'src/common/exception/not.found.exception.4
 import { BadRequestException400 } from 'src/common/exception/bad.request.exception.400';
 import { SeatReservDto } from '../../interface/dto/req/seatReserv.dto';
 import { UserRepository } from 'src/domain/user/domain/repository/userRepository';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class ConcertService {
@@ -20,6 +21,8 @@ export class ConcertService {
     private readonly seatsRepository: SeatRepository,
     @Inject('IUserRepository')
     private readonly userRepository: UserRepository,
+    @Inject('KAFKA_CLIENT')
+    private readonly kafkaClient: ClientKafka,
   ) {}
 
   /**
@@ -65,7 +68,9 @@ export class ConcertService {
     const name = this.generateRandomName();
     const email = this.generateRandomEmail();
     const exUser = await this.userRepository.findByUuid(body.uuid);
+    let userId: number;
     if (exUser) {
+      userId = exUser.getId();
       user = exUser;
     } else {
       user = await this.userRepository.create({
@@ -73,12 +78,16 @@ export class ConcertService {
         name,
         email,
       });
+      userId = user.getId();
     }
-    return await this.seatsRepository.create({
-      userId: user.getId(),
-      scheduleId: body.scheduleId,
-      seatNumber: body.seatNumber,
-    });
+    const seatId = body.seatNumber;
+    const message = { userId, seatId, timestamp: Date.now() };
+    this.kafkaClient.emit('seat-reservation', message);
+    // return await this.seatsRepository.create({
+    // userId: user.getId(),
+    // scheduleId: body.scheduleId,
+    // seatNumber: body.seatNumber,
+    // });
   }
 
   /**
