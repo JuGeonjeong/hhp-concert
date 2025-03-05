@@ -92,7 +92,7 @@ export class ConcertController {
     const { userId, seatId } = message;
 
     // const redis = this.redisService.getClient();
-    const lockKey = `lock:seat:${seatId}`;
+    // const lockKey = `lock:seat:${seatId}`;
 
     // const lock = await redis.set(lockKey, userId, 'NX', 'EX', 60);
     // if (!lock) {
@@ -106,7 +106,7 @@ export class ConcertController {
     // await redis.hSet(`reservation:${seatId}`, 'status', 'reserved');
 
     // 결과 전송
-    const resultMessage = { seatId, status: 'reserved', userId };
+    // const resultMessage = { seatId, status: 'reserved', userId };
     // this.redisService.getClient().publish('reservation-result', JSON.stringify(resultMessage));
   }
 }
